@@ -1,0 +1,18 @@
+.movies-paginator {
+  padding: 50px 0 80px;
+}
+
+.movies-paginator__button {
+  width: 100%;
+
+  background-color: #2f2f2f;
+
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
+
+  border: none;
+  border-radius: 6px;
+  padding: 10px 0;
+}
