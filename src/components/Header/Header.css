@@ -1,7 +1,20 @@
 .header {
-  background-color: #073042;
+  background-color: #202020;
 
+  display: block;
+  position: sticky;
+
+  top: 0;
+  left: 0;
   padding: 18px 0;
+}
+
+.header_hidden {
+  display: none;
+}
+
+.header_place_main {
+  background-color: #073042;
 }
 
 .header__container {

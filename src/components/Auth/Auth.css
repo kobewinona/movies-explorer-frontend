@@ -1,0 +1,49 @@
+.auth {
+  width: calc(100% - (30px * 2));
+  height: 100vh;
+
+  display: grid;
+  grid-template-rows: max-content auto 59px;
+
+  margin: 0 auto;
+}
+
+.auth__logo {
+  display: block;
+
+  margin: 56px auto 50px;
+}
+
+.auth__message {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: normal;
+
+  margin-bottom: 80px;
+}
+
+.auth__message_visible {
+  visibility: visible;
+}
+
+.auth__link-message {
+  color: #8b8b8b;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+
+  margin: 0;
+}
+
+.auth__link {
+  color: #4285f4;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: none;
+
+  margin: 0;
+}

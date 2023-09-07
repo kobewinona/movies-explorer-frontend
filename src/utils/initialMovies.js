@@ -33,7 +33,7 @@ export const initialMovies = [
     image: "https://bloody-disgusting.com/wp-content/uploads/2015/09/043-alien-theredlist.jpg",
     trailerLink: "https://www.youtube.com/watch?v=jQ5lPt9edzQ",
     thumbnail: "https://www.themoviedb.org/t/p/w220_and_h330_face/rPV3tePkV3EdlheLP1mt0OjKqWb.jpg",
-    movieId: 210740237509,
+    movieId: 210740237510,
     nameRU: "Чужой",
     nameEN: "Alien"
   },
@@ -52,7 +52,7 @@ export const initialMovies = [
     image: "https://bloody-disgusting.com/wp-content/uploads/2015/09/043-alien-theredlist.jpg",
     trailerLink: "https://www.youtube.com/watch?v=jQ5lPt9edzQ",
     thumbnail: "https://www.themoviedb.org/t/p/w220_and_h330_face/rPV3tePkV3EdlheLP1mt0OjKqWb.jpg",
-    movieId: 210740237509,
+    movieId: 210740237511,
     nameRU: "Чужой",
     nameEN: "Alien"
   },
@@ -71,7 +71,7 @@ export const initialMovies = [
     image: "https://bloody-disgusting.com/wp-content/uploads/2015/09/043-alien-theredlist.jpg",
     trailerLink: "https://www.youtube.com/watch?v=jQ5lPt9edzQ",
     thumbnail: "https://www.themoviedb.org/t/p/w220_and_h330_face/rPV3tePkV3EdlheLP1mt0OjKqWb.jpg",
-    movieId: 210740237509,
+    movieId: 210740237512,
     nameRU: "Чужой",
     nameEN: "Alien"
   },

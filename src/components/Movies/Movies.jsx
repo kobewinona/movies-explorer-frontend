@@ -9,8 +9,10 @@ import './Movies.css';
 const Movies = () => {
   return (
     <main>
-      <SearchForm />
-      <MoviesCardList />
+      <section>
+        <SearchForm />
+        <MoviesCardList />
+      </section>
     </main>
   );
 };

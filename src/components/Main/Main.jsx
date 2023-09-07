@@ -6,18 +6,24 @@ import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
+import Header from '../Header/Header';
+import WithSetRes from '../WithSetRes/WithSetRes';
+import Footer from '../Footer/Footer';
 
 
 const Main = () => {
   console.log('content', content);
   return (
-    <main>
-      <Promo />
-      <AboutProject />
-      <Techs />
-      <AboutMe />
-    </main>
-
+    <>
+      <WithSetRes element={Header} />
+      <main>
+        <Promo />
+        <AboutProject />
+        <Techs />
+        <AboutMe />
+      </main>
+      <Footer />
+    </>
   );
 };
 

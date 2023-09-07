@@ -1,0 +1,35 @@
+.input {
+  width: 100%;
+  box-sizing: border-box;
+
+  background-color: transparent;
+
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+
+  margin-bottom: 6px;
+  border: none;
+  border-bottom: 1px solid #424242;
+  padding: 0 0 10px 0;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input_invalid {
+  color: #ee3465;
+}
+
+.input__error-message {
+  height: 24px;
+
+  color: #ee3465;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: normal;
+
+  display: block;
+}

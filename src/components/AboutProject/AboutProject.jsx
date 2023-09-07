@@ -7,7 +7,7 @@ import Title from '../Shared/Title/Title';
 
 const AboutProject = () => {
   return (
-    <section className="about-project">
+    <section id="about-project" className="about-project">
       <Title text="О проекте" />
       <h3 className="about-project__subtitle">Дипломный проект включал 5 этапов</h3>
       <p className="about-project__text">Составление плана, работу над бэкендом,

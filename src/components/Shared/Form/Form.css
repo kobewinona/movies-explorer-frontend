@@ -1,0 +1,34 @@
+.form {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  margin: 0 auto;
+}
+
+.form__submit {
+  width: 100%;
+
+  background-color: #4285f4;
+
+  cursor: pointer;
+
+  color: #fff;
+
+  margin-bottom: 14px;
+  padding: 15px 0;
+  border: none;
+  border-radius: 3px;
+
+  opacity: 1;
+
+  transition: opacity .4s ease-in-out;
+}
+
+.form__submit:hover {
+  opacity: .7;
+
+  transition: opacity .2s ease-in-out;
+}

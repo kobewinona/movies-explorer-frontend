@@ -18,9 +18,9 @@ const MoviesCard = ({nameRU, duration, image}) => {
 };
 
 MoviesCard.propTypes = {
-  nameRU: PropTypes,
-  duration: PropTypes,
-  image: PropTypes
+  nameRU: PropTypes.string,
+  duration: PropTypes.number,
+  image: PropTypes.string
 }
 
 export default MoviesCard;

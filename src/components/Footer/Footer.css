@@ -5,6 +5,10 @@
   padding: 80px 0 20px;
 }
 
+.footer_hidden {
+  display: none;
+}
+
 .footer__title {
   color: #8b8b8b;
   text-align: center;

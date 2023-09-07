@@ -10,7 +10,7 @@ const Title = ({text}) => {
 };
 
 Title.propTypes = {
-  text: PropTypes,
+  text: PropTypes.string,
 };
 
 export default Title;

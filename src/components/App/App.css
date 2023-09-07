@@ -2,12 +2,19 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
+#root {
+  min-height: 100vh;
+
   background-color: #202020;
 
   color: #fff;
   font-family: 'Inter', Tahoma, sans-serif;
   font-style: normal;
+
+  display: grid;
+  grid-template-columns: 100%;
+  grid-auto-flow: row;
+  grid-template-rows: max-content auto max-content;
 
   margin: 0;
   padding: 0;

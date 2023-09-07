@@ -1,10 +1,11 @@
 import React from 'react';
 
 import './Footer.css';
+import PropTypes from 'prop-types';
 
-const Footer = () => {
+const Footer = ({isHidden}) => {
   return (
-    <footer className="footer">
+    <footer className={`footer ${isHidden && 'footer_hidden'}`}>
       <div className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</div>
       <ul className="footer__link-list">
         <li className="footer__link-list-item">
@@ -18,5 +19,9 @@ const Footer = () => {
     </footer>
   );
 };
+
+Footer.propTypes = {
+  isHidden: PropTypes.bool
+}
 
 export default Footer;
