@@ -9,10 +9,10 @@ const Footer = ({isHidden}) => {
       <div className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</div>
       <ul className="footer__link-list">
         <li className="footer__link-list-item">
-          <a className="footer__link" href="#">Яндекс.Практикум</a>
+          <a className="footer__link" href="https://practicum.yandex.ru">Яндекс.Практикум</a>
         </li>
         <li className="footer__link-list-item">
-          <a className="footer__link" href="#">Github</a>
+          <a className="footer__link" href="https://github.com/kobewinona">Github</a>
         </li>
       </ul>
       <p className="footer__copyright">&copy;2020</p>

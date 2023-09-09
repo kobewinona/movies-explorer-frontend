@@ -1,6 +1,8 @@
 .auth {
   width: calc(100% - (30px * 2));
-  height: 100vh;
+  max-width: 396px;
+  min-height: 100vh;
+  max-height: 100%;
 
   display: grid;
   grid-template-rows: max-content auto 59px;
@@ -46,4 +48,30 @@
   text-decoration: none;
 
   margin: 0;
+}
+
+@media (min-width: 768px) {
+  .auth__logo {
+    margin: 232px auto 40px 0;
+  }
+
+  .auth__message {
+    text-align: left;
+
+    margin-bottom: 40px;
+  }
+
+  .auth {
+    grid-template-rows: max-content 100% 265px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .auth__logo {
+    margin-top: 70px;
+  }
+
+  .auth {
+    grid-template-rows: max-content auto 103px;
+  }
 }

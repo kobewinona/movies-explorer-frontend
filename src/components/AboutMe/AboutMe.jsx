@@ -17,7 +17,7 @@ const AboutMe = () => {
       <p className="about-me__subtitle">{content.name}</p>
       <p className="about-me__details">{content.details}</p>
       <p className="about-me__text">{content.aboutMe}</p>
-      <a className="about-me__link" href="#">GitHub</a>
+      <a className="about-me__link" href="https://github.com/kobewinona">GitHub</a>
       <Portfolio />
     </section>
   );

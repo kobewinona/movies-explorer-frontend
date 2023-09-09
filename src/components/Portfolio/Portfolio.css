@@ -38,16 +38,44 @@
 }
 
 .portfolio__link {
-  text-decoration: none;
   color: #fff;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: -0.72px;
+  text-decoration: none;
 
   margin: 0;
+
+  opacity: 1;
+
+  transition: opacity .4s ease-in-out;
 }
 
-.portfolio__item-name {
-  margin: 0;
+.portfolio__link:hover {
+  opacity: .5;
+
+  transition: opacity .2s ease-in-out;
 }
 
 .portfolio__item-arrow {
+  width: 15px;
+  height: 15px;
+
+  background-image: url('../../images/arrow.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
   margin: 0;
+
+  transform: translate(0, 0);
+
+  transition: all .2s ease-in-out;
+}
+
+.portfolio__link:hover ~ .portfolio__item-arrow {
+  transform: translate(5px, -5px);
+
+  transition: all .2s ease-in-out;
 }

@@ -14,7 +14,7 @@
 
 .not-found__status {
   text-align: center;
-  font-size: 80px;
+  font-size: clamp(80px, 19vw, 140px);
   font-weight: 400;
   line-height: normal;
 
@@ -23,7 +23,7 @@
 
 .not-found__description {
   text-align: center;
-  font-size: 12px;
+  font-size: clamp(12px, 2.5vw, 16px);
   font-weight: 400;
   line-height: normal;
 
@@ -49,4 +49,14 @@
   opacity: .5;
 
   transition: opacity .2s ease-in-out;
+}
+
+@media (min-width: 768px) {
+  .not-found {
+    margin-bottom: 222px;
+  }
+
+  .not-fount__link {
+    font-size: 14px;
+  }
 }
