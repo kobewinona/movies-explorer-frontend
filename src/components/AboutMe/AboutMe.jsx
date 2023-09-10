@@ -13,11 +13,17 @@ const AboutMe = () => {
   return (
     <section className="about-me">
       <Title text="Студент"/>
-      <img className="about-me__photo" src={studentPhoto} alt="Моя фотография."/>
-      <p className="about-me__subtitle">{content.name}</p>
-      <p className="about-me__details">{content.details}</p>
-      <p className="about-me__text">{content.aboutMe}</p>
-      <a className="about-me__link" href="https://github.com/kobewinona">GitHub</a>
+      <div className="about-me__container">
+        <img className="about-me__photo" src={studentPhoto} alt="Моя фотография."/>
+        <div className="about-me__bio">
+          <div>
+            <p className="about-me__bio-name">{content.name}</p>
+            <p className="about-me__bio-details">{content.details}</p>
+            <p className="about-me__bio-text">{content.aboutMe}</p>
+          </div>
+          <a className="about-me__bio-link" href="https://github.com/kobewinona">GitHub</a>
+        </div>
+      </div>
       <Portfolio />
     </section>
   );
