@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 import logo from '../../images/logo.svg'
 
-import Burger from '../Burger/Burger';
 import NavTab from '../NavTab/NavTab';
+import Burger from '../Burger/Burger';
 
 import './Header.css';
 // import NavMenu from '../NavMenu/NavMenu';
@@ -28,10 +28,9 @@ const Header = ({isHidden}) => {
 
   return (
     <header className={`header ${isMainPage && 'header_place_main'} ${isHidden && 'header_hidden'}`}>
+      <NavTab isNavTabShown={isNavTabShown} />
       <div className="header__container">
         <Link to="/"><img src={logo} alt="Логотип." /></Link>
-        {/*<NavMenu />*/}
-        <NavTab isNavTabShown={isNavTabShown} />
         <Burger onToggle={handleNavTabToggle} isNavTabShown={isNavTabShown} />
       </div>
     </header>
@@ -39,7 +38,8 @@ const Header = ({isHidden}) => {
 };
 
 Header.propTypes = {
-  isHidden: PropTypes.bool
+  isHidden: PropTypes.bool,
+  // isNavTabShown: PropTypes.bool
 };
 
 export default Header;

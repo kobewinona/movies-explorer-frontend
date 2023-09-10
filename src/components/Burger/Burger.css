@@ -24,6 +24,9 @@
 
   display: block;
 
+  top: 15px;
+  right: 30px;
+
   transition: opacity .4s ease-out;
 
   z-index: 900;

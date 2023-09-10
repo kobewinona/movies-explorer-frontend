@@ -8,6 +8,7 @@ import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Footer from '../Footer/Footer';
+import PropTypes from 'prop-types';
 
 
 const Main = () => {
@@ -25,5 +26,9 @@ const Main = () => {
     </>
   );
 };
+
+Main.propTypes = {
+  isNavTabShown: PropTypes.bool
+}
 
 export default Main;

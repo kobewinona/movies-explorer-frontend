@@ -24,34 +24,32 @@ function App() {
 
   const handleSignIn = () => {
     console.log('handled');
-  }
+  };
 
   const handleEditProfile = () => {
     console.log('handled');
-  }
+  };
 
   return (
-    <>
-      <CurrentUserContext.Provider value={currentUser}>
-        <Routes>
-          <Route path="/signup" element={
-            <Auth message="Добро пожаловать!">
-              <Register onSignUp={handleSignUp} />
-            </Auth>
-          } />
-          <Route path="/signin" element={
-            <Auth message="Рады видеть!">
-              <Login onSignIn={handleSignIn}/>
-            </Auth>
-          } />
-          <Route path="/" element={<Main />} />
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/saved-movies" element={<SavedMovies />} />
-          <Route path="/profile" element={<Profile onEdit={handleEditProfile}/>} />
-          <Route path="*" element={<NotFound />}/>
-        </Routes>
-      </CurrentUserContext.Provider>
-    </>
+    <CurrentUserContext.Provider value={currentUser}>
+      <Routes>
+        <Route path="/signup" element={
+          <Auth message="Добро пожаловать!">
+            <Register onSignUp={handleSignUp} />
+          </Auth>
+        } />
+        <Route path="/signin" element={
+          <Auth message="Рады видеть!">
+            <Login onSignIn={handleSignIn}/>
+          </Auth>
+        } />
+        <Route path="/" element={<Main />} />
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/saved-movies" element={<SavedMovies />} />
+        <Route path="/profile" element={<Profile onEdit={handleEditProfile}/>} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </CurrentUserContext.Provider>
   );
 }
 
