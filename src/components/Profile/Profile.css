@@ -1,5 +1,6 @@
 .profile {
   width: calc(100% - (30px * 2));
+  max-width: 396px;
   height: 100%;
 
   display: grid;
@@ -110,4 +111,24 @@
   line-height: normal;
 
   margin: 0 0 5px 0;
+}
+
+@media (min-width: 768px) {
+  .profile__greeting {
+    margin-top: 236px;
+  }
+
+  .profile__control {
+    margin-bottom: 269px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .profile__greeting {
+    margin-top: 74px;
+  }
+
+  .profile__control {
+    margin-bottom: 70px;
+  }
 }

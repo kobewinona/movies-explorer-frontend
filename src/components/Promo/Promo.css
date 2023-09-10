@@ -1,37 +1,66 @@
 .promo {
   background-color: #073042;
 
-  margin: 0 auto;
   padding: 70px 0 30px;
 }
 
+.promo__container {
+  width: calc(100% - (10px * 2));
+  max-width: 680px;
+
+  margin: 0 auto;
+}
+
+.promo__cover-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 80px;
+}
+
 .promo__cover-image {
-  width: clamp(210px, 5vw, 310px);
+  width: clamp(210px, 50vw, 310px);
   aspect-ratio: 105 / 103;
 
   background-image: url('../../images/lead-cover.svg');
   background-repeat: no-repeat;
   background-position: center;
+  background-size: contain;
 
   display: block;
+  order: 1;
 
   margin: 0 auto;
 }
 
+.promo__title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 24px;
+  order: 2;
+
+  margin: 44px auto 80px;
+}
+
 .promo__title {
   width: 100%;
+  max-width: 680px;
 
-  font-size: 30px;
+  font-size: clamp(30px, 7vw, 40px);
   text-align: center;
   font-weight: 400;
-  line-height: 38px;
+  line-height: clamp(38px, 9vw, 50px);
   letter-spacing: -1.2px;
 
-  margin: 44px 0 24px;
+  margin: 0;
 }
 
 .promo__subtitle {
-  width: calc(100% - (30px * 2));
+  width: calc(100% - (20px * 2));
+  max-width: 260px;
 
   color: #8397A0;
   text-align: center;
@@ -39,7 +68,7 @@
   font-weight: 400;
   line-height: normal;
 
-  margin: 24px auto 80px;
+  margin: 0;
 }
 
 .promo__link {
@@ -70,4 +99,77 @@
   opacity: .5;
 
   transition: opacity .2s ease-in-out;
+}
+
+@media (min-width: 768px) {
+  .promo {
+    padding: 140px 0 76px;
+  }
+
+  .promo__container {
+    width: calc(100% - (44px * 2));
+    max-width: 1140px;
+  }
+
+  .promo__cover-container {
+    margin-bottom: 92px;
+  }
+
+  .promo__title-container {
+    row-gap: 22px;
+  }
+
+  .promo__title {
+    font-size: clamp(40px, 4.5vw, 50px);
+    line-height: clamp(50px, 5.5vw, 58px);
+    letter-spacing: 0;
+  }
+}
+
+@media (min-width: 1280px) {
+  .promo {
+    padding: 75px 0;
+  }
+
+  .promo__container {
+    width: calc(100% - (70px * 2));
+  }
+
+  .promo__cover-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+
+    margin-bottom: 84px;
+  }
+
+  .promo__cover-image {
+    margin: 0;
+  }
+
+  .promo__title-container {
+    align-items: start;
+    row-gap: 36px;
+    order: 1;
+
+    margin: 0;
+  }
+
+  .promo__title {
+    text-align: left;
+
+    max-width: 640px;
+  }
+
+  .promo__subtitle {
+    text-align: left;
+  }
+
+  .promo__cover-image {
+    order: 2;
+  }
+
+  .promo__link {
+    margin: 0;
+  }
 }

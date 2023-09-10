@@ -37,8 +37,6 @@ const Login = ({onSignIn}) => {
             name="userEmail"
             type="email"
             aria-label="E-mail."
-            minLength="2"
-            maxLength="40"
             required
           />
           <p className="login__input-title">Пароль</p>
@@ -48,8 +46,6 @@ const Login = ({onSignIn}) => {
             name="password"
             type="password"
             aria-label="Пароль."
-            minLength="2"
-            maxLength="40"
             required
           />
         </div>

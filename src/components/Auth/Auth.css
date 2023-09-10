@@ -36,7 +36,7 @@
   font-weight: 400;
   line-height: normal;
 
-  margin: 0;
+  margin: 14px 0 0;
 }
 
 .auth__link {
@@ -48,6 +48,16 @@
   text-decoration: none;
 
   margin: 0;
+
+  opacity: 1;
+
+  transition: opacity .4s ease-in-out;
+}
+
+.auth__link:hover {
+  opacity: .6;
+
+  transition: opacity .2s ease-in-out;
 }
 
 @media (min-width: 768px) {

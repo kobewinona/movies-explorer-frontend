@@ -48,8 +48,6 @@ const Register = ({onSignUp}) => {
             name="userEmail"
             type="email"
             aria-label="E-mail."
-            minLength="2"
-            maxLength="40"
             required
           />
           <p className="register__input-title">Пароль</p>
@@ -59,8 +57,6 @@ const Register = ({onSignUp}) => {
             name="password"
             type="password"
             aria-label="Пароль."
-            minLength="2"
-            maxLength="40"
             required
           />
         </div>

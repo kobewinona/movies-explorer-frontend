@@ -19,10 +19,18 @@
 
 .header__container {
   width: calc(100% - (14px * 2));
+  max-width: 708px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .header__container {
+    width: calc(100% - (30px * 2));
+    max-width: 1140px;
+  }
 }

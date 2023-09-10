@@ -19,7 +19,7 @@ const Profile = ({onEdit}) => {
   const [inputValues, setInputValues] = useState({});
 
   const handleModeSwitch = () => {
-    setIsEditModeOn(true);
+    setIsEditModeOn(!isEditModeOn);
   };
 
   const handleValuesUpdate = (name, value) => {
@@ -88,7 +88,7 @@ const Profile = ({onEdit}) => {
           <ul className="profile__control">
           {
             isEditModeOn
-            ? null
+            ? <li><button className="profile__button" onClick={handleModeSwitch}>Отменить</button></li>
             : <li><button className="profile__button" onClick={handleModeSwitch}>Редактировать</button></li>
           }
             <li><Link className="profile__link" to="/signin">Выйти из аккаунта</Link></li>
