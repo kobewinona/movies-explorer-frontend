@@ -1,0 +1,73 @@
+@keyframes appear {
+  from {
+    transform: translate(100%, 0);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+.appear {
+  animation: appear .2s forwards ease-in;
+}
+
+@keyframes disappear {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(100%, 0);
+  }
+}
+
+.disappear {
+  animation: disappear .2s forwards ease-in;
+}
+
+.nav-tab {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+
+  background-color: #000;
+
+  display: none;
+
+  position: fixed;
+
+  opacity: 0;
+
+  top: 0;
+  right: 0;
+
+  transition: opacity .2s ease-out;
+}
+
+.nav-tab__visible {
+  display: block;
+
+  opacity: .3;
+
+  transition: opacity .2s ease-in;
+}
+
+.nav-tab__container {
+  width: 100%;
+  max-width: 520px;
+  height: 100vh;
+
+  background-color: #202020;
+
+  display: grid;
+
+  position: fixed;
+
+  top: 0;
+  right: 0;
+
+  transform: translate(100%, 0);
+
+  opacity: 1;
+
+  z-index: 800;
+}

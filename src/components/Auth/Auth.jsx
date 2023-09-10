@@ -20,14 +20,16 @@ const Auth = ({message, ...props}) => {
         {props.children}
         {
           pathname === '/signup'
-            ? <p className="auth__link-message">Уже зарегистрированы?
+            && <p className="auth__link-message">Уже зарегистрированы?
                 <Link className="auth__link" to="/signin"> Войти</Link>
               </p>
-            : <p className="auth__link-message">Ещё не зарегистрированы?
-                <Link className="auth__link" to="/signup"> Регистрация</Link>
-              </p>
         }
-
+        {
+          pathname === '/signin'
+            && <p className="auth__link-message">Ещё не зарегистрированы?
+              <Link className="auth__link" to="/signup"> Регистрация</Link>
+            </p>
+        }
       </section>
     </main>
   );

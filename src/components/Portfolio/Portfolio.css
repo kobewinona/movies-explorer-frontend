@@ -69,13 +69,12 @@
 
   margin: 0;
 
-  transform: translate(0, 0);
-
   transition: all .2s ease-in-out;
 }
 
 .portfolio__link:hover ~ .portfolio__item-arrow {
-  transform: translate(5px, -5px);
+  width: 20px;
+  height: 20px;
 
   transition: all .2s ease-in-out;
 }

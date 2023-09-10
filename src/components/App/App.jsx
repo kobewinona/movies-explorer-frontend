@@ -44,10 +44,10 @@ function App() {
               <Login onSignIn={handleSignIn}/>
             </Auth>
           } />
-            <Route path="/" element={<Main />} />
-            <Route path="/movies" element={<Movies />} />
-            <Route path="/saved-movies" element={<SavedMovies />} />
-            <Route path="/profile" element={<Profile onEdit={handleEditProfile}/>} />
+          <Route path="/" element={<Main />} />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/saved-movies" element={<SavedMovies />} />
+          <Route path="/profile" element={<Profile onEdit={handleEditProfile}/>} />
           <Route path="*" element={<NotFound />}/>
         </Routes>
       </CurrentUserContext.Provider>

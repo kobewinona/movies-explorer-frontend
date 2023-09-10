@@ -1,0 +1,105 @@
+@keyframes turnIntoCross {
+  from {
+    transform: translate(0, 9px) rotate(0);
+  }
+  to {
+    transform: translate(0, 9px) rotate(-45deg);
+  }
+}
+
+@keyframes turnIntoBurger {
+  from {
+    transform: translate(0, 9px) rotate(-45deg);
+  }
+  to {
+    transform: translate(0, 9px) rotate(0);
+  }
+}
+
+.burger {
+  width: 22px;
+  height: 20.5px;
+
+  cursor: pointer;
+
+  display: block;
+
+  transition: opacity .4s ease-out;
+
+  z-index: 900;
+}
+
+.burger:hover {
+  opacity: .6;
+
+  transition: opacity .2s ease-in;
+}
+
+.burger__icon {
+  width: 22px;
+  height: 2.5px;
+
+  background-color: #fff;
+
+  position: relative;
+
+  transform: translate(0, 9px);
+
+  animation: turnIntoBurger .2s forwards cubic-bezier(.55,.06,.68,.19);
+}
+
+.burger__icon:before {
+  content: '';
+
+  width: 22px;
+  height: 2.5px;
+
+  background-color: #fff;
+
+  position: absolute;
+
+  transform: translate(0, -9px);
+
+  transition: transform .2s cubic-bezier(.55,.06,.68,.19);
+  transition-delay: .1s;
+}
+
+.burger__icon:after {
+  content: '';
+
+  width: 22px;
+  height: 2.5px;
+
+  background-color: #fff;
+
+  position: absolute;
+
+  transform: translate(0, 9px);
+
+  transition: transform .2s cubic-bezier(.55,.06,.68,.19);
+  transition-delay: .1s;
+}
+
+.burger__icon_turned-into-cross {
+  animation: turnIntoCross .2s forwards cubic-bezier(.55,.06,.68,.19) .2s;
+}
+
+.burger__icon_turned-into-cross:before {
+  transform: translate(0, 0);
+
+  transition: transform .2s cubic-bezier(.55,.06,.68,.19);
+  transition-delay: 0s;
+}
+
+.burger__icon_turned-into-cross:after {
+  transform: translate(0, 0) rotate(90deg);
+
+  transition: transform .2s cubic-bezier(.55,.06,.68,.19);
+  transition-delay: 0s;
+}
+
+@media (min-width: 1280px) {
+  .burger {
+    display: none;
+  }
+}

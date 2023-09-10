@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Checkbox from '../Shared/Checkbox/Checkbox';
+
 import './SearchForm.css';
 
 
@@ -9,11 +11,11 @@ const SearchForm = () => {
       <form>
         <div className="search-form__query-input-container">
           <input className="search-form__query-input" type="text" placeholder="Фильм" />
+          <button className="search-form__submit-button" type="submit">Поиск</button>
           <div className="search-form__filter-container">
-            <input className="search-form__filter-input" type="checkbox" />
+            <Checkbox />
             <p className="search-form__filter-name">Короткометражки</p>
           </div>
-          <button className="search-form__submit-button" type="submit">Поиск</button>
         </div>
       </form>
     </section>

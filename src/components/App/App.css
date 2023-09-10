@@ -24,3 +24,7 @@ html {
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
 }
+
+.no-scroll {
+  overflow: hidden;
+}

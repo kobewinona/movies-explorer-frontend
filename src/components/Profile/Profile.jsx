@@ -3,8 +3,8 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
+
 import Header from '../Header/Header';
-import WithSetRes from '../WithSetRes/WithSetRes';
 import Form from '../Shared/Form/Form';
 import Input from '../Shared/Input/Input';
 
@@ -34,7 +34,7 @@ const Profile = ({onEdit}) => {
 
   return (
     <>
-      <WithSetRes element={Header} />
+      <Header />
       <main>
         <section className="profile">
           <p className="profile__greeting">{`Привет, ${currentUser.name}!`}</p>
