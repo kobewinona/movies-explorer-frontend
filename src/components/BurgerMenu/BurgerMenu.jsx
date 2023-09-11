@@ -5,19 +5,19 @@ import {Link} from 'react-router-dom';
 import './BurgerMenu.css';
 
 
-const BurgerMenu = ({isNavTabShown}) => {
+const BurgerMenu = ({isBurgerMenuOpen}) => {
   useEffect(() => {
-    if (isNavTabShown) {
+    if (isBurgerMenuOpen) {
       document.body.classList.add('no-scroll');
     } else {
       document.body.classList.remove('no-scroll');
     }
-  }, [isNavTabShown]);
+  }, [isBurgerMenuOpen]);
   
   return (
     <>
-      <div className={`burger-menu ${isNavTabShown && 'burger-menu__visible'}`}></div>
-      <div className={`burger-menu__container ${isNavTabShown ? 'appear' : 'disappear'}`}>
+      <div className={`burger-menu ${isBurgerMenuOpen && 'burger-menu__visible'}`}></div>
+      <div className={`burger-menu__container ${isBurgerMenuOpen ? 'appear' : 'disappear'}`}>
         <nav className="burger-menu__navigation">
           <ul className="burger-menu__navigation-container">
             <li><Link className="burger-menu__link" to="/">Главная</Link></li>
@@ -35,7 +35,7 @@ const BurgerMenu = ({isNavTabShown}) => {
 };
 
 BurgerMenu.propTypes = {
-  isNavTabShown: PropTypes.bool
+  isBurgerMenuOpen: PropTypes.bool
 };
 
 export default BurgerMenu;

@@ -4,7 +4,7 @@ import {Link, useLocation} from 'react-router-dom';
 
 import logo from '../../images/logo.svg';
 
-import BurgerMenu from '../NavTab/BurgerMenu';
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import BurgerButton from '../Burger/BurgerButton';
 
 import './Header.css';
