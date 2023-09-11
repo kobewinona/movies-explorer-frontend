@@ -22,11 +22,17 @@
   
   cursor: pointer;
   
+  visibility: hidden;
+  
   display: block;
   
   z-index: 900;
 
   transition: opacity .4s ease-out;
+}
+
+.burger-button_visible {
+  visibility: visible;
 }
 
 .burger-button:hover {
@@ -44,7 +50,6 @@
   position: relative;
   
   animation: turnIntoBurger .2s forwards cubic-bezier(.55, .06, .68, .19);
-  
   transform: translate(0, 9px);
 }
 
@@ -59,7 +64,6 @@
   position: absolute;
   
   transform: translate(0, -9px);
-
   transition: transform .2s cubic-bezier(.55,.06,.68,.19);
   transition-delay: .1s;
 }
@@ -75,7 +79,6 @@
   position: absolute;
   
   transform: translate(0, 9px);
-
   transition: transform .2s cubic-bezier(.55,.06,.68,.19);
   transition-delay: .1s;
 }
@@ -86,14 +89,12 @@
 
 .burger-button__icon_turned-into-cross:before {
   transform: translate(0, 0);
-  
   transition: transform .2s cubic-bezier(.55, .06, .68, .19);
   transition-delay: 0s;
 }
 
 .burger-button__icon_turned-into-cross:after {
   transform: translate(0, 0) rotate(90deg);
-  
   transition: transform .2s cubic-bezier(.55, .06, .68, .19);
   transition-delay: 0s;
 }
