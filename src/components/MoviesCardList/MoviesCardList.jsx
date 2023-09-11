@@ -1,9 +1,9 @@
 import React from 'react';
 
-import '../MoviesCard/MoviesCard';
+import {initialMovies} from '../../utils/initialMovies';
+
 import MoviesCard from '../MoviesCard/MoviesCard';
 import MoviesPaginator from '../MoviesPaginator/MoviesPaginator';
-import {initialMovies} from '../../utils/initialMovies';
 
 import './MoviesCardList.css';
 
@@ -21,11 +21,11 @@ const MoviesCardList = () => {
                 duration={movie.duration}
                 image={movie.image}
               />
-            )
+            );
           })
         }
       </ul>
-      <MoviesPaginator />
+      <MoviesPaginator/>
     </section>
   );
 };

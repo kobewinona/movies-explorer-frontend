@@ -1,32 +1,32 @@
 .techs {
   width: calc(100% - (14px * 2));
   max-width: 668px;
-
+  
   margin: 0 auto;
   padding-top: 70px;
 }
 
 .techs__title {
   max-width: 600px;
-
-  text-align: center;
+  
   font-size: clamp(30px, 4vw, 50px);
   font-weight: 400;
   line-height: normal;
+  text-align: center;
   letter-spacing: -1.2px;
-
+  
   margin: 0 auto;
 }
 
 .techs__text {
   max-width: 460px;
-
-  text-align: center;
+  
   font-size: 11px;
   font-weight: 400;
   line-height: 16px;
+  text-align: center;
   letter-spacing: -0.44px;
-
+  
   margin: 24px auto 50px;
 }
 
@@ -34,31 +34,30 @@
   width: calc(100% - (57px * 2));
   min-width: 178px;
   max-width: 178px;
-
-  list-style: none;
-
-  text-align: center;
+  
   font-size: 12px;
   font-weight: 400;
   line-height: normal;
+  text-align: center;
   letter-spacing: -0.48px;
-
+  
+  list-style: none;
+  
   display: flex;
+  flex-wrap: wrap;
   row-gap: 10px;
   column-gap: 10px;
-  flex-wrap: wrap;
-
+  
   margin: 0 auto;
   padding: 0;
 }
 
 .techs__tech-item {
+  min-width: 84px;
   max-width: 84px;
-
+  
   background-color: #303030;
-
-  flex: 1 1 84px;
-
+  
   border-radius: 10px;
   padding: 21px 0;
 }
@@ -74,16 +73,16 @@
     width: calc(100% - (50px * 2));
     max-width: 1140px;
   }
-
+  
   .techs__title {
     line-height: 58px;
     letter-spacing: -2px;
   }
-
+  
   .techs__tech-list {
     width: 100%;
     max-width: 690px;
-
+    
     justify-content: space-evenly;
   }
 }
@@ -92,7 +91,7 @@
   .techs {
     width: calc(100% - (70px * 2));
   }
-
+  
   .techs__tech-item {
     min-width: 90px;
   }

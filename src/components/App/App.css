@@ -4,21 +4,21 @@ html {
 
 #root {
   min-height: 100vh;
-
-  background-color: #202020;
-
+  
   color: #fff;
   font-family: 'Inter', Tahoma, sans-serif;
   font-style: normal;
-
+  
+  background-color: #202020;
+  
   display: grid;
   grid-template-columns: 100%;
-  grid-auto-flow: row;
   grid-template-rows: max-content auto max-content;
-
+  grid-auto-flow: row;
+  
   margin: 0;
   padding: 0;
-
+  
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -ms-text-size-adjust: 100%;

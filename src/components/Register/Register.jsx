@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import React, {useState} from 'react';
 
 import Form from '../Shared/Form/Form';
 import Input from '../Shared/Input/Input';
@@ -9,17 +9,17 @@ import './Register.css';
 
 const Register = ({onSignUp}) => {
   const [inputValues, setInputValues] = useState({});
-
+  
   const handleValuesUpdate = (name, value) => {
     setInputValues(prevValues => ({
       ...prevValues, [name]: value
     }));
   };
-
+  
   const handleSubmit = () => {
     onSignUp(inputValues);
   };
-
+  
   return (
     <>
       <Form
@@ -67,6 +67,6 @@ const Register = ({onSignUp}) => {
 
 Register.propTypes = {
   onSignUp: PropTypes.func
-}
+};
 
 export default Register;

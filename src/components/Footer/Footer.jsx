@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import './Footer.css';
-import PropTypes from 'prop-types';
+
 
 const Footer = ({isHidden}) => {
   return (
@@ -24,6 +25,6 @@ const Footer = ({isHidden}) => {
 
 Footer.propTypes = {
   isHidden: PropTypes.bool
-}
+};
 
 export default Footer;

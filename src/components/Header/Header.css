@@ -1,14 +1,14 @@
 .header {
   background-color: #202020;
-
+  
   display: block;
   position: sticky;
-
+  
+  z-index: 1;
   top: 0;
   left: 0;
+  
   padding: 18px 0;
-
-  z-index: 1;
 }
 
 .header_hidden {
@@ -22,11 +22,11 @@
 .header__container {
   width: calc(100% - (14px * 2));
   max-width: 708px;
-
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  
   margin: 0 auto;
 }
 

@@ -1,27 +1,26 @@
 .movies {
   width: calc(100% - 10px * 2);
   max-width: 708px;
-
+  
   margin: 0 auto;
   padding: 40px 0 30px;
 }
 
 .movies__list {
   list-style: none;
-
+  
   display: grid;
   grid-template-columns: 100%;
+  padding: 0;
   grid-column-gap: 24px;
   grid-row-gap: 16px;
-
-  padding: 0;
 }
 
 @media (min-width: 768px) {
   .movies__list {
     width: calc(100% - (30px * 2));
     max-width: 1140px;
-
+    
     grid-template-columns: auto auto;
   }
 }

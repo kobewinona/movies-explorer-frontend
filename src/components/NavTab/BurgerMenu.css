@@ -1,0 +1,153 @@
+@keyframes appear {
+  from {
+    transform: translate(100%, 0);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+.appear {
+  animation: appear .2s forwards ease-in;
+}
+
+@keyframes disappear {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(100%, 0);
+  }
+}
+
+.disappear {
+  animation: disappear .2s forwards ease-in;
+}
+
+.burger-menu {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  
+  visibility: hidden;
+  background-color: #000;
+  opacity: 0;
+  
+  position: fixed;
+  top: 0;
+  right: 0;
+  
+  transition: opacity .2s ease-out;
+}
+
+.burger-menu__visible {
+  visibility: visible;
+  opacity: .3;
+  
+  transition: opacity .2s ease-in;
+}
+
+.burger-menu__container {
+  width: 100%;
+  max-width: 520px;
+  height: 100vh;
+  
+  background-color: #202020;
+  opacity: 1;
+  display: grid;
+  
+  position: fixed;
+  z-index: 900;
+  top: 0;
+  right: 0;
+  
+  transform: translate(100%, 0);
+}
+
+.burger-menu__navigation {
+  width: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  
+  margin: 144px auto 48px;
+}
+
+.burger-menu__navigation-container {
+  list-style: none;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: 24px;
+  align-items: center;
+  
+  margin: 0;
+  padding: 0;
+}
+
+.burger-menu__link {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration: none;
+  
+  position: relative;
+  
+  border: 2px solid rgba(255, 255, 255, 0);
+  padding-bottom: 7px;
+  
+  transition: border-bottom-color .4s ease-out;
+}
+
+.burger-menu__link:hover {
+  border-bottom: 2px solid rgba(255, 255, 255, 1);
+  
+  transition: border-bottom-color .2s ease-in;
+}
+
+.burger-menu__profile-link-container {
+  display: flex;
+  flex-direction: row;
+  column-gap: 13px;
+  align-items: center;
+}
+
+.burger-menu__profile-link {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  text-decoration: none;
+  
+  opacity: 1;
+  
+  transition: opacity .4s ease-out;
+}
+
+.burger-menu__profile-link:hover {
+  opacity: .5;
+  
+  transition: opacity .2s ease-in;
+}
+
+.burger-menu__profile--link-icon {
+  width: 30px;
+  height: 30px;
+  
+  background-color: #313131;
+  background-image: url('../../images/account-pict.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  
+  border-radius: 6px;
+}
+
+@media (min-width: 1280px) {
+  .burger-menu {
+    display: block;
+  }
+}

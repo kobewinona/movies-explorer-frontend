@@ -1,6 +1,6 @@
 .not-found {
   height: 100vh;
-
+  
   display: grid;
   grid-template-rows: auto max-content;
 }
@@ -13,41 +13,41 @@
 }
 
 .not-found__status {
-  text-align: center;
   font-size: clamp(80px, 19vw, 140px);
   font-weight: 400;
   line-height: normal;
-
+  text-align: center;
+  
   margin: 0 0 10px 0;
 }
 
 .not-found__description {
-  text-align: center;
   font-size: clamp(12px, 2.5vw, 16px);
   font-weight: 400;
   line-height: normal;
-
+  text-align: center;
+  
   margin: 0;
 }
 
 .not-fount__link {
   color: #4285f4;
-  text-align: center;
   font-size: 12px;
   font-weight: 400;
   line-height: normal;
+  text-align: center;
   text-decoration: none;
-
-  margin-bottom: 30px;
-
+  
   opacity: 1;
-
+  
+  margin-bottom: 30px;
+  
   transition: opacity .4s ease-in-out;
 }
 
 .not-fount__link:hover {
   opacity: .5;
-
+  
   transition: opacity .2s ease-in-out;
 }
 
@@ -55,7 +55,7 @@
   .not-found {
     margin-bottom: 222px;
   }
-
+  
   .not-fount__link {
     font-size: 14px;
   }

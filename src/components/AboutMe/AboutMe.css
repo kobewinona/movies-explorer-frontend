@@ -1,7 +1,7 @@
 .about-me {
   width: calc(100% - (14px * 2));
   max-width: 668px;
-
+  
   margin: 0 auto;
   padding-top: 70px;
 }
@@ -15,20 +15,21 @@
 .about-me__photo {
   width: 100%;
   aspect-ratio: 73 / 88;
-
+  
   object-fit: cover;
+  
   display: block;
   order: 1;
-
+  
   border-radius: 10px;
 }
 
 .about-me__bio {
   width: 100%;
+  
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   order: 2;
 }
 
@@ -37,7 +38,7 @@
   font-weight: 400;
   line-height: normal;
   letter-spacing: -1.2px;
-
+  
   margin: 40px auto 20px;
 }
 
@@ -45,7 +46,7 @@
   font-size: 11px;
   font-weight: 500;
   line-height: 16px;
-
+  
   margin: 20px auto;
 }
 
@@ -53,25 +54,25 @@
   font-size: 11px;
   font-weight: 400;
   line-height: 16px;
-
+  
   margin: 20px auto 40px;
 }
 
 .about-me__bio-link {
-  text-decoration: none;
   color: #fff;
   font-size: 14px;
   font-weight: 500;
   line-height: normal;
-
+  text-decoration: none;
+  
   opacity: 1;
-
+  
   transition: opacity .4s ease-in-out;
 }
 
 .about-me__bio-link:hover {
   opacity: .5;
-
+  
   transition: opacity .2s ease-in-out;
 }
 
@@ -80,41 +81,41 @@
     width: calc(100% - (50px * 2));
     max-width: 1140px;
   }
-
+  
   .about-me__container {
     flex-direction: row;
   }
-
+  
   .about-me__photo {
     width: clamp(255px, 23vw, 270px);
-
+    
     order: 2;
   }
-
+  
   .about-me__bio {
     width: clamp(364px, 47.3vw, 600px);
-
+    
     justify-content: space-between;
-
+    
     order: 1;
   }
-
+  
   .about-me__bio-name {
     margin-top: 0;
     margin-bottom: 16px;
   }
-
+  
   .about-me__bio-details {
     font-size: 12px;
     line-height: 18px;
-
+    
     margin: 16px auto 20px;
   }
-
+  
   .about-me__bio-text {
     font-size: 12px;
     line-height: 18px;
-
+    
     margin-bottom: 0;
   }
 }
@@ -123,19 +124,19 @@
   .about-me {
     width: calc(100% - (70px * 2));
   }
-
+  
   .about-me__container {
     grid-column-gap: 270px;
   }
-
+  
   .about-me__bio-name {
     margin-top: 0;
     margin-bottom: 18px;
   }
-
+  
   .about-me__bio-details {
     font-size: 16px;
-
+    
     margin: 16px auto 26px;
   }
 }

@@ -7,15 +7,16 @@ import Footer from '../Footer/Footer';
 
 import './SavedMovies.css';
 
+
 const SavedMovies = () => {
   return (
     <>
-      <Header />
+      <Header/>
       <main>
-        <SearchForm />
-        <MoviesCardList />
+        <SearchForm/>
+        <MoviesCardList/>
       </main>
-      <Footer />
+      <Footer/>
     </>
   );
 };

@@ -1,6 +1,6 @@
+import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 
@@ -13,34 +13,35 @@ import './Profile.css';
 
 const Profile = ({onEdit}) => {
   const currentUser = useContext(CurrentUserContext);
-
+  
   const [isEditModeOn, setIsEditModeOn] = useState(false);
-
+  
   const [inputValues, setInputValues] = useState({});
-
+  
   const handleModeSwitch = () => {
     setIsEditModeOn(!isEditModeOn);
   };
-
+  
   const handleValuesUpdate = (name, value) => {
     setInputValues(prevValues => ({
       ...prevValues, [name]: value
     }));
   };
-
+  
   const handleSubmit = () => {
     onEdit(inputValues);
   };
-
+  
   return (
     <>
-      <Header />
+      <Header/>
       <main>
         <section className="profile">
           <p className="profile__greeting">{`Привет, ${currentUser.name}!`}</p>
           {
             isEditModeOn
-              ? <Form
+              ?
+              <Form
                 validate={true}
                 onSubmit={handleSubmit}
                 name="sign-up"
@@ -72,7 +73,8 @@ const Profile = ({onEdit}) => {
                   />
                 </div>
               </Form>
-              : <>
+              :
+              <>
                 <ul className="profile__data-container">
                   <li className="profile__data-cell">
                     <p className="profile__data-title">Имя</p>
@@ -86,13 +88,19 @@ const Profile = ({onEdit}) => {
               </>
           }
           <ul className="profile__control">
-          {
-            isEditModeOn
-            ? <li><button className="profile__button" onClick={handleModeSwitch}>Отменить</button></li>
-            : <li><button className="profile__button" onClick={handleModeSwitch}>Редактировать</button></li>
-          }
+            {
+              isEditModeOn
+                ?
+                <li>
+                  <button className="profile__button" onClick={handleModeSwitch}>Отменить</button>
+                </li>
+                :
+                <li>
+                  <button className="profile__button" onClick={handleModeSwitch}>Редактировать</button>
+                </li>
+            }
             <li><Link className="profile__link" to="/signin">Выйти из аккаунта</Link></li>
-            </ul>
+          </ul>
         </section>
       </main>
     </>
@@ -101,6 +109,6 @@ const Profile = ({onEdit}) => {
 
 Profile.propTypes = {
   onEdit: PropTypes.func
-}
+};
 
 export default Profile;

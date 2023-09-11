@@ -1,14 +1,14 @@
 import React from 'react';
 
-import './AboutProject.css';
-
 import Title from '../Shared/Title/Title';
+
+import './AboutProject.css';
 
 
 const AboutProject = () => {
   return (
     <section id="about-project" className="about-project">
-      <Title text="О проекте" />
+      <Title text="О проекте"/>
       <ul className="about-project__thesis-list">
         <li>
           <h3 className="about-project__thesis-title">Дипломный проект включал 5 этапов</h3>

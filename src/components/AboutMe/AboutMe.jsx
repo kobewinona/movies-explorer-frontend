@@ -2,7 +2,6 @@ import React from 'react';
 
 import * as content from '../../utils/content';
 import studentPhoto from '../../images/student-photo.jpeg';
-
 import Title from '../Shared/Title/Title';
 import Portfolio from '../Portfolio/Portfolio';
 
@@ -24,7 +23,7 @@ const AboutMe = () => {
           <a className="about-me__bio-link" href="https://github.com/kobewinona">GitHub</a>
         </div>
       </div>
-      <Portfolio />
+      <Portfolio/>
     </section>
   );
 };

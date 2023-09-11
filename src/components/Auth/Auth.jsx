@@ -1,6 +1,6 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Link, useLocation} from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import logo from '../../images/logo.svg';
 
@@ -9,7 +9,7 @@ import './Auth.css';
 
 const Auth = ({message, ...props}) => {
   const {pathname} = useLocation();
-
+  
   return (
     <main>
       <section className="auth">
@@ -20,15 +20,15 @@ const Auth = ({message, ...props}) => {
         {props.children}
         {
           pathname === '/signup'
-            && <p className="auth__link-message">Уже зарегистрированы?
-                <Link className="auth__link" to="/signin"> Войти</Link>
-              </p>
+          && <p className="auth__link-message">Уже зарегистрированы?
+            <Link className="auth__link" to="/signin"> Войти</Link>
+          </p>
         }
         {
           pathname === '/signin'
-            && <p className="auth__link-message">Ещё не зарегистрированы?
-              <Link className="auth__link" to="/signup"> Регистрация</Link>
-            </p>
+          && <p className="auth__link-message">Ещё не зарегистрированы?
+            <Link className="auth__link" to="/signup"> Регистрация</Link>
+          </p>
         }
       </section>
     </main>
@@ -38,6 +38,6 @@ const Auth = ({message, ...props}) => {
 Auth.propTypes = {
   message: PropTypes.string,
   children: PropTypes.any
-}
+};
 
 export default Auth;

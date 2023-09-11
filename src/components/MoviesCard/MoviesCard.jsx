@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import './MoviesCard.css';
 
@@ -11,7 +11,7 @@ const MoviesCard = ({nameRU, duration, image}) => {
         <h3 className="movies-card__title">{nameRU}</h3>
         <p className="movies-card__duration">{duration}</p>
       </div>
-      <img className="movies-card__image" src={image} alt="" />
+      <img className="movies-card__image" src={image} alt=""/>
       <button className="movies-card__button">Сохранить</button>
     </li>
   );
@@ -21,6 +21,6 @@ MoviesCard.propTypes = {
   nameRU: PropTypes.string,
   duration: PropTypes.number,
   image: PropTypes.string
-}
+};
 
 export default MoviesCard;

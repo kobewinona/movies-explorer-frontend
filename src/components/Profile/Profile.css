@@ -2,36 +2,35 @@
   width: calc(100% - (30px * 2));
   max-width: 396px;
   height: 100%;
-
+  
   display: grid;
   grid-template-rows: max-content auto max-content;
-
+  
   margin: 0 auto;
 }
 
 .profile__greeting {
-  text-align: center;
   font-size: 24px;
   font-weight: 500;
   line-height: normal;
-
+  text-align: center;
+  
   margin: 70px 0 80px;
 }
 
 .profile__data-container {
-  list-style: none;
-
   font-size: 11px;
   font-weight: 500;
   line-height: normal;
-
+  list-style: none;
+  
   padding: 0;
 }
 
 .profile__data-cell {
   display: flex;
   justify-content: space-between;
-
+  
   margin-bottom: 17px;
   border-bottom: 1px solid #424242;
   padding-bottom: 16px;
@@ -43,12 +42,12 @@
 
 .profile__control {
   list-style: none;
-
+  
   display: flex;
   flex-direction: column;
-  align-items: center;
   row-gap: 15px;
-
+  align-items: center;
+  
   margin-bottom: 40px;
   padding: 0;
 }
@@ -60,47 +59,44 @@
 }
 
 .profile__button {
-  background-color: transparent;
-
-  cursor: pointer;
-
   color: #fff;
-  text-align: center;
   font-size: 12px;
-  font-style: normal;
   font-weight: 400;
   line-height: normal;
-
+  text-align: center;
+  cursor: pointer;
+  
+  background-color: transparent;
+  opacity: 1;
+  
   border: none;
   padding: 0;
-
-  opacity: 1;
-
+  
   transition: opacity .4s ease-in-out;
 }
 
 .profile__button:hover {
   opacity: .5;
-
+  
   transition: opacity .2s ease-in-out;
 }
 
 .profile__link {
   color: #ee3465;
-  text-align: center;
   font-size: 12px;
   font-weight: 500;
   line-height: normal;
+  text-align: center;
   text-decoration: none;
-
+  
   opacity: 1;
-
+  
   transition: opacity .4s ease-in-out;
 }
 
 .profile__link:hover {
   opacity: .5;
-
+  
   transition: opacity .2s ease-in-out;
 }
 
@@ -109,7 +105,7 @@
   font-size: 10px;
   font-weight: 400;
   line-height: normal;
-
+  
   margin: 0 0 5px 0;
 }
 
@@ -117,7 +113,7 @@
   .profile__greeting {
     margin-top: 236px;
   }
-
+  
   .profile__control {
     margin-bottom: 269px;
   }
@@ -127,7 +123,7 @@
   .profile__greeting {
     margin-top: 74px;
   }
-
+  
   .profile__control {
     margin-bottom: 70px;
   }

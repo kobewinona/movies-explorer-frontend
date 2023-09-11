@@ -3,25 +3,25 @@
   max-width: 396px;
   min-height: 100vh;
   max-height: 100%;
-
+  
   display: grid;
   grid-template-rows: max-content auto 59px;
-
+  
   margin: 0 auto;
 }
 
 .auth__logo {
   display: block;
-
+  
   margin: 56px auto 50px;
 }
 
 .auth__message {
-  text-align: center;
   font-size: 24px;
   font-weight: 500;
   line-height: normal;
-
+  text-align: center;
+  
   margin-bottom: 80px;
 }
 
@@ -31,32 +31,32 @@
 
 .auth__link-message {
   color: #8b8b8b;
-  text-align: center;
   font-size: 12px;
   font-weight: 400;
   line-height: normal;
-
+  text-align: center;
+  
   margin: 14px 0 0;
 }
 
 .auth__link {
   color: #4285f4;
-  text-align: center;
   font-size: 12px;
   font-weight: 400;
   line-height: normal;
+  text-align: center;
   text-decoration: none;
-
-  margin: 0;
-
+  
   opacity: 1;
-
+  
+  margin: 0;
+  
   transition: opacity .4s ease-in-out;
 }
 
 .auth__link:hover {
   opacity: .6;
-
+  
   transition: opacity .2s ease-in-out;
 }
 
@@ -64,13 +64,13 @@
   .auth__logo {
     margin: 232px auto 40px 0;
   }
-
+  
   .auth__message {
     text-align: left;
-
+    
     margin-bottom: 40px;
   }
-
+  
   .auth {
     grid-template-rows: max-content 100% 265px;
   }
@@ -80,7 +80,7 @@
   .auth__logo {
     margin-top: 70px;
   }
-
+  
   .auth {
     grid-template-rows: max-content auto 103px;
   }

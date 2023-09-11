@@ -1,7 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import './Title.css';
+
 
 const Title = ({text}) => {
   return (
@@ -10,7 +11,7 @@ const Title = ({text}) => {
 };
 
 Title.propTypes = {
-  text: PropTypes.string,
+  text: PropTypes.string
 };
 
 export default Title;
