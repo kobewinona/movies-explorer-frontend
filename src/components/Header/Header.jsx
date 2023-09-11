@@ -7,7 +7,7 @@ import logo from '../../images/logo.svg';
 
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import NavTab from '../NavTab/NavTab';
-import BurgerButton from '../Burger/BurgerButton';
+import BurgerButton from '../BurgerButton/BurgerButton';
 
 import './Header.css';
 
@@ -29,7 +29,7 @@ const Header = ({isHidden}) => {
   
   return (
     <header className={`header ${isMainPage && 'header_place_main'} ${isHidden && 'header_hidden'}`}>
-      <BurgerMenu isBurgerMenuOpen={isBurgerMenuOpen}/>
+      <BurgerMenu isBurgerMenuOpen={isBurgerMenuOpen} onClose={handleBurgerMenuToggle}/>
       <div className="header__container">
         <Link to="/"><img src={logo} alt="Логотип."/></Link>
         {
