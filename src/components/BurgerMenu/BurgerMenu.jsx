@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 
+import ProfileLink from '../Shared/ProfileLink/ProfileLink';
+
 import './BurgerMenu.css';
 
 
@@ -24,10 +26,7 @@ const BurgerMenu = ({isBurgerMenuOpen}) => {
             <li><Link className="burger-menu__link" to="/movies">Фильмы</Link></li>
             <li><Link className="burger-menu__link" to="/saved-movies">Сохранённые фильмы</Link></li>
           </ul>
-          <div className="burger-menu__profile-link-container">
-            <Link className="burger-menu__profile-link" to="/profile">Аккаунт</Link>
-            <div className="burger-menu__profile--link-icon"></div>
-          </div>
+          <ProfileLink/>
         </nav>
       </div>
     </>

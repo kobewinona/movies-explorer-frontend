@@ -66,6 +66,8 @@
   line-height: normal;
   text-align: center;
   
+  cursor: default;
+  
   order: 2;
   
   margin: 0;

@@ -25,9 +25,6 @@
   display: block;
   
   z-index: 900;
-  top: 15px;
-  
-  right: 30px;
 
   transition: opacity .4s ease-out;
 }

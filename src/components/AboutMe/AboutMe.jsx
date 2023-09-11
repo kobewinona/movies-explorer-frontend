@@ -13,14 +13,20 @@ const AboutMe = () => {
     <section className="about-me">
       <Title text="Студент"/>
       <div className="about-me__container">
-        <img className="about-me__photo" src={studentPhoto} alt="Моя фотография."/>
+        <img className="about-me__photo" src={studentPhoto} alt="Фотография студента."/>
         <div className="about-me__bio">
           <div>
             <p className="about-me__bio-name">{content.name}</p>
             <p className="about-me__bio-details">{content.details}</p>
             <p className="about-me__bio-text">{content.aboutMe}</p>
           </div>
-          <a className="about-me__bio-link" href="https://github.com/kobewinona">GitHub</a>
+          <a
+            className="about-me__bio-link"
+            href="https://github.com/kobewinona"
+            target="_blank"
+            rel="noreferrer"
+          >GitHub
+          </a>
         </div>
       </div>
       <Portfolio/>

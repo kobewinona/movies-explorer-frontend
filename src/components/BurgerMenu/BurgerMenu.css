@@ -109,43 +109,6 @@
   transition: border-bottom-color .2s ease-in;
 }
 
-.burger-menu__profile-link-container {
-  display: flex;
-  flex-direction: row;
-  column-gap: 13px;
-  align-items: center;
-}
-
-.burger-menu__profile-link {
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 16px;
-  text-decoration: none;
-  
-  opacity: 1;
-  
-  transition: opacity .4s ease-out;
-}
-
-.burger-menu__profile-link:hover {
-  opacity: .5;
-  
-  transition: opacity .2s ease-in;
-}
-
-.burger-menu__profile--link-icon {
-  width: 30px;
-  height: 30px;
-  
-  background-color: #313131;
-  background-image: url('../../images/account-pict.svg');
-  background-repeat: no-repeat;
-  background-position: center;
-  
-  border-radius: 6px;
-}
-
 @media (min-width: 1280px) {
   .burger-menu {
     display: block;

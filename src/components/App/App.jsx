@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Route, Routes} from 'react-router-dom';
 
+import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 
 import Auth from '../Auth/Auth';
@@ -17,7 +18,7 @@ import './App.css';
 
 function App() {
   const currentUser = {name: 'Дима', email: 'oi@oi.ru'};
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   const handleSignUp = () => {
     console.log('handled');
@@ -31,26 +32,32 @@ function App() {
     console.log('handled');
   };
   
+  useEffect(() => {
+    setIsLoggedIn(true);
+  }, []);
+  
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <Routes>
-        <Route path="/signup" element={
-          <Auth message="Добро пожаловать!">
-            <Register onSignUp={handleSignUp}/>
-          </Auth>
-        }/>
-        <Route path="/signin" element={
-          <Auth message="Рады видеть!">
-            <Login onSignIn={handleSignIn}/>
-          </Auth>
-        }/>
-        <Route path="/" element={<Main/>}/>
-        <Route path="/movies" element={<Movies/>}/>
-        <Route path="/saved-movies" element={<SavedMovies/>}/>
-        <Route path="/profile" element={<Profile onEdit={handleEditProfile}/>}/>
-        <Route path="*" element={<NotFound/>}/>
-      </Routes>
-    </CurrentUserContext.Provider>
+    <AuthContext.Provider value={isLoggedIn}>
+      <CurrentUserContext.Provider value={currentUser}>
+        <Routes>
+          <Route path="/signup" element={
+            <Auth message="Добро пожаловать!">
+              <Register onSignUp={handleSignUp}/>
+            </Auth>
+          }/>
+          <Route path="/signin" element={
+            <Auth message="Рады видеть!">
+              <Login onSignIn={handleSignIn}/>
+            </Auth>
+          }/>
+          <Route path="/" element={<Main/>}/>
+          <Route path="/movies" element={<Movies/>}/>
+          <Route path="/saved-movies" element={<SavedMovies/>}/>
+          <Route path="/profile" element={<Profile onEdit={handleEditProfile}/>}/>
+          <Route path="*" element={<NotFound/>}/>
+        </Routes>
+      </CurrentUserContext.Provider>
+    </AuthContext.Provider>
   );
 }
 
