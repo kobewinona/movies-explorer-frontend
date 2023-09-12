@@ -75,7 +75,7 @@
   opacity: 1;
   
   border-radius: 3px;
-  padding: 5px;
+  padding: 5px 12px;
   
   transition: opacity .4s ease-out;
 }
@@ -90,5 +90,15 @@
   .header__container {
     width: calc(100% - (30px * 2));
     max-width: 1140px;
+  }
+  
+  .header__register-link {
+    font-size: 12px;
+  }
+  
+  .header__login-link {
+    font-size: 12px;
+  
+    padding: 8px 20px;
   }
 }

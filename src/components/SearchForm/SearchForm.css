@@ -7,11 +7,11 @@
   padding: 70px 0 65px;
 }
 
-.search-form__query-input-container {
+.search-form__search-query-container {
   position: relative;
 }
 
-.search-form__query-input {
+.search-form__search-query-input {
   width: 100%;
   max-height: 56px;
   box-sizing: border-box;
@@ -66,6 +66,7 @@
   line-height: 18px;
 
   position: absolute;
+  z-index: 1;
 
   top: 6px;
   right: 6px;

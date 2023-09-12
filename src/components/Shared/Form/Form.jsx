@@ -6,7 +6,7 @@ import Preloader from '../Preloader/Preloader';
 import './Form.css';
 
 
-const Form = ({validate, onSubmit, ...props}) => {
+const Form = ({validate, onSubmit, showDefaultSubmitButton, ...props}) => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [inputsValidity, setInputsValidity] = useState({});
   
@@ -71,7 +71,9 @@ const Form = ({validate, onSubmit, ...props}) => {
       {props.children}
       {props.isUpdating
         ? <Preloader/>
-        : <button
+        :
+        showDefaultSubmitButton &&
+        <button
           className={`form__submit ${validate ? !isFormValid && 'form__submit_disabled' : ''}`}
           type="submit"
           name="submit"
@@ -87,7 +89,8 @@ Form.propTypes = {
   name: PropTypes.string,
   submitText: PropTypes.string,
   children: PropTypes.any,
-  isUpdating: PropTypes.bool
+  isUpdating: PropTypes.bool,
+  showDefaultSubmitButton: PropTypes.bool
 };
 
 export default Form;

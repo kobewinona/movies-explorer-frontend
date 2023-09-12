@@ -33,7 +33,7 @@ function App() {
   };
   
   useEffect(() => {
-    setIsLoggedIn(true);
+    setIsLoggedIn(false);
   }, []);
   
   return (

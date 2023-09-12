@@ -25,7 +25,9 @@ const Input = ({onUpdate, validate, ...props}) => {
   return (
     <>
       <input
-        className={`input ${validate ? !isInputValid && 'input_invalid' : ''}`}
+        className={`input
+        ${props.name === 'searchQuery' && 'input_type_search-query'}
+        ${validate ? !isInputValid && 'input_invalid' : ''}`}
         onChange={event => validate && handleInputsChange(event)}
         value={inputValue || ''}
         {...props}

@@ -28,6 +28,7 @@ const Register = ({onSignUp}) => {
         name="sign-up"
         submitText="Зарегистрироваться"
         isUpdating={false}
+        showDefaultSubmitButton={true}
       >
         <div>
           <p className="register__input-title">Имя</p>
@@ -66,7 +67,8 @@ const Register = ({onSignUp}) => {
 };
 
 Register.propTypes = {
-  onSignUp: PropTypes.func
+  onSignUp: PropTypes.func,
+  showDefaultSubmitButton: PropTypes.bool
 };
 
 export default Register;

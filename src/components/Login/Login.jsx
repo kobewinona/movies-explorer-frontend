@@ -28,6 +28,7 @@ const Login = ({onSignIn}) => {
         name="sign-in"
         submitText="Войти"
         isUpdating={false}
+        showDefaultSubmitButton={true}
       >
         <div>
           <p className="login__input-title">E-mail</p>
