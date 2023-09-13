@@ -12,6 +12,8 @@
   background-color: #2f2f2f;
   opacity: 1;
   
+  cursor: pointer;
+  
   border: none;
   border-radius: 6px;
   padding: 10px 0;

@@ -19,6 +19,7 @@ import './App.css';
 function App() {
   const currentUser = {name: 'Виталий', email: 'oi@oi.ru'};
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   
   const handleSignUp = () => {
     console.log('handled');
@@ -34,6 +35,7 @@ function App() {
   
   useEffect(() => {
     setIsLoggedIn(true);
+    setIsLoading(false);
   }, []);
   
   return (
@@ -51,8 +53,8 @@ function App() {
             </Auth>
           }/>
           <Route path="/" element={<Main/>}/>
-          <Route path="/movies" element={<Movies/>}/>
-          <Route path="/saved-movies" element={<SavedMovies/>}/>
+          <Route path="/movies" element={<Movies isLoading={isLoading}/>}/>
+          <Route path="/saved-movies" element={<SavedMovies isLoading={isLoading}/>}/>
           <Route path="/profile" element={<Profile onEdit={handleEditProfile}/>}/>
           <Route path="*" element={<NotFound/>}/>
         </Routes>

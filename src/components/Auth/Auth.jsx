@@ -14,7 +14,9 @@ const Auth = ({message, ...props}) => {
     <main>
       <section className="auth">
         <div>
-          <img className="auth__logo" src={logo} alt=""/>
+          <Link to="/">
+            <img className="auth__logo" src={logo} alt="Логотип."/>
+          </Link>
           <p className="auth__message">{message}</p>
         </div>
         {props.children}

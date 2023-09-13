@@ -1,6 +1,5 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-
-import {initialMovies} from '../../utils/initialMovies';
 
 import MoviesCard from '../MoviesCard/MoviesCard';
 import MoviesPaginator from '../MoviesPaginator/MoviesPaginator';
@@ -8,12 +7,12 @@ import MoviesPaginator from '../MoviesPaginator/MoviesPaginator';
 import './MoviesCardList.css';
 
 
-const MoviesCardList = () => {
+const MoviesCardList = ({movies}) => {
   return (
-    <section className="movies">
-      <ul className="movies__list">
+    <section className="movies-card-list__container">
+      <ul className="movies-card-list__list">
         {
-          initialMovies.map((movie, index) => {
+          movies.map((movie, index) => {
             return (
               <MoviesCard
                 key={index}
@@ -28,6 +27,10 @@ const MoviesCardList = () => {
       <MoviesPaginator/>
     </section>
   );
+};
+
+MoviesCardList.propTypes = {
+  movies: PropTypes.array
 };
 
 export default MoviesCardList;

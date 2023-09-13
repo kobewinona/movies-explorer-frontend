@@ -86,3 +86,34 @@
 .movies-card__button_active {
   background-color: #ee3465;
 }
+
+.movies-card__check-icon {
+  width: 10px;
+  height: 7px;
+  
+  background-image: url('../../images/check-icon.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  
+  margin: 0 auto;
+}
+
+.movies-card__uncheck-icon {
+  width: 10px;
+  height: 7px;
+  
+  background-image: url('../../images/uncheck-icon.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 1;
+  
+  margin: 0 auto;
+  
+  transition: opacity .4s ease-out;
+}
+
+.movies-card__uncheck-icon:hover {
+  opacity: .5;
+  
+  transition: opacity .2s ease-in;
+}
