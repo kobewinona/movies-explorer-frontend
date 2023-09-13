@@ -1,7 +1,7 @@
 import {useState} from 'react';
 
 
-function useInputValidation(onUpdate) {
+export default function useInputValidation(onUpdate) {
   const [inputValue, setInputValue] = useState('');
   const [isInputValid, setIsInputValid] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
@@ -21,5 +21,3 @@ function useInputValidation(onUpdate) {
     handleInputChange,
   };
 }
-
-export default useInputValidation;

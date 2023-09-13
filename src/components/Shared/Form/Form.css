@@ -30,3 +30,13 @@
   
   transition: opacity .2s ease-in-out;
 }
+
+.form__submit_disabled {
+  cursor: default;
+  
+  background-color: #8397a0;
+}
+
+.form__submit_disabled:hover {
+  opacity: 1;
+}

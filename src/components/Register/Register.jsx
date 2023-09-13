@@ -23,7 +23,6 @@ const Register = ({onSignUp}) => {
   return (
     <>
       <Form
-        validate={true}
         onSubmit={handleSubmit}
         name="sign-up"
         submitText="Зарегистрироваться"
