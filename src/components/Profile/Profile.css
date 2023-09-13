@@ -24,7 +24,24 @@
   line-height: normal;
   list-style: none;
   
+  margin: 0;
   padding: 0;
+}
+
+.profile__data-title {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: normal;
+  
+  margin: 0;
+}
+
+.profile__data-content {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: normal;
+  
+  margin: 0;
 }
 
 .profile__data-cell {
@@ -41,6 +58,8 @@
 }
 
 .profile__control {
+  line-height: 0;
+  
   list-style: none;
   
   display: flex;
@@ -110,12 +129,24 @@
 }
 
 @media (min-width: 768px) {
+  .profile {
+    max-width: 410px;
+  }
+  
   .profile__greeting {
-    margin-top: 236px;
+    margin: 236px 0 96px;
   }
   
   .profile__control {
     margin-bottom: 269px;
+  }
+  
+  .profile__button {
+    font-size: 13px;
+  }
+  
+  .profile__link {
+    font-size: 13px;
   }
 }
 

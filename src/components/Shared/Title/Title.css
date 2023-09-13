@@ -6,7 +6,7 @@
   line-height: normal;
   letter-spacing: -0.72px;
   
-  margin-bottom: 60px;
+  margin: 0 0 40px 0;
   border-bottom: #dadada solid 1px;
   padding-bottom: 28px;
 }
@@ -14,5 +14,15 @@
 @media (min-width: 768px) {
   .title {
     letter-spacing: -0.88px;
+    
+    padding-bottom: 23px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .title {
+    letter-spacing: -0.88px;
+    
+    padding-bottom: 23px;
   }
 }

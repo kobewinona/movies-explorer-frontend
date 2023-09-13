@@ -24,14 +24,14 @@
   animation: disappear .2s forwards ease-in;
 }
 
-.burger-menu {
+.burger-menu__base {
   width: 100%;
   height: 100vh;
   overflow: hidden;
   
   visibility: hidden;
   background-color: #000;
-  opacity: 0;
+  opacity: .3;
   
   position: fixed;
   top: 0;
@@ -40,11 +40,14 @@
   transition: opacity .2s ease-out;
 }
 
-.burger-menu_open {
+.burger-menu__base_hidden {
+  visibility: hidden;
+}
+
+.burger-menu__base_visible {
   visibility: visible;
-  opacity: .3;
   
-  transition: opacity .2s ease-in;
+  transition: all .2s ease-in;
 }
 
 .burger-menu__container {
@@ -112,6 +115,16 @@
   border-bottom: 2px solid rgba(255, 255, 255, 1);
   
   transition: border-bottom-color .2s ease-in;
+}
+
+@media (min-width: 768px) {
+  .burger-menu__navigation {
+    margin: 159px auto 92px;
+  }
+  
+  .burger-menu__navigation-container {
+    row-gap: 28px;
+  }
 }
 
 @media (min-width: 1280px) {

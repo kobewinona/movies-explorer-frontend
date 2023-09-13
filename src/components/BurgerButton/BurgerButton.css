@@ -27,6 +27,8 @@
   display: block;
   
   z-index: 900;
+  
+  margin: 0 10px;
 
   transition: opacity .4s ease-out;
 }
@@ -97,6 +99,24 @@
   transform: translate(0, 0) rotate(90deg);
   transition: transform .2s cubic-bezier(.55, .06, .68, .19);
   transition-delay: 0s;
+}
+
+@media (min-width: 768px) {
+  .burger-button {
+    width: 28px;
+  }
+  
+  .burger-button__icon {
+    width: 28px;
+  }
+  
+  .burger-button__icon:before {
+    width: 28px;
+  }
+  
+  .burger-button__icon:after {
+    width: 28px;
+  }
 }
 
 @media (min-width: 1280px) {

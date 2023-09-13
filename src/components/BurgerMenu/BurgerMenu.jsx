@@ -27,10 +27,10 @@ const BurgerMenu = ({isBurgerMenuOpen, onClose}) => {
   }, []);
   
   return (
-    <>
+    <div className="burger-menu">
       <div
-        className={`burger-menu
-        ${isBurgerMenuOpen && 'burger-menu_open'}`}
+        className={`burger-menu__base
+        ${isBurgerMenuOpen ? 'burger-menu__base_visible' : 'burger-menu__base_hidden'}`}
         onClick={onClose}
       ></div>
       <div
@@ -59,7 +59,7 @@ const BurgerMenu = ({isBurgerMenuOpen, onClose}) => {
           <ProfileLink/>
         </nav>
       </div>
-    </>
+    </div>
   );
 };
 

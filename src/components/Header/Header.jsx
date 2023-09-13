@@ -31,7 +31,7 @@ const Header = ({isHidden}) => {
     <header className={`header ${isMainPage && 'header_place_main'} ${isHidden && 'header_hidden'}`}>
       <BurgerMenu isBurgerMenuOpen={isBurgerMenuOpen} onClose={handleBurgerMenuToggle}/>
       <div className="header__container">
-        <Link to="/"><img src={logo} alt="Логотип."/></Link>
+        <Link className="header__logo-link" to="/"><img src={logo} alt="Логотип."/></Link>
         {
           isLoggedIn
           ?

@@ -12,6 +12,9 @@
   width: 100%;
   
   color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
   
   cursor: pointer;
   
@@ -39,4 +42,12 @@
 
 .form__submit_disabled:hover {
   opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .form__submit {
+    max-height: 45px;
+    
+    font-size: 14px;
+  }
 }

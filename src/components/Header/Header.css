@@ -30,6 +30,10 @@
   margin: 0 auto;
 }
 
+.header__logo-link {
+  line-height: 0;
+}
+
 .header__login-menu {
   list-style: none;
   
@@ -38,6 +42,7 @@
   column-gap: 14px;
   align-items: center;
   
+  margin: 0;
   padding: 0;
 }
 
@@ -75,7 +80,7 @@
   opacity: 1;
   
   border-radius: 3px;
-  padding: 5px 12px;
+  padding: 7px 12px;
   
   transition: opacity .4s ease-out;
 }
@@ -90,6 +95,10 @@
   .header__container {
     width: calc(100% - (30px * 2));
     max-width: 1140px;
+  }
+  
+  .header__login-menu {
+    column-gap: 30px;
   }
   
   .header__register-link {

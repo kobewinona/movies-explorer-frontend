@@ -3,7 +3,7 @@
   max-width: 668px;
   
   margin: 0 auto;
-  padding-top: 70px;
+  padding: 70px 0;
 }
 
 .about-me__container {
@@ -36,7 +36,7 @@
 .about-me__bio-name {
   font-size: clamp(30px, 5vw, 40px);
   font-weight: 400;
-  line-height: normal;
+  line-height: clamp(1, 5vw, 40px);
   letter-spacing: -1.2px;
   
   margin: 40px auto 20px;
@@ -80,10 +80,14 @@
   .about-me {
     width: calc(100% - (50px * 2));
     max-width: 1140px;
+    
+    padding: 90px 0;
   }
   
   .about-me__container {
     flex-direction: row;
+    
+    margin-top: 66px;
   }
   
   .about-me__photo {
@@ -101,20 +105,23 @@
   }
   
   .about-me__bio-name {
-    margin-top: 0;
-    margin-bottom: 16px;
+    font-size: clamp(40px, 5vw, 50px);
+    line-height: clamp(40px, 5vw, 58px);
+    letter-spacing: -1.2px;
+    
+    margin: 0 auto 16px;
   }
   
   .about-me__bio-details {
-    font-size: 12px;
-    line-height: 18px;
+    font-size: clamp(12px, 1.5vw, 18px);
+    line-height: clamp(18px, 2vw, 20px);
     
     margin: 16px auto 20px;
   }
   
   .about-me__bio-text {
-    font-size: 12px;
-    line-height: 18px;
+    font-size: clamp(12px, 1.5vw, 14px);
+    line-height: clamp(18px, 2vw, 22px);
     
     margin-bottom: 0;
   }
@@ -123,6 +130,8 @@
 @media (min-width: 1280px) {
   .about-me {
     width: calc(100% - (70px * 2));
+    
+    padding: 110px 0 125px;
   }
   
   .about-me__container {
@@ -130,13 +139,17 @@
   }
   
   .about-me__bio-name {
+    letter-spacing: -2px;
+    
     margin-top: 0;
     margin-bottom: 18px;
   }
   
   .about-me__bio-details {
-    font-size: 16px;
-    
     margin: 16px auto 26px;
+  }
+  
+  .about-me__photo {
+    min-height: 327px;
   }
 }

@@ -24,7 +24,7 @@ const MoviesCardList = ({movies}) => {
           })
         }
       </ul>
-      <MoviesPaginator/>
+      <MoviesPaginator moviesCount={movies.length}/>
     </section>
   );
 };
