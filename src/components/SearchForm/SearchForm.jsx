@@ -11,8 +11,8 @@ import './SearchForm.css';
 const SearchForm = () => {
   const {inputValue, handleInputChange} = useInput();
   
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = () => {
+    console.log('handled');
   };
   
   return (
@@ -21,8 +21,7 @@ const SearchForm = () => {
         <Form
           validate={true}
           onSubmit={handleSubmit}
-          name="sign-up"
-          submitText="Зарегистрироваться"
+          name="searchQuery"
           isUpdating={false}
           showDefaultSubmitButton={false}
         >

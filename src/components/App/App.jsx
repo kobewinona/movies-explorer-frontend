@@ -17,7 +17,7 @@ import './App.css';
 
 
 function App() {
-  const currentUser = {name: 'Дима', email: 'oi@oi.ru'};
+  const currentUser = {name: 'Виталий', email: 'oi@oi.ru'};
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   const handleSignUp = () => {

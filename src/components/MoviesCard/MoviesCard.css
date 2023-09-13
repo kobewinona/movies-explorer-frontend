@@ -1,9 +1,26 @@
+@keyframes jump-up {
+  from {
+    transform: translate(0, -5px);
+  }
+  30% {
+    transform: translate(0, 1px);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+.jump-up {
+  animation: jump-up .1s forwards ease-in-out;
+}
+
 .movies-card {
-  min-width: 300px;
-  
   background-color: #222;
   
+  flex: 1;
+  
   border-radius: 6px;
+  box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.08);
 }
 
 .movies-card__details {
@@ -49,9 +66,23 @@
   line-height: 11px;
   background-color: #313131;
   
+  cursor: pointer;
+  
   display: block;
   
   margin: 14px auto;
   border: none;
   border-radius: 30px;
+  
+  transition: background-color .4s ease-out;
+}
+
+.movies-card__button:hover {
+  background-color: #ee3465;
+  
+  transition: background-color .2s ease-in;
+}
+
+.movies-card__button_active {
+  background-color: #ee3465;
 }

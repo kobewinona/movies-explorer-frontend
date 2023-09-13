@@ -13,10 +13,10 @@ const MoviesCardList = () => {
     <section className="movies">
       <ul className="movies__list">
         {
-          initialMovies.map(movie => {
+          initialMovies.map((movie, index) => {
             return (
               <MoviesCard
-                key={movie.movieId}
+                key={index}
                 nameRU={movie.nameRU}
                 duration={movie.duration}
                 image={movie.image}

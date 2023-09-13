@@ -10,23 +10,27 @@
   list-style: none;
   
   display: grid;
-  grid-template-columns: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(300px, auto));
+  column-gap: 24px;
+  row-gap: 16px;
+  
   padding: 0;
-  grid-column-gap: 24px;
-  grid-row-gap: 16px;
 }
 
 @media (min-width: 768px) {
-  .movies__list {
+  .movies {
     width: calc(100% - (30px * 2));
     max-width: 1140px;
-    
-    grid-template-columns: auto auto;
+  }
+  
+  .movies__list {
+    grid-row-gap: 35px;
   }
 }
 
 @media (min-width: 1280px) {
   .movies__list {
-    grid-template-columns: auto auto auto;
+    grid-column-gap: 28px;
+    grid-row-gap: 32px;
   }
 }
