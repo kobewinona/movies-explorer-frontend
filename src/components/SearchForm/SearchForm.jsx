@@ -1,25 +1,18 @@
-import React, {useState} from 'react';
+import React from 'react';
+
+import useInput from '../../hooks/useInput';
 
 import Form from '../Shared/Form/Form';
-import Input from '../Shared/Input/Input';
 import FilterCheckbox from '../Shared/FilterCheckbox/FilterCheckbox';
 
 import './SearchForm.css';
 
 
 const SearchForm = () => {
-  const [inputValues, setInputValues] = useState({});
-  
-  const handleValuesUpdate = (name, value) => {
-    setInputValues(prevValues => ({
-      ...prevValues, [name]: value
-    }));
-  };
+  const {inputValue, handleInputChange} = useInput();
   
   const handleSubmit = (event) => {
     event.preventDefault();
-    
-    console.log('inputValues', inputValues);
   };
   
   return (
@@ -33,9 +26,10 @@ const SearchForm = () => {
           isUpdating={false}
           showDefaultSubmitButton={false}
         >
-          <Input
-            onUpdate={handleValuesUpdate}
-            validate={true}
+          <input
+            className="search-form__search-query-input"
+            onChange={handleInputChange}
+            value={inputValue || ''}
             name="searchQuery"
             type="text"
             aria-label="Запрос поиска."
@@ -44,7 +38,6 @@ const SearchForm = () => {
           />
           <div className="search-form__filter-container">
             <FilterCheckbox
-              onUpdate={handleValuesUpdate}
               name="shortfilms"
               type="checkbox"
               aria-label="Фильтр по короткометражным фильмам."

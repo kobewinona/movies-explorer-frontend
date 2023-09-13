@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import Form from '../Shared/Form/Form';
-import Input from '../Shared/Input/Input';
+import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErrorMessage';
 
 import './Register.css';
 
@@ -32,9 +32,8 @@ const Register = ({onSignUp}) => {
       >
         <div>
           <p className="register__input-title">Имя</p>
-          <Input
+          <InputWithErrorMessage
             onUpdate={handleValuesUpdate}
-            validate={true}
             name="userName"
             type="text"
             aria-label="Имя."
@@ -43,18 +42,16 @@ const Register = ({onSignUp}) => {
             required
           />
           <p className="register__input-title">E-mail</p>
-          <Input
+          <InputWithErrorMessage
             onUpdate={handleValuesUpdate}
-            validate={true}
             name="userEmail"
             type="email"
             aria-label="E-mail."
             required
           />
           <p className="register__input-title">Пароль</p>
-          <Input
+          <InputWithErrorMessage
             onUpdate={handleValuesUpdate}
-            validate={true}
             name="password"
             type="password"
             aria-label="Пароль."

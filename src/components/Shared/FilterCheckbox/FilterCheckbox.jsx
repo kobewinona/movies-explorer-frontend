@@ -1,16 +1,13 @@
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React from 'react';
+
+import useInput from '../../../hooks/useInput';
 
 import './FilterCheckbox.css';
 
 
-const FilterCheckbox = ({onUpdate, ...props}) => {
-  const [inputValue, setInputValue] = useState('');
-  
-  const handleInputChange = event => {
-    setInputValue(event.target.checked);
-    onUpdate(props.name, event.target.checked);
-  };
+const FilterCheckbox = ({...props}) => {
+  const {inputValue, handleInputChange} = useInput();
   
   return (
     <label className="filter-checkbox__container" htmlFor="filter-checkbox">

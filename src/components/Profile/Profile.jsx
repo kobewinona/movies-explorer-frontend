@@ -6,7 +6,7 @@ import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 
 import Header from '../Header/Header';
 import Form from '../Shared/Form/Form';
-import Input from '../Shared/Input/Input';
+import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErrorMessage';
 
 import './Profile.css';
 
@@ -44,15 +44,15 @@ const Profile = ({onEdit}) => {
               <Form
                 validate={true}
                 onSubmit={handleSubmit}
+                showDefaultSubmitButton={true}
                 name="sign-up"
                 submitText="Сохранить"
                 isUpdating={false}
               >
                 <div>
                   <p className="profile__input-title">Имя</p>
-                  <Input
+                  <InputWithErrorMessage
                     onUpdate={handleValuesUpdate}
-                    validate={true}
                     name="userName"
                     type="text"
                     aria-label="Имя."
@@ -61,9 +61,8 @@ const Profile = ({onEdit}) => {
                     required
                   />
                   <p className="register__input-title">E-mail</p>
-                  <Input
+                  <InputWithErrorMessage
                     onUpdate={handleValuesUpdate}
-                    validate={true}
                     name="userEmail"
                     type="email"
                     aria-label="E-mail."

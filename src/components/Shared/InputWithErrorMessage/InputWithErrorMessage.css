@@ -16,8 +16,8 @@
 }
 
 .input:focus {
-  outline: #ee3465 solid 1px;
-  outline-offset: 1px;
+  outline: none;
+  border-bottom: 1px solid #8b8b8b;
 }
 
 .input_invalid {
@@ -33,31 +33,4 @@
   line-height: normal;
   
   display: block;
-}
-
-.input_type_search-query {
-  width: 100%;
-  max-height: 56px;
-  box-sizing: border-box;
-  
-  color: #fff;
-  
-  background-color: transparent;
-  
-  z-index: 1;
-  border: 1.5px solid #3c3c3c;
-  border-radius: 8px;
-  
-  padding: 18.5px 12px;
-}
-
-.input_type_search-query:focus {
-  outline: none;
-}
-
-.input_type_search-query::placeholder {
-  color: #8b8b8b;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 16px;
 }
