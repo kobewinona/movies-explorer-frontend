@@ -9,7 +9,7 @@ import './Form.css';
 const Form = ({onSubmit, showDefaultSubmitButton, ...props}) => {
   const {
     isFormValid,
-    handleChange,
+    handleChange
   } = useFormWithValidation();
   
   const handleSubmit = event => {

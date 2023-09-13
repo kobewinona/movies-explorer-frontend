@@ -18,6 +18,6 @@ export default function useInputValidation(onUpdate) {
     inputValue,
     isInputValid,
     errorMessage,
-    handleInputChange,
+    handleInputChange
   };
 }

@@ -5,13 +5,13 @@ import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 
 import Auth from '../Auth/Auth';
-import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
-import SavedMovies from '../SavedMovies/SavedMovies';
-import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
+import Profile from '../Profile/Profile';
+import Register from '../Register/Register';
+import SavedMovies from '../SavedMovies/SavedMovies';
 
 import './App.css';
 
@@ -34,7 +34,7 @@ function App() {
   };
   
   useEffect(() => {
-    setIsLoggedIn(false);
+    setIsLoggedIn(true);
     setIsLoading(false);
   }, []);
   

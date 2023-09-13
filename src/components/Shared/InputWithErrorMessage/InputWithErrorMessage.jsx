@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import './InputWithErrorMessage.css';
 import useInputWithValidation from '../../../hooks/useInputWithValidation';
+
+import './InputWithErrorMessage.css';
 
 
 const InputWithErrorMessage = ({onUpdate, ...props}) => {

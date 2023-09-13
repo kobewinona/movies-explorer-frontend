@@ -2,8 +2,8 @@ import React from 'react';
 
 import useInput from '../../hooks/useInput';
 
-import Form from '../Shared/Form/Form';
 import FilterCheckbox from '../Shared/FilterCheckbox/FilterCheckbox';
+import Form from '../Shared/Form/Form';
 
 import './SearchForm.css';
 

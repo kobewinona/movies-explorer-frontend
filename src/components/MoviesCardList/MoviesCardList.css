@@ -11,8 +11,8 @@
   
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, auto));
-  column-gap: 24px;
   row-gap: 16px;
+  column-gap: 24px;
   
   margin: 0;
   padding: 0 0 80px 0;
@@ -22,7 +22,7 @@
   .movies-card-list__container {
     width: calc(100% - (30px * 2));
     max-width: 1140px;
-  
+    
     padding-top: 70px;
     padding-bottom: 10px;
   }
@@ -34,7 +34,9 @@
 
 @media (min-width: 1280px) {
   .movies-card-list__list {
-    grid-column-gap: 28px;
     grid-row-gap: 32px;
+    grid-column-gap: 28px;
+    
+    padding-bottom: 60px;
   }
 }

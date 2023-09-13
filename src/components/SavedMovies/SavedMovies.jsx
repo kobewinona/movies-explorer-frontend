@@ -2,14 +2,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {savedMovies} from '../../utils/savedMovies';
-
-import Header from '../Header/Header';
-import SearchForm from '../SearchForm/SearchForm';
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-import './SavedMovies.css';
+import Header from '../Header/Header';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Shared/Preloader/Preloader';
+
+import './SavedMovies.css';
 
 
 const SavedMovies = ({isLoading}) => {
@@ -31,6 +31,6 @@ const SavedMovies = ({isLoading}) => {
 
 SavedMovies.propTypes = {
   isLoading: PropTypes.bool
-}
+};
 
 export default SavedMovies;

@@ -3,14 +3,13 @@ import React from 'react';
 
 import {initialMovies} from '../../utils/initialMovies';
 
-import Header from '../Header/Header';
-import SearchForm from '../SearchForm/SearchForm';
-// import Preloader from '../Shared/Preloader/Preloader';
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import SearchForm from '../SearchForm/SearchForm';
+import Preloader from '../Shared/Preloader/Preloader';
 
 import './Movies.css';
-import Preloader from '../Shared/Preloader/Preloader';
 
 
 const Movies = ({isLoading}) => {
@@ -32,6 +31,6 @@ const Movies = ({isLoading}) => {
 
 Movies.propTypes = {
   isLoading: PropTypes.bool
-}
+};
 
 export default Movies;

@@ -67,9 +67,9 @@
   font-size: 12px;
   font-weight: 400;
   line-height: 11px;
-  background-color: #313131;
-  
   cursor: pointer;
+  
+  background-color: #313131;
   
   display: block;
   
@@ -130,5 +130,15 @@
   
   .movies-card__button {
     margin: 18px auto;
+  }
+}
+
+@media (min-width: 1280px) {
+  .movies-card {
+    max-width: 360px;
+  }
+  
+  .movies-card__image {
+    max-height: 200px;
   }
 }

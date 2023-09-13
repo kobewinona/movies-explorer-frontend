@@ -9,7 +9,7 @@ const MoviesPaginator = ({moviesCount}) => {
     <div className="movies-paginator">
       {
         moviesCount > 3
-          && <button className="movies-paginator__button">Ещё</button>
+        && <button className="movies-paginator__button">Ещё</button>
       }
     </div>
   );
@@ -17,6 +17,6 @@ const MoviesPaginator = ({moviesCount}) => {
 
 MoviesPaginator.propTypes = {
   moviesCount: PropTypes.number
-}
+};
 
 export default MoviesPaginator;

@@ -4,10 +4,10 @@ import {Link, useLocation} from 'react-router-dom';
 
 import {AuthContext} from '../../contexts/AuthContext';
 import logo from '../../images/logo.svg';
+import BurgerButton from '../BurgerButton/BurgerButton';
 
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import NavTab from '../NavTab/NavTab';
-import BurgerButton from '../BurgerButton/BurgerButton';
 
 import './Header.css';
 
@@ -34,12 +34,12 @@ const Header = ({isHidden}) => {
         <Link className="header__logo-link" to="/"><img src={logo} alt="Логотип."/></Link>
         {
           isLoggedIn
-          ?
+            ?
             <>
               <BurgerButton onToggle={handleBurgerMenuToggle} isBurgerMenuOpen={isBurgerMenuOpen}/>
               <NavTab/>
             </>
-          :
+            :
             <ul className="header__login-menu">
               <li><Link className="header__register-link" to="/signup">Регистрация</Link></li>
               <li><Link className="header__login-link" to="/signin">Войти</Link></li>

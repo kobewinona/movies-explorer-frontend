@@ -1,9 +1,9 @@
 import React from 'react';
 
-import * as content from '../../utils/content';
 import studentPhoto from '../../images/student-photo.jpeg';
-import Title from '../Shared/Title/Title';
+import * as content from '../../utils/content';
 import Portfolio from '../Portfolio/Portfolio';
+import Title from '../Shared/Title/Title';
 
 import './AboutMe.css';
 

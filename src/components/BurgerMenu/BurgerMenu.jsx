@@ -23,7 +23,7 @@ const BurgerMenu = ({isBurgerMenuOpen, onClose}) => {
       setBurgerMenuVisible(true);
     }, 200);
     
-    return () =>  clearTimeout(timer);
+    return () => clearTimeout(timer);
   }, []);
   
   return (

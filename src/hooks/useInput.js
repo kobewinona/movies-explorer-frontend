@@ -7,15 +7,14 @@ function useInputValidation() {
   const handleInputChange = event => {
     if (event.target.type === 'checkbox') {
       setInputValue(event.target.checked);
-    }
-    else {
+    } else {
       setInputValue(event.target.value);
     }
   };
   
   return {
     inputValue,
-    handleInputChange,
+    handleInputChange
   };
 }
 

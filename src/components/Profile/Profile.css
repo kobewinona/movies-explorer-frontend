@@ -152,7 +152,7 @@
 
 @media (min-width: 1280px) {
   .profile__greeting {
-    margin-top: 74px;
+    margin: 74px 0 123px;
   }
   
   .profile__control {

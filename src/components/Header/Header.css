@@ -70,8 +70,8 @@
   color: #000;
   font-size: 10px;
   font-weight: 500;
-  text-align: center;
   line-height: 16px;
+  text-align: center;
   text-decoration: none;
   
   cursor: pointer;
@@ -107,7 +107,7 @@
   
   .header__login-link {
     font-size: 12px;
-  
+    
     padding: 8px 20px;
   }
 }

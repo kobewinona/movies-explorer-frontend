@@ -29,7 +29,9 @@ const MoviesCard = ({nameRU, duration, image}) => {
             <div className="movies-card__uncheck-icon"></div>
           </button>
           :
-          <button className={`movies-card__button ${isLiked && 'movies-card__button_active'}`} onClick={handleToggleLike}>
+          <button
+            className={`movies-card__button ${isLiked && 'movies-card__button_active'}`}
+            onClick={handleToggleLike}>
             {
               isLiked
                 ? <div className="movies-card__check-icon jump-up"></div>
@@ -37,7 +39,7 @@ const MoviesCard = ({nameRU, duration, image}) => {
             }
           </button>
       }
-      
+    
     </li>
   );
 };

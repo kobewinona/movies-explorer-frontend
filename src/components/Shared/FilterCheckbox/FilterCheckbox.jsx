@@ -25,7 +25,7 @@ const FilterCheckbox = ({...props}) => {
 
 FilterCheckbox.propTypes = {
   onUpdate: PropTypes.func,
-  name: PropTypes.string,
-}
+  name: PropTypes.string
+};
 
 export default FilterCheckbox;
