@@ -1,7 +1,7 @@
 import React from 'react';
 
 import studentPhoto from '../../images/student-photo.jpeg';
-import * as content from '../../utils/content';
+import * as content from '../../utils/studentInfo';
 import Portfolio from '../Portfolio/Portfolio';
 import Title from '../Shared/Title/Title';
 

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import * as content from '../../utils/content';
 import AboutMe from '../AboutMe/AboutMe';
 import AboutProject from '../AboutProject/AboutProject';
 import Footer from '../Footer/Footer';
@@ -12,7 +11,6 @@ import Techs from '../Techs/Techs';
 
 
 const Main = () => {
-  console.log('content', content);
   return (
     <>
       <Header/>
