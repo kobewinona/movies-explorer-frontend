@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import MoviesCard from '../MoviesCard/MoviesCard';
-import MoviesPaginator from '../MoviesPaginator/MoviesPaginator';
 
 import './MoviesCardList.css';
 
@@ -24,7 +23,12 @@ const MoviesCardList = ({movies}) => {
           })
         }
       </ul>
-      <MoviesPaginator moviesCount={movies.length}/>
+      <div className="movies-card-list__more-button-container">
+        {
+          movies.length > 3
+          && <button className="movies-card-list__more-button">Ещё</button>
+        }
+      </div>
     </section>
   );
 };

@@ -104,18 +104,22 @@
 @media (min-width: 768px) {
   .burger-button {
     width: 28px;
+    height: 23px;
   }
   
   .burger-button__icon {
     width: 28px;
+    height: 3px;
   }
   
   .burger-button__icon:before {
     width: 28px;
+    height: 3px;
   }
   
   .burger-button__icon:after {
     width: 28px;
+    height: 3px;
   }
 }
 

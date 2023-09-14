@@ -21,7 +21,7 @@ const MoviesCard = ({nameRU, duration, image}) => {
         <h3 className="movies-card__title">{nameRU}</h3>
         <p className="movies-card__duration">{`${durationHours}ч ${durationMinutes}м`}</p>
       </div>
-      <img className="movies-card__image" src={image} alt=""/>
+      <img className="movies-card__image" src={image} alt="Постер к фильму."/>
       {
         pathname === '/saved-movies'
           ?

@@ -41,22 +41,28 @@ const BurgerMenu = ({isBurgerMenuOpen, onClose}) => {
         <nav className="burger-menu__navigation">
           <ul className="burger-menu__navigation-container">
             <li>
-              <Link className="burger-menu__link" to="/"
+              <Link
+                className="burger-menu__link" to="/"
+                onClick={onClose}
               >Главная
               </Link>
             </li>
             <li>
-              <Link className="burger-menu__link" to="/movies"
+              <Link
+                className="burger-menu__link" to="/movies"
+                onClick={onClose}
               >Фильмы
               </Link>
             </li>
             <li>
-              <Link className="burger-menu__link" to="/saved-movies"
+              <Link
+                className="burger-menu__link" to="/saved-movies"
+                onClick={onClose}
               >Сохранённые фильмы
               </Link>
             </li>
           </ul>
-          <ProfileLink/>
+          <ProfileLink onClose={onClose}/>
         </nav>
       </div>
     </div>

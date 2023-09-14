@@ -7,7 +7,7 @@ import './AboutProject.css';
 
 const AboutProject = () => {
   return (
-    <section id="about-project" className="about-project">
+    <article id="about-project" className="about-project">
       <Title text="О проекте"/>
       <ul className="about-project__thesis-list">
         <li className="about-project__thesis-item">
@@ -29,7 +29,7 @@ const AboutProject = () => {
         <li className="about-project__caption">Back-end</li>
         <li className="about-project__caption">Front-end</li>
       </ul>
-    </section>
+    </article>
   );
 };
 

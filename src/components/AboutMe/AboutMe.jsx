@@ -10,7 +10,7 @@ import './AboutMe.css';
 
 const AboutMe = () => {
   return (
-    <section className="about-me">
+    <article className="about-me">
       <Title text="Студент"/>
       <div className="about-me__container">
         <img className="about-me__photo" src={studentPhoto} alt="Фотография студента."/>
@@ -30,7 +30,7 @@ const AboutMe = () => {
         </div>
       </div>
       <Portfolio/>
-    </section>
+    </article>
   );
 };
 
