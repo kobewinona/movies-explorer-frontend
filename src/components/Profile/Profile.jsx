@@ -91,14 +91,26 @@ const Profile = ({onEdit}) => {
               isEditModeOn
                 ?
                 <li>
-                  <button className="profile__button" onClick={handleModeSwitch}>Отменить</button>
+                  <button
+                    className="profile__button"
+                    onClick={handleModeSwitch}
+                  >Отменить
+                  </button>
                 </li>
                 :
                 <li>
-                  <button className="profile__button" onClick={handleModeSwitch}>Редактировать</button>
+                  <button
+                    className="profile__button profile__button_style_normal"
+                    onClick={handleModeSwitch}
+                  >Редактировать
+                  </button>
                 </li>
             }
-            <li><Link className="profile__link" to="/signin">Выйти из аккаунта</Link></li>
+            <li>
+              <Link className="profile__link" to="/signin">
+                <button className="profile__button profile__button_style_bright">Выйти из аккаунта</button>
+              </Link>
+            </li>
           </ul>
         </section>
       </main>

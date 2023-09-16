@@ -6,3 +6,15 @@
   
   margin: 0 0 5px 0;
 }
+
+@media (min-width: 768px) {
+  .register {
+    grid-template-rows: max-content auto 265px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .register {
+    grid-template-rows: max-content auto 103px;
+  }
+}

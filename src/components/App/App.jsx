@@ -4,7 +4,6 @@ import {Route, Routes} from 'react-router-dom';
 import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 
-import Auth from '../Auth/Auth';
 import Login from '../Login/Login';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -42,16 +41,8 @@ function App() {
     <AuthContext.Provider value={isLoggedIn}>
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
-          <Route path="/signup" element={
-            <Auth message="Добро пожаловать!">
-              <Register onSignUp={handleSignUp}/>
-            </Auth>
-          }/>
-          <Route path="/signin" element={
-            <Auth message="Рады видеть!">
-              <Login onSignIn={handleSignIn}/>
-            </Auth>
-          }/>
+          <Route path="/signup" element={<Register onSignUp={handleSignUp}/>}/>
+          <Route path="/signin" element={<Login onSignIn={handleSignIn}/>}/>
           <Route path="/" element={<Main/>}/>
           <Route path="/movies" element={<Movies isLoading={isLoading}/>}/>
           <Route path="/saved-movies" element={<SavedMovies isLoading={isLoading}/>}/>

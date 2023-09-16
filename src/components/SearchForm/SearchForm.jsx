@@ -40,6 +40,7 @@ const SearchForm = () => {
               name="shortfilms"
               type="checkbox"
               aria-label="Фильтр по короткометражным фильмам."
+              placeholder="Фильтр по короткометражным фильмам"
               required
             />
             <p className="search-form__filter-name">Короткометражки</p>

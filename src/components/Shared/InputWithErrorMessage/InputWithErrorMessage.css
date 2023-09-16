@@ -1,4 +1,4 @@
-.input {
+.input-with-error-message__input {
   width: 100%;
   box-sizing: border-box;
   
@@ -13,18 +13,26 @@
   border: none;
   border-bottom: 1px solid #424242;
   padding: 0 0 8px 0;
+  
+  transition: all .2s ease-out;
 }
 
-.input:focus {
+.input-with-error-message__input:focus {
   outline: none;
   border-bottom: 1px solid #8b8b8b;
+  
+  transition: all .1s ease-in;
 }
 
-.input_invalid {
+.input-with-error-message__input::placeholder {
+  color: transparent;
+}
+
+.input-with-error-message__input_invalid {
   color: #ee3465;
 }
 
-.input__error-message {
+.input-with-error-message__error-message {
   height: 24px;
   
   color: #ee3465;

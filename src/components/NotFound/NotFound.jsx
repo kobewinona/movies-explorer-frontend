@@ -12,7 +12,7 @@ const NotFound = () => {
           <p className="not-found__status">404</p>
           <p className="not-found__description">Страница не найдена</p>
         </div>
-        <Link className="not-fount__link" to="/">Назад</Link>
+        <Link className="not-found__link" to="/">Назад</Link>
       </section>
     </main>
   );

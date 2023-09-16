@@ -8,8 +8,8 @@ import './MoviesCardList.css';
 
 const MoviesCardList = ({movies}) => {
   return (
-    <section className="movies-card-list__container">
-      <ul className="movies-card-list__list">
+    <section className="movies-card-list">
+      <ul className="movies-card-list__container">
         {
           movies.map((movie, index) => {
             return (

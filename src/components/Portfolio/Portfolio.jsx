@@ -5,7 +5,7 @@ import './Portfolio.css';
 
 const Portfolio = () => {
   return (
-    <>
+    <div className="portfolio">
       <h3 className="portfolio__title">Портфолио</h3>
       <ul className="portfolio__list">
         <li className="portfolio__item">
@@ -16,7 +16,6 @@ const Portfolio = () => {
             rel="noreferrer"
           >Статичный сайт
           </a>
-          <div className="portfolio__item-arrow"></div>
         </li>
         <li className="portfolio__item">
           <a
@@ -24,9 +23,9 @@ const Portfolio = () => {
             href="https://github.com/kobewinona/russian-travel"
             target="_blank"
             rel="noreferrer"
+            aria-label="Адаптивный сайт."
           >Адаптивный сайт
           </a>
-          <div className="portfolio__item-arrow"></div>
         </li>
         <li className="portfolio__item">
           <a
@@ -36,10 +35,9 @@ const Portfolio = () => {
             rel="noreferrer"
           >Одностраничное приложение
           </a>
-          <div className="portfolio__item-arrow"></div>
         </li>
       </ul>
-    </>
+    </div>
   );
 };
 

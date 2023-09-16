@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react';
 import './BurgerButton.css';
 
 
+// eslint-disable-next-line no-unused-vars
 const BurgerButton = ({onToggle, isBurgerMenuOpen}) => {
   const [isBurgerButtonVisible, setIsBurgerButtonVisible] = useState(false);
   
@@ -16,16 +17,18 @@ const BurgerButton = ({onToggle, isBurgerMenuOpen}) => {
   }, []);
   
   return (
-    <div
-      className={`burger-button
+  <button
+    className={`burger-button
       ${isBurgerButtonVisible && 'burger-button_visible'}`}
-      onClick={onToggle}
-    >
-      <div
-        className={`burger-button__icon
+    role="button"
+    tabIndex={0}
+    onClick={onToggle}
+  >
+    <div
+      className={`burger-button__icon
         ${isBurgerMenuOpen && 'burger-button__icon_turned-into-cross'}`}
-      ></div>
-    </div>
+    ></div>
+  </button>
   );
 };
 

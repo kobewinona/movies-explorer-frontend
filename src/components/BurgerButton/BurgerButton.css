@@ -23,12 +23,16 @@
   cursor: pointer;
   
   visibility: hidden;
+  background-color: transparent;
   
   display: block;
   
-  z-index: 900;
+  position: relative;
+  z-index: 20;
   
   margin: 0 10px;
+  border: none;
+  padding: 0;
   
   transition: opacity .4s ease-out;
 }
@@ -49,7 +53,9 @@
   
   background-color: #fff;
   
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   
   animation: turnIntoBurger .2s forwards cubic-bezier(.55, .06, .68, .19);
   transform: translate(0, 9px);
@@ -64,6 +70,8 @@
   background-color: #fff;
   
   position: absolute;
+  top: 0;
+  left: 0;
   
   transform: translate(0, -9px);
   transition: transform .2s cubic-bezier(.55, .06, .68, .19);
@@ -79,6 +87,8 @@
   background-color: #fff;
   
   position: absolute;
+  top: 0;
+  left: 0;
   
   transform: translate(0, 9px);
   transition: transform .2s cubic-bezier(.55, .06, .68, .19);
@@ -101,29 +111,7 @@
   transition-delay: 0s;
 }
 
-@media (min-width: 768px) {
-  .burger-button {
-    width: 28px;
-    height: 23px;
-  }
-  
-  .burger-button__icon {
-    width: 28px;
-    height: 3px;
-  }
-  
-  .burger-button__icon:before {
-    width: 28px;
-    height: 3px;
-  }
-  
-  .burger-button__icon:after {
-    width: 28px;
-    height: 3px;
-  }
-}
-
-@media (min-width: 1280px) {
+@media (min-width: 769px) {
   .burger-button {
     display: none;
   }

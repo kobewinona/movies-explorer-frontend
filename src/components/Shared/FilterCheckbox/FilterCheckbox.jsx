@@ -10,7 +10,7 @@ const FilterCheckbox = ({...props}) => {
   const {inputValue, handleInputChange} = useInput();
   
   return (
-    <label className="filter-checkbox__container" htmlFor="filter-checkbox">
+    <label className="filter-checkbox" htmlFor="filter-checkbox">
       <input
         id="filter-checkbox"
         className="filter-checkbox__original-checkbox"

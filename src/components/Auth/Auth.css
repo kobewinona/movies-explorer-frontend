@@ -25,6 +25,10 @@
   margin-bottom: 80px;
 }
 
+.auth__form-container {
+  min-height: 468px;
+}
+
 .auth__message_visible {
   visibility: visible;
 }
@@ -62,7 +66,7 @@
 
 @media (min-width: 768px) {
   .auth {
-    grid-template-rows: max-content 100% 265px;
+    grid-template-rows: max-content auto 265px;
   }
   
   .auth__logo {
@@ -73,6 +77,10 @@
     text-align: left;
     
     margin-bottom: 40px;
+  }
+  
+  .auth__form-container {
+    min-height: 380px;
   }
   
   .auth__link-message {

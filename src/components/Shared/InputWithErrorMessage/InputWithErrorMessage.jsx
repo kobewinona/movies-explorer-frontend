@@ -15,17 +15,19 @@ const InputWithErrorMessage = ({onUpdate, ...props}) => {
   } = useInputWithValidation(onUpdate);
   
   return (
-    <>
+    <div className="input-with-error-message">
       <input
-        className={`input
-        ${props.name === 'searchQuery' && 'input_type_search-query'}
-        ${!isInputValid && 'input_invalid'}`}
+        className={`input-with-error-message__input
+        ${!isInputValid && 'input-with-error-message_invalid'}`}
         onChange={handleInputChange}
         value={inputValue || ''}
         {...props}
       />
-      <span className="input__error-message">{!isInputValid && errorMessage}</span>
-    </>
+      <span
+        className="input-with-error-message__error-message">
+        {!isInputValid && errorMessage}
+      </span>
+    </div>
   );
 };
 

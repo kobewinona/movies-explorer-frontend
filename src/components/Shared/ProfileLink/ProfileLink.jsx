@@ -14,7 +14,7 @@ const ProfileLink = ({onClose}) => {
         onClick={onClose}
       >Аккаунт
       </Link>
-      <div className="profile--link__icon"></div>
+      <div className="profile-link__icon"></div>
     </div>
   );
 };

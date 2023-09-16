@@ -11,29 +11,27 @@ const Auth = ({message, ...props}) => {
   const {pathname} = useLocation();
   
   return (
-    <main>
-      <section className="auth">
-        <div>
-          <Link to="/">
-            <img className="auth__logo" src={logo} alt="Логотип."/>
-          </Link>
-          <p className="auth__message">{message}</p>
-        </div>
+    <div className="auth">
+      <div>
+        <img className="auth__logo" src={logo} alt="Логотип."/>
+        <p className="auth__message">{message}</p>
+      </div>
+      <div className="auth__form-container">
         {props.children}
-        {
-          pathname === '/signup'
-          && <p className="auth__link-message">Уже зарегистрированы?
-            <Link className="auth__link" to="/signin"> Войти</Link>
-          </p>
-        }
-        {
-          pathname === '/signin'
-          && <p className="auth__link-message">Ещё не зарегистрированы?
-            <Link className="auth__link" to="/signup"> Регистрация</Link>
-          </p>
-        }
-      </section>
-    </main>
+      </div>
+      {
+        pathname === '/signup'
+        && <p className="auth__link-message">Уже зарегистрированы?
+          <Link className="auth__link" to="/signin"> Войти</Link>
+        </p>
+      }
+      {
+        pathname === '/signin'
+        && <p className="auth__link-message">Ещё не зарегистрированы?
+          <Link className="auth__link" to="/signup"> Регистрация</Link>
+        </p>
+      }
+    </div>
   );
 };
 

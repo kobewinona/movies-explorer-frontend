@@ -2,11 +2,6 @@
   background-color: #202020;
   
   display: block;
-  position: sticky;
-  
-  z-index: 1;
-  top: 0;
-  left: 0;
   
   padding: 18px 0;
 }
@@ -32,6 +27,16 @@
 
 .header__logo-link {
   line-height: 0;
+  
+  opacity: 1;
+  
+  transition: opacity .4s ease-out;
+}
+
+.header__logo-link:hover {
+  opacity: .6;
+  
+  transition: opacity .2s ease-in;
 }
 
 .header__login-menu {

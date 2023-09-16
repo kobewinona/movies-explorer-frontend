@@ -17,6 +17,8 @@
   line-height: inherit;
   text-align: center;
   
+  cursor: default;
+  
   border-bottom: #424242 solid 1px;
   padding: 0 0 21px;
 }
