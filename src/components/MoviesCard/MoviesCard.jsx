@@ -5,8 +5,9 @@ import {useLocation} from 'react-router-dom';
 import './MoviesCard.css';
 
 
-const MoviesCard = ({nameRU, duration, image}) => {
+const MoviesCard = ({nameRU, duration, image, trailerLink}) => {
   const {pathname} = useLocation();
+  const imageURL = `https://api.nomoreparties.co${image.url}`;
   const durationHours = Math.floor(duration / 60);
   const durationMinutes = duration % 60;
   const [isLiked, setIsLiked] = useState(false);
@@ -18,10 +19,12 @@ const MoviesCard = ({nameRU, duration, image}) => {
   return (
     <li className="movies-card">
       <div className="movies-card__details">
-        <h3 className="movies-card__title">{nameRU}</h3>
+        <h3 className="movies-card__title" title={nameRU}>{nameRU}</h3>
         <p className="movies-card__duration">{`${durationHours}ч ${durationMinutes}м`}</p>
       </div>
-      <img className="movies-card__image" src={image} alt="Постер к фильму."/>
+      <a href={trailerLink} target="_blank" rel="noreferrer">
+        <img className="movies-card__image" src={imageURL} alt="Постер к фильму."/>
+      </a>
       {
         pathname === '/saved-movies'
           ?
@@ -47,7 +50,8 @@ const MoviesCard = ({nameRU, duration, image}) => {
 MoviesCard.propTypes = {
   nameRU: PropTypes.string,
   duration: PropTypes.number,
-  image: PropTypes.string
+  image: PropTypes.string,
+  trailerLink: PropTypes.string
 };
 
 export default MoviesCard;

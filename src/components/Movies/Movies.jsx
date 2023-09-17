@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {initialMovies} from '../../utils/initialMovies';
-
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
@@ -12,7 +10,7 @@ import Preloader from '../Shared/Preloader/Preloader';
 import './Movies.css';
 
 
-const Movies = ({isLoading}) => {
+const Movies = ({movies, isLoading}) => {
   return (
     <>
       <Header/>
@@ -21,7 +19,7 @@ const Movies = ({isLoading}) => {
         {
           isLoading
             ? <Preloader/>
-            : <MoviesCardList movies={initialMovies} isLoading={isLoading}/>
+            : <MoviesCardList movies={movies} isLoading={isLoading}/>
         }
       </main>
       <Footer/>
@@ -30,6 +28,7 @@ const Movies = ({isLoading}) => {
 };
 
 Movies.propTypes = {
+  movies: PropTypes.array,
   isLoading: PropTypes.bool
 };
 
