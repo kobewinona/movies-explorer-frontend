@@ -1,0 +1,118 @@
+@keyframes turnIntoCross {
+  from {
+    transform: translate(0, 9px) rotate(0);
+  }
+  to {
+    transform: translate(0, 9px) rotate(-45deg);
+  }
+}
+
+@keyframes turnIntoBurger {
+  from {
+    transform: translate(0, 9px) rotate(-45deg);
+  }
+  to {
+    transform: translate(0, 9px) rotate(0);
+  }
+}
+
+.burger-button {
+  width: 22px;
+  height: 20.5px;
+  
+  cursor: pointer;
+  
+  visibility: hidden;
+  background-color: transparent;
+  
+  display: block;
+  
+  position: relative;
+  z-index: 20;
+  
+  margin: 0 10px;
+  border: none;
+  padding: 0;
+  
+  transition: opacity .4s ease-out;
+}
+
+.burger-button_visible {
+  visibility: visible;
+}
+
+.burger-button:hover {
+  opacity: .6;
+  
+  transition: opacity .2s ease-in;
+}
+
+.burger-button__icon {
+  width: 22px;
+  height: 2.5px;
+  
+  background-color: #fff;
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  animation: turnIntoBurger .2s forwards cubic-bezier(.55, .06, .68, .19);
+  transform: translate(0, 9px);
+}
+
+.burger-button__icon:before {
+  content: '';
+  
+  width: 22px;
+  height: 2.5px;
+  
+  background-color: #fff;
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  transform: translate(0, -9px);
+  transition: transform .2s cubic-bezier(.55, .06, .68, .19);
+  transition-delay: .1s;
+}
+
+.burger-button__icon:after {
+  content: '';
+  
+  width: 22px;
+  height: 2.5px;
+  
+  background-color: #fff;
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  transform: translate(0, 9px);
+  transition: transform .2s cubic-bezier(.55, .06, .68, .19);
+  transition-delay: .1s;
+}
+
+.burger-button__icon_turned-into-cross {
+  animation: turnIntoCross .2s forwards cubic-bezier(.55, .06, .68, .19) .2s;
+}
+
+.burger-button__icon_turned-into-cross:before {
+  transform: translate(0, 0);
+  transition: transform .2s cubic-bezier(.55, .06, .68, .19);
+  transition-delay: 0s;
+}
+
+.burger-button__icon_turned-into-cross:after {
+  transform: translate(0, 0) rotate(90deg);
+  transition: transform .2s cubic-bezier(.55, .06, .68, .19);
+  transition-delay: 0s;
+}
+
+@media (min-width: 769px) {
+  .burger-button {
+    display: none;
+  }
+}

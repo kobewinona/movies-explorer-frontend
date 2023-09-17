@@ -1,0 +1,4 @@
+.saved-movies {
+  display: grid;
+  grid-template-rows: max-content auto;
+}

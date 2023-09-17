@@ -1,0 +1,151 @@
+.profile {
+  width: calc(100% - (30px * 2));
+  max-width: 396px;
+  height: 100%;
+  
+  display: grid;
+  grid-template-rows: max-content auto max-content;
+  
+  margin: 0 auto;
+}
+
+.profile__greeting {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: normal;
+  text-align: center;
+  
+  margin: 70px 0 80px;
+}
+
+.profile__data-container {
+  min-height: 250px;
+  
+  font-size: 11px;
+  font-weight: 500;
+  line-height: normal;
+  list-style: none;
+  
+  margin: 0;
+  padding: 0;
+}
+
+.profile__data-title {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: normal;
+  
+  margin: 0;
+}
+
+.profile__data-content {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: normal;
+  
+  margin: 0;
+}
+
+.profile__data-cell {
+  display: flex;
+  justify-content: space-between;
+  
+  margin-bottom: 17px;
+  border-bottom: 1px solid #424242;
+  padding-bottom: 16px;
+}
+
+.profile__data-cell:last-child {
+  border: none;
+}
+
+.profile__control {
+  line-height: 0;
+  
+  list-style: none;
+  
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  align-items: center;
+  
+  margin-bottom: 40px;
+  padding: 0;
+}
+
+.profile__edit-control-container {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 15px;
+}
+
+.profile__button {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  cursor: pointer;
+  
+  background-color: transparent;
+  opacity: 1;
+  
+  border: none;
+  padding: 0;
+  
+  transition: opacity .4s ease-out;
+}
+
+.profile__button:hover {
+  opacity: .5;
+  
+  transition: opacity .2s ease-in;
+}
+
+.profile__button_style_normal {
+  color: #fff;
+}
+
+.profile__button_style_bright {
+  color: #ee3465;
+}
+
+.profile__input-title {
+  color: #8b8b8b;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: normal;
+  
+  margin: 0 0 5px 0;
+}
+
+@media (min-width: 768px) {
+  .profile {
+    max-width: 410px;
+  }
+  
+  .profile__greeting {
+    margin: 236px 0 96px;
+  }
+  
+  .profile__control {
+    margin-bottom: 269px;
+  }
+  
+  .profile__button {
+    font-size: 13px;
+  }
+  
+  .profile__link {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .profile__greeting {
+    margin: 74px 0 123px;
+  }
+  
+  .profile__control {
+    margin-bottom: 70px;
+  }
+}

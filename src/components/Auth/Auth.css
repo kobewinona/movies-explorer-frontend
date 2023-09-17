@@ -1,0 +1,115 @@
+.auth {
+  width: calc(100% - (30px * 2));
+  max-width: 396px;
+  min-height: 100vh;
+  max-height: 100%;
+  
+  display: grid;
+  grid-template-rows: max-content auto 59px;
+  
+  margin: 0 auto;
+}
+
+.auth__message-container {
+  padding: 56px 0 50px 0;
+}
+
+.auth__logo-link {
+  opacity: 1;
+  
+  transition: opacity .4s ease-out;
+}
+
+.auth__logo-link:hover {
+  opacity: .5;
+  
+  transition: opacity .2s ease-in;
+}
+
+.auth__message {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: normal;
+  text-align: center;
+  
+  margin-bottom: 80px;
+}
+
+.auth__form-container {
+  min-height: 468px;
+}
+
+.auth__message_visible {
+  visibility: visible;
+}
+
+.auth__link-message {
+  color: #8b8b8b;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  
+  margin: 14px 0 0;
+}
+
+.auth__link {
+  color: #4285f4;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  text-decoration: none;
+  
+  opacity: 1;
+  
+  margin: 0;
+  
+  transition: opacity .4s ease-out;
+}
+
+.auth__link:hover {
+  opacity: .6;
+  
+  transition: opacity .2s ease-in;
+}
+
+@media (min-width: 768px) {
+  .auth {
+    grid-template-rows: max-content auto 265px;
+  }
+  
+  .auth__message-container {
+    padding: 232px 0 40px 0;
+  }
+  
+  .auth__message {
+    text-align: left;
+    
+    margin-bottom: 40px;
+  }
+  
+  .auth__form-container {
+    min-height: 380px;
+  }
+  
+  .auth__link-message {
+    font-size: 14px;
+    
+    margin-top: 16px;
+  }
+  
+  .auth__link {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .auth__message-container {
+    padding-top: 70px;
+  }
+  
+  .auth {
+    grid-template-rows: max-content auto 103px;
+  }
+}

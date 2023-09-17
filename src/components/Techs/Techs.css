@@ -1,0 +1,142 @@
+.techs {
+  background-color: #272727;
+  
+  padding: 70px 0;
+}
+
+.techs__container {
+  width: calc(100% - (18px * 2));
+  max-width: 668px;
+  
+  margin: 0 auto;
+}
+
+.techs__title {
+  max-width: 600px;
+  
+  font-size: clamp(30px, 7vw, 50px);
+  font-weight: 400;
+  line-height: inherit;
+  text-align: center;
+  letter-spacing: -1.2px;
+  
+  margin: 60px auto 0;
+}
+
+.techs__text {
+  max-width: 460px;
+  
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: center;
+  letter-spacing: -0.44px;
+  
+  margin: 24px auto 50px;
+}
+
+.techs__tech-list {
+  width: calc(100% - (57px * 2));
+  min-width: 178px;
+  max-width: 178px;
+  
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  letter-spacing: -0.48px;
+  
+  list-style: none;
+  
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  column-gap: 10px;
+  
+  margin: 0 auto;
+  padding: 0;
+}
+
+.techs__tech-item {
+  min-width: 84px;
+  max-width: 84px;
+  min-height: 57px;
+  box-sizing: border-box;
+  
+  background-color: #303030;
+  
+  border-radius: 10px;
+  padding: 21px 0;
+}
+
+@media (min-width: 512px) {
+  .techs__tech-list {
+    max-width: 272px;
+  }
+}
+
+@media (min-width: 768px) {
+  .techs {
+    padding: 90px 0;
+  }
+  
+  .techs__container {
+    width: calc(100% - (50px * 2));
+    max-width: 1140px;
+    
+    background-color: #272727;
+  }
+  
+  .techs__title {
+    line-height: 58px;
+    letter-spacing: -2px;
+    
+    margin-top: 80px;
+  }
+  
+  .techs__text {
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: -0.48px;
+    
+    margin: 22px auto 83px;
+  }
+  
+  .techs__tech-list {
+    width: 100%;
+    max-width: 690px;
+    
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1280px) {
+  .techs {
+    padding: 100px 0;
+  }
+  
+  .techs__container {
+    width: calc(100% - (70px * 2));
+  }
+  
+  .techs__title {
+    margin-top: 90px;
+  }
+  
+  .techs__text {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.56px;
+    
+    margin: 26px auto 100px;
+  }
+  
+  .techs__tech-item {
+    min-width: 90px;
+    
+    min-height: 60px;
+    font-size: 14px;
+    
+    letter-spacing: -0.56px;
+  }
+}
