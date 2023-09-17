@@ -3,11 +3,11 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 
 import {AuthContext} from '../../contexts/AuthContext';
-import logo from '../../images/logo.svg';
-import BurgerButton from '../BurgerButton/BurgerButton';
 
+import BurgerButton from '../BurgerButton/BurgerButton';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import NavTab from '../NavTab/NavTab';
+import HomeLinkWithLogo from '../Shared/HomeLinkWithLogo/HomeLinkWithLogo';
 
 import './Header.css';
 
@@ -31,9 +31,7 @@ const Header = ({isHidden}) => {
     <header className={`header ${isMainPage && 'header_place_main'} ${isHidden && 'header_hidden'}`}>
       <BurgerMenu isBurgerMenuOpen={isBurgerMenuOpen} onClose={handleBurgerMenuToggle}/>
       <div className="header__container">
-        <Link className="header__logo-link" to="/" aria-label="Главная страница.">
-          <img src={logo} alt="Логотип."/>
-        </Link>
+        <HomeLinkWithLogo/>
         {
           isLoggedIn
             ?

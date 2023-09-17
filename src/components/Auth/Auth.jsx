@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {Link, useLocation} from 'react-router-dom';
 
-import logo from '../../images/logo.svg';
+import HomeLinkWithLogo from '../Shared/HomeLinkWithLogo/HomeLinkWithLogo';
 
 import './Auth.css';
 
@@ -12,8 +12,8 @@ const Auth = ({message, ...props}) => {
   
   return (
     <div className="auth">
-      <div>
-        <img className="auth__logo" src={logo} alt="Логотип."/>
+      <div className="auth__message-container">
+        <HomeLinkWithLogo/>
         <p className="auth__message">{message}</p>
       </div>
       <div className="auth__form-container">

@@ -10,10 +10,20 @@
   margin: 0 auto;
 }
 
-.auth__logo {
-  display: block;
+.auth__message-container {
+  padding: 56px 0 50px 0;
+}
+
+.auth__logo-link {
+  opacity: 1;
   
-  margin: 56px auto 50px;
+  transition: opacity .4s ease-out;
+}
+
+.auth__logo-link:hover {
+  opacity: .5;
+  
+  transition: opacity .2s ease-in;
 }
 
 .auth__message {
@@ -55,13 +65,13 @@
   
   margin: 0;
   
-  transition: opacity .4s ease-in-out;
+  transition: opacity .4s ease-out;
 }
 
 .auth__link:hover {
   opacity: .6;
   
-  transition: opacity .2s ease-in-out;
+  transition: opacity .2s ease-in;
 }
 
 @media (min-width: 768px) {
@@ -69,8 +79,8 @@
     grid-template-rows: max-content auto 265px;
   }
   
-  .auth__logo {
-    margin: 232px auto 40px 0;
+  .auth__message-container {
+    padding: 232px 0 40px 0;
   }
   
   .auth__message {
@@ -95,8 +105,8 @@
 }
 
 @media (min-width: 1280px) {
-  .auth__logo {
-    margin-top: 70px;
+  .auth__message-container {
+    padding-top: 70px;
   }
   
   .auth {

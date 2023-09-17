@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 import ProfileLink from '../Shared/ProfileLink/ProfileLink';
 
@@ -38,28 +38,37 @@ const BurgerMenu = ({isBurgerMenuOpen, onClose}) => {
         ${isBurgerMenuVisible && 'burger-menu__container_visible'}
         ${isBurgerMenuOpen ? 'appear' : 'disappear'}`}
       >
-        <nav className="burger-menu__navigation">
-          <ul className="burger-menu__navigation-container">
+        <nav className="burger-menu__nav">
+          <ul className="burger-menu__nav-container">
             <li>
-              <Link
-                className="burger-menu__link" to="/"
+              <NavLink
+                className={({isActive}) => {
+                  return (`burger-menu__link ${isActive && 'burger-menu__link_active'}`);
+                }}
+                to="/"
                 onClick={onClose}
               >Главная
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
-                className="burger-menu__link" to="/movies"
+              <NavLink
+                className={({isActive}) => {
+                  return (`burger-menu__link ${isActive && 'burger-menu__link_active'}`);
+                }}
+                to="/movies"
                 onClick={onClose}
               >Фильмы
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
-                className="burger-menu__link" to="/saved-movies"
+              <NavLink
+                className={({isActive}) => {
+                  return (`burger-menu__link ${isActive && 'burger-menu__link_active'}`);
+                }}
+                to="/saved-movies"
                 onClick={onClose}
               >Сохранённые фильмы
-              </Link>
+              </NavLink>
             </li>
           </ul>
           <ProfileLink onClose={onClose}/>

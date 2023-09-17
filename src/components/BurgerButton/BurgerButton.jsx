@@ -17,18 +17,18 @@ const BurgerButton = ({onToggle, isBurgerMenuOpen}) => {
   }, []);
   
   return (
-  <button
-    className={`burger-button
+    <button
+      className={`burger-button
       ${isBurgerButtonVisible && 'burger-button_visible'}`}
-    role="button"
-    tabIndex={0}
-    onClick={onToggle}
-  >
-    <div
-      className={`burger-button__icon
+      role="button"
+      tabIndex={0}
+      onClick={onToggle}
+    >
+      <div
+        className={`burger-button__icon
         ${isBurgerMenuOpen && 'burger-button__icon_turned-into-cross'}`}
-    ></div>
-  </button>
+      ></div>
+    </button>
   );
 };
 

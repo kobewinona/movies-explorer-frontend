@@ -3,8 +3,8 @@
   
   display: grid;
   grid-template-rows: auto min-content;
-  align-items: center;
   grid-row-gap: 30px;
+  align-items: center;
 }
 
 .not-found__message-container {
@@ -48,13 +48,13 @@
   
   padding-bottom: 30px;
   
-  transition: opacity .4s ease-in-out;
+  transition: opacity .4s ease-out;
 }
 
 .not-found__link:hover {
   opacity: .5;
   
-  transition: opacity .2s ease-in-out;
+  transition: opacity .2s ease-in;
 }
 
 @media (min-width: 768px) {
@@ -72,7 +72,7 @@
   
   .not-found__link {
     font-size: 14px;
-  
+    
     padding-bottom: 222px;
   }
 }

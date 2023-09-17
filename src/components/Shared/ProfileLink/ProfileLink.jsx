@@ -21,6 +21,6 @@ const ProfileLink = ({onClose}) => {
 
 ProfileLink.propTypes = {
   onClose: PropTypes.func
-}
+};
 
 export default ProfileLink;

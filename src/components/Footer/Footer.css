@@ -55,13 +55,13 @@
   
   opacity: 1;
   
-  transition: opacity .4s ease-in-out;
+  transition: opacity .4s ease-out;
 }
 
 .footer__link:hover {
   opacity: .5;
   
-  transition: opacity .2s ease-in-out;
+  transition: opacity .2s ease-in;
 }
 
 .footer__copyright {
