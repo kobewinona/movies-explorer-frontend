@@ -64,6 +64,7 @@
   width: 100%;
   aspect-ratio: 25 / 14;
   
+  visibility: hidden;
   object-fit: cover;
   opacity: 1;
   
@@ -74,6 +75,10 @@
   opacity: .5;
   
   transition: opacity .2s ease-in;
+}
+
+.movies-card__image_visible {
+  visibility: visible;
 }
 
 .movies-card__button {

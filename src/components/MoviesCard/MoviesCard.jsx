@@ -11,6 +11,7 @@ const MoviesCard = ({nameRU, duration, image, trailerLink}) => {
   const durationHours = Math.floor(duration / 60);
   const durationMinutes = duration % 60;
   const [isLiked, setIsLiked] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   
   const handleToggleLike = () => {
     setIsLiked(!isLiked);
@@ -23,7 +24,12 @@ const MoviesCard = ({nameRU, duration, image, trailerLink}) => {
         <p className="movies-card__duration">{`${durationHours}ч ${durationMinutes}м`}</p>
       </div>
       <a href={trailerLink} target="_blank" rel="noreferrer">
-        <img className="movies-card__image" src={imageURL} alt="Постер к фильму."/>
+        <img
+          className={`movies-card__image ${isImageLoaded && 'movies-card__image_visible'}`}
+          src={imageURL}
+          alt="Постер к фильму."
+          onLoad={() => setIsImageLoaded(true)}
+        />
       </a>
       {
         pathname === '/saved-movies'
