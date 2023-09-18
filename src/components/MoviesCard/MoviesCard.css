@@ -63,7 +63,6 @@
 .movies-card__image {
   width: 100%;
   aspect-ratio: 25 / 14;
-  max-height: 190px;
   
   object-fit: cover;
   opacity: 1;
@@ -94,6 +93,7 @@
   margin: 14px auto;
   border: none;
   border-radius: 30px;
+  padding: 9px 15px;
   
   transition: background-color .4s ease-out;
 }

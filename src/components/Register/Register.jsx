@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
-// import {Link} from 'react-router-dom';
-// import logo from '../../images/logo.svg';
 import Auth from '../Auth/Auth';
 import Form from '../Shared/Form/Form';
 import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErrorMessage';

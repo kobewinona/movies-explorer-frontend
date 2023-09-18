@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {useWidthPaginator} from '../../hooks/useWidthPaginator';
 
 import MoviesCard from '../MoviesCard/MoviesCard';
 
@@ -7,6 +8,33 @@ import './MoviesCardList.css';
 
 
 const MoviesCardList = ({moviesList}) => {
+  const [deviceWidth, setDeviceWidth] = useState(0);
+  const {
+    extendMoviesCountLimit,
+    moviesCountLimit
+  } = useWidthPaginator(deviceWidth);
+  
+  const handleDeviceWidthResize = () => {
+    setDeviceWidth(window.innerWidth);
+  };
+  
+  useEffect(() => {
+    setDeviceWidth(window.innerWidth);
+    
+    let timer;
+    
+    window.addEventListener('resize', () => {
+      timer = setTimeout(() => {
+        handleDeviceWidthResize();
+      }, 400);
+    });
+    
+    return () => {
+      window.removeEventListener('resize', handleDeviceWidthResize);
+      clearTimeout(timer);
+    };
+  }, []);
+  
   return (
     <section className="movies-card-list">
       {
@@ -14,7 +42,7 @@ const MoviesCardList = ({moviesList}) => {
           <ul className="movies-card-list__container">
             {
               moviesList.map((movie, index) => {
-                return (
+                return (index < moviesCountLimit &&
                   <MoviesCard
                     key={index}
                     nameRU={movie.nameRU}
@@ -28,8 +56,12 @@ const MoviesCardList = ({moviesList}) => {
           </ul>
           <div className="movies-card-list__more-button-container">
             {
-              moviesList.length > 3
-              && <button className="movies-card-list__more-button">Ещё</button>
+              moviesList.length > moviesCountLimit &&
+              <button
+                className="movies-card-list__more-button"
+                onClick={extendMoviesCountLimit}
+              >Ещё
+              </button>
             }
           </div>
         </>

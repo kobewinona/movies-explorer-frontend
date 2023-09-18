@@ -49,6 +49,12 @@
   transition: opacity .2s ease-in;
 }
 
+@media (min-width: 480px) {
+  .movies-card-list__container {
+    grid-template-columns: repeat(auto-fill, minmax(348px, auto));
+  }
+}
+
 @media (min-width: 768px) {
   .movies-card-list {
     width: calc(100% - (30px * 2));
@@ -59,7 +65,7 @@
   }
   
   .movies-card-list__container {
-    grid-row-gap: 35px;
+    grid-template-columns: repeat(auto-fill, minmax(360px, auto));
   }
   
   .movies-card-list__more-button-container {

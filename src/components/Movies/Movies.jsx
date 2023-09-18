@@ -12,8 +12,6 @@ import Preloader from '../Shared/Preloader/Preloader';
 
 
 const Movies = ({isLoading, moviesList, onSearch, searchQueryErrorMessage}) => {
-  console.log(Boolean(moviesList));
-  console.log('moviesList', moviesList);
   return (
     <>
       <Header/>

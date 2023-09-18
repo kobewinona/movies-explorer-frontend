@@ -3,8 +3,8 @@ import {Route, Routes} from 'react-router-dom';
 
 import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
-import * as MoviesApi from '../../utils/MoviesApi';
-// import {MainApi} from '../../utils/MainApi';
+import * as moviesApi from '../../utils/moviesApi';
+// import {mainApi} from '../../utils/MainApi';
 import {unknownError, notFoundError} from '../../utils/searchQueryErrorMessages';
 
 import Login from '../Login/Login';
@@ -24,7 +24,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [moviesList, setMoviesList] = useState(null);
   const [searchQuery, setSearchQuery] = useState();
-  const [searchQueryErrorMessage, setSearchQueryErrorMessage] = useState(undefined);
+  const [
+    searchQueryErrorMessage,
+    setSearchQueryErrorMessage
+  ] = useState(undefined);
   
   const handleSignUp = () => {
     console.log('handled');
@@ -49,9 +52,9 @@ function App() {
     if (searchQuery) {
       setIsLoading(true);
       
-      localStorage.setItem('searchQuery', searchQuery);
+      // localStorage.setItem('searchQuery', searchQuery);
       
-      MoviesApi.getMovies()
+      moviesApi.getMovies()
         .then(movies => {
           const moviesList = movies.filter(movie => {
             return (movie.nameRU.toLowerCase().includes(searchQuery))
@@ -59,6 +62,7 @@ function App() {
           if (moviesList?.length > 0) {
             setMoviesList(moviesList.reverse());
           } else {
+            setMoviesList(null);
             setSearchQueryErrorMessage(notFoundError);
           }
         })
@@ -71,10 +75,11 @@ function App() {
   }, [searchQuery]);
   
   useEffect(() => {
-    const savedSearchQuery = localStorage.getItem('searchQuery');
-    if (savedSearchQuery) {
-      setSearchQuery(savedSearchQuery);
-    }
+    // const savedSearchQuery = localStorage.getItem('searchQuery');
+    // if (savedSearchQuery) {
+    //   // noinspection JSCheckFunctionSignatures
+    //   setSearchQuery(savedSearchQuery);
+    // }
   }, []);
   
   return (

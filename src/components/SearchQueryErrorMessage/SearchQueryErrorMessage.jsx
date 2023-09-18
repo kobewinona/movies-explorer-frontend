@@ -5,7 +5,6 @@ import './SearchQueryErrorMessage.css';
 
 
 const SearchQueryErrorMessage = ({searchQueryErrorMessage}) => {
-  console.log('searchQueryErrorMessage', searchQueryErrorMessage);
   return (
     <section className="search-query-error-message">
       <p className="search-query-error-message__text">{searchQueryErrorMessage}</p>
