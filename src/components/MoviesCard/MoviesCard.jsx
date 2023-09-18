@@ -42,7 +42,6 @@ const MoviesCard = ({nameRU, duration, image, trailerLink}) => {
             }
           </button>
       }
-    
     </li>
   );
 };
@@ -50,7 +49,7 @@ const MoviesCard = ({nameRU, duration, image, trailerLink}) => {
 MoviesCard.propTypes = {
   nameRU: PropTypes.string,
   duration: PropTypes.number,
-  image: PropTypes.string,
+  image: PropTypes.object,
   trailerLink: PropTypes.string
 };
 

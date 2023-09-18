@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import useInput from '../../hooks/useInput';
@@ -8,11 +9,11 @@ import Form from '../Shared/Form/Form';
 import './SearchForm.css';
 
 
-const SearchForm = () => {
+const SearchForm = ({onSearch}) => {
   const {inputValue, handleInputChange} = useInput();
   
   const handleSubmit = () => {
-    console.log('handled');
+    onSearch(inputValue.toLowerCase());
   };
   
   return (
@@ -51,5 +52,9 @@ const SearchForm = () => {
     </section>
   );
 };
+
+SearchForm.propTypes = {
+  onSearch: PropTypes.func
+}
 
 export default SearchForm;

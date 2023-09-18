@@ -57,13 +57,15 @@
   height: 100px;
   
   position: relative;
+  
+  margin-top: 70px;
 }
 
 .preloader__round {
   width: 100px;
   height: 100px;
   
-  background-color: #ee3465;
+  background-color: #2f2f2f;
   
   position: absolute;
   
@@ -87,12 +89,12 @@
 }
 
 .preloader__round::after {
-  background-color: white;
+  background-color: #8b8b8b;
   animation: preloader-inside-white 1s ease-in-out infinite;
 }
 
 .preloader__round::before {
-  background-color: #ee3465;
+  background-color: #2f2f2f;
   
   z-index: 10;
   

@@ -5,6 +5,7 @@ import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 import * as MoviesApi from '../../utils/MoviesApi';
 // import {MainApi} from '../../utils/MainApi';
+import {unknownError, notFoundError} from '../../utils/searchQueryErrorMessages';
 
 import Login from '../Login/Login';
 import Main from '../Main/Main';
@@ -21,7 +22,9 @@ function App() {
   const currentUser = {name: 'Виталий', email: 'oi@oi.ru'};
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [movies, setMovies] = useState([]);
+  const [moviesList, setMoviesList] = useState(null);
+  const [searchQuery, setSearchQuery] = useState();
+  const [searchQueryErrorMessage, setSearchQueryErrorMessage] = useState(undefined);
   
   const handleSignUp = () => {
     console.log('handled');
@@ -35,14 +38,43 @@ function App() {
     console.log('handled');
   };
   
+  const handleSearchQuery = (query) => {
+    setSearchQuery(query);
+  };
+  
   useEffect(() => {
     setIsLoggedIn(true);
-    setIsLoading(false);
+    setSearchQueryErrorMessage(undefined);
+    
+    if (searchQuery) {
+      setIsLoading(true);
+      
+      localStorage.setItem('searchQuery', searchQuery);
+      
+      MoviesApi.getMovies()
+        .then(movies => {
+          const moviesList = movies.filter(movie => {
+            return (movie.nameRU.toLowerCase().includes(searchQuery))
+          });
+          if (moviesList?.length > 0) {
+            setMoviesList(moviesList.reverse());
+          } else {
+            setSearchQueryErrorMessage(notFoundError);
+          }
+        })
+        .catch(() => {
+          setMoviesList(null);
+          setSearchQueryErrorMessage(unknownError);
+        })
+        .finally(() => setIsLoading(false));
+    }
+  }, [searchQuery]);
   
-    MoviesApi.getMovies()
-      .then(movies =>setMovies(movies))
-      .catch(err => console.log(err))
-      .finally(() => setIsLoading(false));
+  useEffect(() => {
+    const savedSearchQuery = localStorage.getItem('searchQuery');
+    if (savedSearchQuery) {
+      setSearchQuery(savedSearchQuery);
+    }
   }, []);
   
   return (
@@ -52,7 +84,14 @@ function App() {
           <Route path="/signup" element={<Register onSignUp={handleSignUp}/>}/>
           <Route path="/signin" element={<Login onSignIn={handleSignIn}/>}/>
           <Route path="/" element={<Main/>}/>
-          <Route path="/movies" element={<Movies isLoading={isLoading} movies={movies}/>}/>
+          <Route path="/movies" element={
+            <Movies
+              isLoading={isLoading}
+              moviesList={moviesList}
+              onSearch={handleSearchQuery}
+              searchQueryErrorMessage={searchQueryErrorMessage}
+            />
+          }/>
           <Route path="/saved-movies" element={<SavedMovies isLoading={isLoading}/>}/>
           <Route path="/profile" element={<Profile onEdit={handleEditProfile}/>}/>
           <Route path="*" element={<NotFound/>}/>
