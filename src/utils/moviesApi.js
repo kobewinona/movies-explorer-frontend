@@ -1,16 +1,5 @@
-import {moviesApiConfig} from './props';
+import {moviesApiConfig, setRequest, returnRes} from './props';
 
-const setRequest = (url, config) => {
-  return fetch(url, config);
-}
-
-const returnRes = res => {
-  if (res.ok) {
-    return res.json();
-  } else {
-    return Promise.reject(`Ошибка: ${res.status}`)
-  }
-};
 
 export const  getMovies = () => {
   return setRequest(`${moviesApiConfig['url']}`, {

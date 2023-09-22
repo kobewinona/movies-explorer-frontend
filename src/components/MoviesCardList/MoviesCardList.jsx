@@ -7,7 +7,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 
 
-const MoviesCardList = ({moviesList}) => {
+const MoviesCardList = ({moviesList, onAddMovie, onDelete}) => {
   const [deviceWidth, setDeviceWidth] = useState(0);
   const {extendMoviesCountLimit, moviesCountLimit} = useWidthPaginator(deviceWidth);
   
@@ -46,6 +46,9 @@ const MoviesCardList = ({moviesList}) => {
                     duration={movie.duration}
                     image={movie.image}
                     trailerLink={movie.trailerLink}
+                    movieInfo={movie}
+                    onAddMovie={onAddMovie}
+                    onDelete={onDelete}
                   />
                 );
               })
@@ -67,6 +70,10 @@ const MoviesCardList = ({moviesList}) => {
   );
 };
 
-MoviesCardList.propTypes = {moviesList: PropTypes.array};
+MoviesCardList.propTypes = {
+  moviesList: PropTypes.array,
+  onAddMovie: PropTypes.func,
+  onDelete: PropTypes.func
+};
 
 export default MoviesCardList;

@@ -4,7 +4,7 @@ import {Route, Routes} from 'react-router-dom';
 import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 import * as moviesApi from '../../utils/moviesApi';
-// import {mainApi} from '../../utils/MainApi';
+import * as mainApi from '../../utils/mainApi';
 import {unknownError, notFoundError} from '../../utils/searchQueryErrorMessages';
 
 import Login from '../Login/Login';
@@ -72,6 +72,42 @@ function App() {
     fetchMovies(query['movieName']);
   };
   
+  const handleAddMovie = (movieInfo) => {
+    const {
+      id,
+      image,
+      // eslint-disable-next-line no-unused-vars
+      created_at,
+      // eslint-disable-next-line no-unused-vars
+      updated_at,
+      ...movieToAdd
+    } = movieInfo;
+
+    const imageURL = `https://api.nomoreparties.co${image.url}`;
+    const thumbnail = `https://api.nomoreparties.co${image.formats.thumbnail.url}`;
+  
+    const movieData = {
+      movieId: id,
+      image: imageURL,
+      thumbnail,
+      ...movieToAdd,
+    };
+    
+    mainApi.addMovie(movieData)
+      .then(data => {
+        console.log('movie', data);
+      })
+      .catch(err => console.log('err', err));
+  };
+  
+  const handleDeleteMovie = (movieId) => {
+    mainApi.deleteMovie(movieId)
+      .then(data => {
+        console.log('movie', data);
+      })
+      .catch(err => console.log('err', err));
+  };
+  
   useEffect(() => {
     if (searchedQuery) {
       localStorage.setItem('searchedQuery', JSON.stringify(searchedQuery));
@@ -108,6 +144,8 @@ function App() {
               searchedQuery={searchedQuery}
               onSearch={handleSearchQuery}
               searchQueryErrorMessage={searchQueryErrorMessage}
+              onAddMovie={handleAddMovie}
+              onDelete={handleDeleteMovie}
             />
           }/>
           <Route path="/saved-movies" element={<SavedMovies isLoading={isLoading}/>}/>

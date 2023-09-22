@@ -5,8 +5,9 @@ import {useLocation} from 'react-router-dom';
 import './MoviesCard.css';
 
 
-const MoviesCard = ({nameRU, duration, image, trailerLink}) => {
+const MoviesCard = ({movieInfo, onAddMovie, onDelete}) => {
   const {pathname} = useLocation();
+  const {nameRU, duration, image, trailerLink} = movieInfo;
   const imageURL = `https://api.nomoreparties.co${image.url}`;
   const durationHours = Math.floor(duration / 60);
   const durationMinutes = duration % 60;
@@ -14,7 +15,13 @@ const MoviesCard = ({nameRU, duration, image, trailerLink}) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   
   const handleToggleLike = () => {
-    setIsLiked(!isLiked);
+    if (isLiked) {
+      setIsLiked(false);
+      onDelete(movieInfo.id);
+    } else {
+      setIsLiked(true);
+      onAddMovie(movieInfo);
+    }
   };
   
   return (
@@ -56,7 +63,10 @@ MoviesCard.propTypes = {
   nameRU: PropTypes.string,
   duration: PropTypes.number,
   image: PropTypes.object,
-  trailerLink: PropTypes.string
+  trailerLink: PropTypes.string,
+  movieInfo: PropTypes.object,
+  onAddMovie: PropTypes.func,
+  onDelete: PropTypes.func
 };
 
 export default MoviesCard;

@@ -1,5 +1,5 @@
 export const mainApiConfig = {
-  url: 'https://klimkin-mesto-b.nomoreparties.co',
+  url: 'http://localhost:3000',
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
@@ -11,5 +11,17 @@ export const moviesApiConfig = {
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
+  }
+};
+
+export const setRequest = (url, config) => {
+  return fetch(url, config);
+}
+
+export const returnRes = res => {
+  if (res.ok) {
+    return res.json();
+  } else {
+    return Promise.reject(`Ошибка: ${res.status}`)
   }
 };
