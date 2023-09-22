@@ -1,5 +1,6 @@
 .search-query-error-message {
   width: calc(100% - 10px * 2);
+  max-width: 708px;
   
   margin: 0 auto;
 }
@@ -22,5 +23,6 @@
 @media (min-width: 768px) {
   .search-query-error-message {
     width: calc(100% - (30px * 2));
+    max-width: 1140px;
   }
 }

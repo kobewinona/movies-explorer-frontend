@@ -11,12 +11,12 @@ import SearchQueryErrorMessage from '../SearchQueryErrorMessage/SearchQueryError
 import Preloader from '../Shared/Preloader/Preloader';
 
 
-const Movies = ({isLoading, moviesList, onSearch, searchQueryErrorMessage}) => {
+const Movies = ({isLoading, moviesList, searchedQuery, onSearch, searchQueryErrorMessage}) => {
   return (
     <>
       <Header/>
       <main className="movies">
-        <SearchForm onSearch={onSearch}/>
+        <SearchForm searchedQuery={searchedQuery} onSearch={onSearch}/>
         {
           isLoading
             ? <Preloader/>
@@ -33,7 +33,7 @@ const Movies = ({isLoading, moviesList, onSearch, searchQueryErrorMessage}) => {
 Movies.propTypes = {
   isLoading: PropTypes.bool,
   moviesList: PropTypes.array,
-  isSearchQueryPut: PropTypes.bool,
+  searchedQuery: PropTypes.object,
   onSearch: PropTypes.func,
   searchQueryErrorMessage: PropTypes.string
 };

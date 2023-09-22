@@ -1,19 +1,24 @@
 import PropTypes from 'prop-types';
-import React from 'react';
-
-import useInput from '../../hooks/useInput';
+import React, {useState} from 'react';
 
 import FilterCheckbox from '../Shared/FilterCheckbox/FilterCheckbox';
 import Form from '../Shared/Form/Form';
+import Input from '../Shared/Input/Input';
 
 import './SearchForm.css';
 
 
-const SearchForm = ({onSearch}) => {
-  const {inputValue, handleInputChange} = useInput();
+const SearchForm = ({searchedQuery, onSearch}) => {
+  const [searchQuery, setSearchQuery] = useState(null);
+  
+  const handleValuesUpdate = (name, value) => {
+    setSearchQuery(prevState => ({
+      ...prevState, [name]: value
+    }));
+  };
   
   const handleSubmit = () => {
-    onSearch(inputValue.toLowerCase());
+    onSearch(searchQuery);
   };
   
   return (
@@ -26,11 +31,10 @@ const SearchForm = ({onSearch}) => {
           isUpdating={false}
           showDefaultSubmitButton={false}
         >
-          <input
-            className="search-form__search-query-input"
-            onChange={handleInputChange}
-            value={inputValue || ''}
-            name="searchQuery"
+          <Input
+            defaultValue={searchedQuery?.['movieName']}
+            onUpdate={handleValuesUpdate}
+            name="movieName"
             type="text"
             aria-label="Запрос поиска."
             placeholder="Фильм"
@@ -38,10 +42,12 @@ const SearchForm = ({onSearch}) => {
           />
           <div className="search-form__filter-container">
             <FilterCheckbox
-              name="shortfilms"
+              defaultValue={searchedQuery?.['showShortfilms']}
+              onUpdate={handleValuesUpdate}
+              name="showShortfilms"
               type="checkbox"
               aria-label="Фильтр по короткометражным фильмам."
-              placeholder="Фильтр по короткометражным фильмам"
+              placeholder="Короткометражки"
               required
             />
             <p className="search-form__filter-name">Короткометражки</p>
@@ -54,6 +60,7 @@ const SearchForm = ({onSearch}) => {
 };
 
 SearchForm.propTypes = {
+  searchedQuery: PropTypes.object,
   onSearch: PropTypes.func
 }
 

@@ -1,13 +1,17 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import useInput from '../../../hooks/useInput';
 
 import './FilterCheckbox.css';
 
 
-const FilterCheckbox = ({...props}) => {
-  const {inputValue, handleInputChange} = useInput();
+const FilterCheckbox = ({defaultValue, onUpdate, ...props}) => {
+  const {inputName, inputValue, handleInputChange} = useInput(defaultValue);
+  
+  useEffect(() => {
+    onUpdate(inputName, inputValue);
+  }, [inputValue]);
   
   return (
     <label className="filter-checkbox" htmlFor="filter-checkbox">
@@ -24,6 +28,7 @@ const FilterCheckbox = ({...props}) => {
 };
 
 FilterCheckbox.propTypes = {
+  defaultValue: PropTypes.bool,
   onUpdate: PropTypes.func,
   name: PropTypes.string
 };

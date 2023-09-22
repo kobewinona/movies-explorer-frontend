@@ -9,10 +9,7 @@ import './MoviesCardList.css';
 
 const MoviesCardList = ({moviesList}) => {
   const [deviceWidth, setDeviceWidth] = useState(0);
-  const {
-    extendMoviesCountLimit,
-    moviesCountLimit
-  } = useWidthPaginator(deviceWidth);
+  const {extendMoviesCountLimit, moviesCountLimit} = useWidthPaginator(deviceWidth);
   
   const handleDeviceWidthResize = () => {
     setDeviceWidth(window.innerWidth);
@@ -70,9 +67,6 @@ const MoviesCardList = ({moviesList}) => {
   );
 };
 
-MoviesCardList.propTypes = {
-  isSearchQueryPut: PropTypes.bool,
-  moviesList: PropTypes.array
-};
+MoviesCardList.propTypes = {moviesList: PropTypes.array};
 
 export default MoviesCardList;

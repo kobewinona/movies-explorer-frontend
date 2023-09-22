@@ -1,7 +1,7 @@
 import {useCallback, useState} from 'react';
 
 
-export function useFormWithValidation() {
+export default function useFormWithValidation() {
   const [inputValues, setInputValues] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   
@@ -9,17 +9,15 @@ export function useFormWithValidation() {
     const target = event.target;
     const name = target.name;
     const value = target.value;
+    
     setInputValues({...inputValues, [name]: value});
     setIsFormValid(target.closest('form').checkValidity());
   };
   
-  const resetForm = useCallback(
-    (newValues = {}, newIsValid = false) => {
+  const resetForm = useCallback((newValues = {}, newIsValid = false) => {
       setInputValues(newValues);
       setIsFormValid(newIsValid);
-    },
-    [setInputValues, setIsFormValid]
-  );
+    }, [setInputValues, setIsFormValid]);
   
   return {inputValues, isFormValid, handleChange, resetForm};
 }

@@ -23,7 +23,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [moviesList, setMoviesList] = useState(null);
-  const [searchQuery, setSearchQuery] = useState();
+  const [searchedQuery, setSearchedQuery] = useState(null);
   const [
     searchQueryErrorMessage,
     setSearchQueryErrorMessage
@@ -41,45 +41,57 @@ function App() {
     console.log('handled');
   };
   
-  const handleSearchQuery = (query) => {
-    setSearchQuery(query);
+  const fetchMovies = (movieName) => {
+    setIsLoading(true);
+  
+    moviesApi.getMovies()
+      .then(movies => {
+        const moviesList = movies.filter(movie => {
+          return (movie.nameRU.toLowerCase().includes(movieName))
+        });
+        if (moviesList?.length > 0) {
+          setMoviesList(moviesList.reverse());
+          localStorage.setItem('searchedMoviesList', JSON.stringify(moviesList));
+        } else {
+          setMoviesList(null);
+          setSearchQueryErrorMessage(notFoundError);
+        }
+      })
+      .catch(() => {
+        setMoviesList(null);
+        setSearchQueryErrorMessage(unknownError);
+      })
+      .finally(() => setIsLoading(false));
   };
+  
+  const handleSearchQuery = query => {
+    setSearchedQuery(prevState => ({
+      ...prevState, ...query
+    }));
+    
+    fetchMovies(query['movieName']);
+  };
+  
+  useEffect(() => {
+    if (searchedQuery) {
+      localStorage.setItem('searchedQuery', JSON.stringify(searchedQuery));
+    }
+  }, [searchedQuery]);
   
   useEffect(() => {
     setIsLoggedIn(true);
     setSearchQueryErrorMessage(undefined);
     
-    if (searchQuery) {
-      setIsLoading(true);
-      
-      // localStorage.setItem('searchQuery', searchQuery);
-      
-      moviesApi.getMovies()
-        .then(movies => {
-          const moviesList = movies.filter(movie => {
-            return (movie.nameRU.toLowerCase().includes(searchQuery))
-          });
-          if (moviesList?.length > 0) {
-            setMoviesList(moviesList.reverse());
-          } else {
-            setMoviesList(null);
-            setSearchQueryErrorMessage(notFoundError);
-          }
-        })
-        .catch(() => {
-          setMoviesList(null);
-          setSearchQueryErrorMessage(unknownError);
-        })
-        .finally(() => setIsLoading(false));
+    const queryFromStorage = localStorage.getItem('searchedQuery');
+    const searchedMoviesList = localStorage.getItem('searchedMoviesList');
+    
+    if (queryFromStorage) {
+      setSearchedQuery(JSON.parse(queryFromStorage));
     }
-  }, [searchQuery]);
-  
-  useEffect(() => {
-    // const savedSearchQuery = localStorage.getItem('searchQuery');
-    // if (savedSearchQuery) {
-    //   // noinspection JSCheckFunctionSignatures
-    //   setSearchQuery(savedSearchQuery);
-    // }
+    
+    if (searchedMoviesList) {
+      setMoviesList(JSON.parse(searchedMoviesList));
+    }
   }, []);
   
   return (
@@ -93,6 +105,7 @@ function App() {
             <Movies
               isLoading={isLoading}
               moviesList={moviesList}
+              searchedQuery={searchedQuery}
               onSearch={handleSearchQuery}
               searchQueryErrorMessage={searchQueryErrorMessage}
             />

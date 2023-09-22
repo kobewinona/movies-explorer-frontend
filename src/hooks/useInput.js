@@ -1,21 +1,32 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 // Custom hook for input validation
-function useInputValidation() {
+export default function useInput(defaultValue) {
+  const [inputName, setInputName] = useState('')
   const [inputValue, setInputValue] = useState('');
   
   const handleInputChange = event => {
+    const target = event.target;
+    const name = target.name;
+    
     if (event.target.type === 'checkbox') {
-      setInputValue(event.target.checked);
+      setInputName(name);
+      setInputValue(target.checked);
     } else {
-      setInputValue(event.target.value);
+      setInputName(name);
+      setInputValue(target.value);
     }
   };
   
+  useEffect(() => {
+    if (defaultValue) {
+      setInputValue(defaultValue);
+    }
+  }, [defaultValue]);
+  
   return {
+    inputName,
     inputValue,
     handleInputChange
   };
 }
-
-export default useInputValidation;

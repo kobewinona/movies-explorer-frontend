@@ -18,7 +18,7 @@ const InputWithErrorMessage = ({onUpdate, ...props}) => {
     <div className="input-with-error-message">
       <input
         className={`input-with-error-message__input
-        ${!isInputValid && 'input-with-error-message_invalid'}`}
+        ${!isInputValid && 'input-with-error-message__input_invalid'}`}
         onChange={handleInputChange}
         value={inputValue || ''}
         {...props}

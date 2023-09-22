@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {useFormWithValidation} from '../../../hooks/useFormWithValidation';
+import useFormWithValidation from '../../../hooks/useFormWithValidation';
 
 import './Form.css';
 
