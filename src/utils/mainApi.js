@@ -1,6 +1,39 @@
 import {mainApiConfig, setRequest, returnRes} from './props';
 
 
+export const signUp = (userInfo) => {
+  return setRequest(`${mainApiConfig['url']}/signup`, {
+    method: 'POST',
+    headers: mainApiConfig['headers'],
+    body: JSON.stringify(userInfo)
+  }).then(res => returnRes(res));
+};
+
+export const signIn = (userInfo) => {
+  return setRequest(`${mainApiConfig['url']}/signin`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: mainApiConfig['headers'],
+    body: JSON.stringify(userInfo)
+  }).then(res => returnRes(res));
+};
+
+export const getCurrentUser = () => {
+  return setRequest(`${mainApiConfig['url']}/users/me`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {...mainApiConfig['headers']}
+  }).then(res => returnRes(res));
+};
+
+export const signOut = () => {
+  return setRequest(`${mainApiConfig['url']}/signout`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: mainApiConfig['headers']
+  }).then(res => returnRes(res));
+};
+
 export const  addMovie = (movieInfo) => {
   return setRequest(`${mainApiConfig['url']}/movies`, {
     method: 'POST',

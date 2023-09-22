@@ -3,10 +3,12 @@ import React from 'react';
 
 import useFormWithValidation from '../../../hooks/useFormWithValidation';
 
+import Spinner from '../Spinner/Spinner';
+
 import './Form.css';
 
 
-const Form = ({onSubmit, showDefaultSubmitButton, ...props}) => {
+const Form = ({onSubmit, isUpdating, showDefaultSubmitButton, ...props}) => {
   const {
     isFormValid,
     handleChange
@@ -31,11 +33,12 @@ const Form = ({onSubmit, showDefaultSubmitButton, ...props}) => {
         showDefaultSubmitButton &&
         <button
           className={`form__submit
-          ${!isFormValid && 'form__submit_disabled'}`}
+          ${!isFormValid && 'form__submit_disabled'}
+          ${isUpdating && 'form__submit_updated'}`}
           type="submit"
           name="submit"
-          disabled={!isFormValid}
-        >{props.submitText || 'Сохранить'}
+          disabled={!isFormValid || isUpdating}
+        >{isUpdating ? <Spinner/> : props.submitText || 'Сохранить'}
         </button>
       }
     </form>
@@ -46,6 +49,7 @@ Form.propTypes = {
   onSubmit: PropTypes.func,
   name: PropTypes.string,
   submitText: PropTypes.string,
+  isUpdating: PropTypes.bool,
   children: PropTypes.any,
   showDefaultSubmitButton: PropTypes.bool
 };

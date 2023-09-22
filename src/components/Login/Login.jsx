@@ -27,7 +27,7 @@ const Login = ({onSignIn}) => {
         <Form
           validate={true}
           onSubmit={handleSubmit}
-          name="sign-in"
+          name="signin"
           submitText="Войти"
           isUpdating={false}
           showDefaultSubmitButton={true}
@@ -36,7 +36,7 @@ const Login = ({onSignIn}) => {
             <p className="login__input-title">E-mail</p>
             <InputWithErrorMessage
               onUpdate={handleValuesUpdate}
-              name="userEmail"
+              name="email"
               placeholder="E-mail"
               type="email"
               aria-label="E-mail."

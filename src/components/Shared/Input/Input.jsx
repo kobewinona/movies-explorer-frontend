@@ -10,7 +10,9 @@ const Input = ({defaultValue, onUpdate, ...props}) => {
   const {inputName, inputValue, handleInputChange} = useInput(defaultValue);
   
   useEffect(() => {
-    onUpdate(inputName, inputValue);
+    if (inputValue) {
+      onUpdate(inputName, inputValue);
+    }
   }, [inputValue]);
   
   return (

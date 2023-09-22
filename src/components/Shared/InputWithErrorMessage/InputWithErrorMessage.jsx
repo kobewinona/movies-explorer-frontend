@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import useInputWithValidation from '../../../hooks/useInputWithValidation';
 
@@ -8,11 +8,18 @@ import './InputWithErrorMessage.css';
 
 const InputWithErrorMessage = ({onUpdate, ...props}) => {
   const {
+    inputName,
     inputValue,
     isInputValid,
     errorMessage,
     handleInputChange
-  } = useInputWithValidation(onUpdate);
+  } = useInputWithValidation();
+  
+  useEffect(() => {
+    if (inputValue) {
+      onUpdate(inputName, inputValue);
+    }
+  }, [inputValue]);
   
   return (
     <div className="input-with-error-message">
@@ -32,9 +39,8 @@ const InputWithErrorMessage = ({onUpdate, ...props}) => {
 };
 
 InputWithErrorMessage.propTypes = {
-  name: PropTypes.string,
   onUpdate: PropTypes.func,
-  defaultValue: PropTypes.string
+  props: PropTypes.any
 };
 
 export default InputWithErrorMessage;

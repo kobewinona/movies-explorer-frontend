@@ -7,12 +7,12 @@ import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErro
 import './Register.css';
 
 
-const Register = ({onSignUp}) => {
-  const [inputValues, setInputValues] = useState({});
+const Register = ({onSignUp, isUpdating}) => {
+  const [inputValues, setInputValues] = useState(null);
   
   const handleValuesUpdate = (name, value) => {
-    setInputValues(prevValues => ({
-      ...prevValues, [name]: value
+    setInputValues(prevState => ({
+      ...prevState, [name]: value
     }));
   };
   
@@ -25,16 +25,16 @@ const Register = ({onSignUp}) => {
       <Auth message="Добро пожаловать!">
         <Form
           onSubmit={handleSubmit}
-          name="sign-up"
+          name="signup"
           submitText="Зарегистрироваться"
-          isUpdating={false}
+          isUpdating={isUpdating}
           showDefaultSubmitButton={true}
         >
           <div>
             <p className="register__input-title">Имя</p>
             <InputWithErrorMessage
               onUpdate={handleValuesUpdate}
-              name="userName"
+              name="name"
               placeholder="Имя"
               type="text"
               aria-label="Имя."
@@ -45,7 +45,7 @@ const Register = ({onSignUp}) => {
             <p className="register__input-title">E-mail</p>
             <InputWithErrorMessage
               onUpdate={handleValuesUpdate}
-              name="userEmail"
+              name="email"
               placeholder="E-mail"
               type="email"
               aria-label="E-mail."
@@ -69,7 +69,7 @@ const Register = ({onSignUp}) => {
 
 Register.propTypes = {
   onSignUp: PropTypes.func,
-  showDefaultSubmitButton: PropTypes.bool
+  isUpdating: PropTypes.bool
 };
 
 export default Register;

@@ -41,9 +41,17 @@
   background-color: #2f2f2f;
   opacity: .4;
 }
-
 .form__submit_disabled:hover {
   opacity: .4;
+}
+
+
+.form__submit_updated {
+  cursor: default;
+}
+
+.form__submit_updated:hover {
+  opacity: 1;
 }
 
 @media (min-width: 768px) {

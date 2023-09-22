@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Route, Routes} from 'react-router-dom';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 
 import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
@@ -19,9 +19,12 @@ import './App.css';
 
 
 function App() {
-  const currentUser = {name: 'Виталий', email: 'oi@oi.ru'};
+  const navigate = useNavigate();
+  
+  const [currentUserInfo, setCurrentUserInfo] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [moviesList, setMoviesList] = useState(null);
   const [searchedQuery, setSearchedQuery] = useState(null);
   const [
@@ -29,12 +32,59 @@ function App() {
     setSearchQueryErrorMessage
   ] = useState(undefined);
   
-  const handleSignUp = () => {
-    console.log('handled');
+  // auth handlers
+  
+  const handleSignUp = (userInfo) => {
+    setIsUpdating(true);
+    
+    mainApi.signUp(userInfo)
+      .then(() => navigate('/signin', {replace: true}))
+      .catch(err => console.log(err))
+      .finally(() => setIsUpdating(false));
   };
   
-  const handleSignIn = () => {
-    console.log('handled');
+  const handleSignIn = (userInfo) => {
+    setIsUpdating(true);
+    
+    mainApi.signIn(userInfo)
+      .then(() => {
+        validateCredentials();
+        
+        navigate('/', {replace: true});
+      })
+      .catch(err => console.log(err))
+      .finally(() => setIsUpdating(false));
+  };
+  
+  const validateCredentials = () => {
+    mainApi.getCurrentUser()
+      .then(({name, email}) => {
+        setCurrentUserInfo({name, email});
+        setIsLoggedIn(true);
+      })
+      .catch(err => {
+        setIsLoggedIn(false);
+        
+        navigate('/signin', {replace: true});
+        
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setIsUpdating(false);
+      });
+  };
+  
+  const signOut = () => {
+    mainApi.signOut()
+      .then(() => {
+        setIsLoggedIn(false);
+        
+        validateCredentials();
+  
+        navigate('/signin', {replace: true});
+      })
+      .catch(err => console.log(err));
   };
   
   const handleEditProfile = () => {
@@ -101,6 +151,7 @@ function App() {
   };
   
   const handleDeleteMovie = (movieId) => {
+    console.log('movieId', movieId);
     mainApi.deleteMovie(movieId)
       .then(data => {
         console.log('movie', data);
@@ -115,7 +166,7 @@ function App() {
   }, [searchedQuery]);
   
   useEffect(() => {
-    setIsLoggedIn(true);
+    validateCredentials();
     setSearchQueryErrorMessage(undefined);
     
     const queryFromStorage = localStorage.getItem('searchedQuery');
@@ -132,9 +183,9 @@ function App() {
   
   return (
     <AuthContext.Provider value={isLoggedIn}>
-      <CurrentUserContext.Provider value={currentUser}>
+      <CurrentUserContext.Provider value={currentUserInfo}>
         <Routes>
-          <Route path="/signup" element={<Register onSignUp={handleSignUp}/>}/>
+          <Route path="/signup" element={<Register isUpdating={isUpdating} onSignUp={handleSignUp}/>}/>
           <Route path="/signin" element={<Login onSignIn={handleSignIn}/>}/>
           <Route path="/" element={<Main/>}/>
           <Route path="/movies" element={
@@ -149,7 +200,7 @@ function App() {
             />
           }/>
           <Route path="/saved-movies" element={<SavedMovies isLoading={isLoading}/>}/>
-          <Route path="/profile" element={<Profile onEdit={handleEditProfile}/>}/>
+          <Route path="/profile" element={<Profile onEdit={handleEditProfile} onSignOut={signOut}/>}/>
           <Route path="*" element={<NotFound/>}/>
         </Routes>
       </CurrentUserContext.Provider>

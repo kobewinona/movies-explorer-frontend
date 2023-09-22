@@ -11,7 +11,7 @@ import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErro
 import './Profile.css';
 
 
-const Profile = ({onEdit}) => {
+const Profile = ({onEdit, onSignOut}) => {
   const currentUser = useContext(CurrentUserContext);
   
   const [isEditModeOn, setIsEditModeOn] = useState(false);
@@ -108,7 +108,10 @@ const Profile = ({onEdit}) => {
             }
             <li>
               <Link className="profile__link" to="/signin">
-                <button className="profile__button profile__button_style_bright">Выйти из аккаунта</button>
+                <button
+                  className="profile__button profile__button_style_bright"
+                  onClick={onSignOut}
+                >Выйти из аккаунта</button>
               </Link>
             </li>
           </ul>
@@ -119,7 +122,8 @@ const Profile = ({onEdit}) => {
 };
 
 Profile.propTypes = {
-  onEdit: PropTypes.func
+  onEdit: PropTypes.func,
+  onSignOut: PropTypes.func
 };
 
 export default Profile;

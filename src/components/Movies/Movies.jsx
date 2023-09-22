@@ -32,6 +32,7 @@ const Movies = ({isLoading, moviesList, searchedQuery, onSearch, searchQueryErro
 
 Movies.propTypes = {
   isLoading: PropTypes.bool,
+  isUpdating: PropTypes.bool,
   moviesList: PropTypes.array,
   searchedQuery: PropTypes.object,
   onSearch: PropTypes.func,
