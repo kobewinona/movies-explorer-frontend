@@ -11,7 +11,7 @@ import SearchQueryErrorMessage from '../SearchQueryErrorMessage/SearchQueryError
 import Preloader from '../Shared/Preloader/Preloader';
 
 
-const Movies = ({isLoading, moviesList, searchedQuery, onSearch, searchQueryErrorMessage, onAddMovie, onDelete}) => {
+const Movies = ({isLoading, moviesList, searchedQuery, onSearch, searchQueryErrorMessage, ...props}) => {
   return (
     <>
       <Header/>
@@ -21,7 +21,7 @@ const Movies = ({isLoading, moviesList, searchedQuery, onSearch, searchQueryErro
           isLoading
             ? <Preloader/>
             : moviesList
-              ? <MoviesCardList moviesList={moviesList} onAddMovie={onAddMovie} onDelete={onDelete}/>
+              ? <MoviesCardList moviesList={moviesList} {...props}/>
               : <SearchQueryErrorMessage searchQueryErrorMessage={searchQueryErrorMessage}/>
         }
       </main>
@@ -32,13 +32,15 @@ const Movies = ({isLoading, moviesList, searchedQuery, onSearch, searchQueryErro
 
 Movies.propTypes = {
   isLoading: PropTypes.bool,
-  isUpdating: PropTypes.bool,
   moviesList: PropTypes.array,
+  savedMoviesList: PropTypes.array,
   searchedQuery: PropTypes.object,
   onSearch: PropTypes.func,
   searchQueryErrorMessage: PropTypes.string,
-  onAddMovie: PropTypes.func,
-  onDelete: PropTypes.func
+  isMovieSaved: PropTypes.func,
+  onSaveMovie: PropTypes.func,
+  onDeleteMovie: PropTypes.func,
+  props: PropTypes.object
 };
 
 export default Movies;

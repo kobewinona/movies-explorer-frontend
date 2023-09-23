@@ -5,11 +5,20 @@ export function useWidthPaginator(deviceWidth) {
   const [moviesCountLimit, setMoviesCountLimit] = useState(4);
   
   const extendMoviesCountLimit = () => {
-    if (deviceWidth >= 1280) {
-      setMoviesCountLimit(moviesCountLimit + 3);
+    let increment;
+    let newMoviesCountLimit;
+  
+    if (deviceWidth > 1008) {
+      increment = 3;
+  
+      newMoviesCountLimit = Math.ceil((moviesCountLimit + increment) / 3) * 3;
     } else {
-      setMoviesCountLimit(moviesCountLimit + 2);
+      increment = 2;
+  
+      newMoviesCountLimit = Math.ceil((moviesCountLimit + increment) / 2) * 2;
     }
+  
+    setMoviesCountLimit(newMoviesCountLimit);
   };
   
   const handleMoviesCountLimit = () => {

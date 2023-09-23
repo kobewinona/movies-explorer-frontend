@@ -1,27 +1,29 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {savedMovies} from '../../utils/savedMovies';
 import Footer from '../Footer/Footer';
 
 import Header from '../Header/Header';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
+import SearchQueryErrorMessage from '../SearchQueryErrorMessage/SearchQueryErrorMessage';
 import Preloader from '../Shared/Preloader/Preloader';
 
 import './SavedMovies.css';
 
 
-const SavedMovies = ({isLoading}) => {
+const SavedMovies = ({isLoading, moviesList, searchedQuery, onSearch, searchQueryErrorMessage, ...props}) => {
   return (
     <>
       <Header/>
       <main className="saved-movies">
-        <SearchForm/>
+        <SearchForm searchedQuery={searchedQuery} onSearch={onSearch}/>
         {
           isLoading
             ? <Preloader/>
-            : <MoviesCardList movies={savedMovies} isLoading={isLoading}/>
+            : moviesList
+              ? <MoviesCardList moviesList={moviesList} {...props}/>
+              : <SearchQueryErrorMessage searchQueryErrorMessage={searchQueryErrorMessage}/>
         }
       </main>
       <Footer/>
@@ -30,7 +32,13 @@ const SavedMovies = ({isLoading}) => {
 };
 
 SavedMovies.propTypes = {
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  moviesList: PropTypes.array,
+  searchedQuery: PropTypes.object,
+  onSearch: PropTypes.func,
+  isMovieSaved: PropTypes.func,
+  searchQueryErrorMessage: PropTypes.string,
+  props: PropTypes.object
 };
 
 export default SavedMovies;

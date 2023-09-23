@@ -162,7 +162,7 @@
 
 @media (min-width: 1280px) {
   .movies-card {
-    max-width: 360px;
+    max-width: 340px;
   }
   
   .movies-card__image {

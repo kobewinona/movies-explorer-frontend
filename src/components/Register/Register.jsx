@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
+
 import Auth from '../Auth/Auth';
 import Form from '../Shared/Form/Form';
 import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErrorMessage';

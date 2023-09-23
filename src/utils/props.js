@@ -1,3 +1,5 @@
+export const moviesURL = 'https://api.nomoreparties.co';
+
 export const mainApiConfig = {
   url: 'http://localhost:3000',
   headers: {
@@ -7,7 +9,7 @@ export const mainApiConfig = {
 };
 
 export const moviesApiConfig = {
-  url: 'https://api.nomoreparties.co/beatfilm-movies',
+  url: `${moviesURL}/beatfilm-movies`,
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json'

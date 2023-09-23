@@ -2,25 +2,27 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 import {useLocation} from 'react-router-dom';
 
+import {moviesURL} from '../../utils/props';
+
 import './MoviesCard.css';
 
 
-const MoviesCard = ({movieInfo, onAddMovie, onDelete}) => {
+const MoviesCard = ({movieId, movieInfo, onIsMovieSaved, onSave, onDelete}) => {
   const {pathname} = useLocation();
   const {nameRU, duration, image, trailerLink} = movieInfo;
-  const imageURL = `https://api.nomoreparties.co${image.url}`;
+  const imageURL = image.url ? `${moviesURL}${image.url}` : image;
   const durationHours = Math.floor(duration / 60);
   const durationMinutes = duration % 60;
-  const [isLiked, setIsLiked] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [isSaved, setIsSaved] = useState(onIsMovieSaved?.(movieInfo.id));
   
-  const handleToggleLike = () => {
-    if (isLiked) {
-      setIsLiked(false);
-      onDelete(movieInfo.id);
+  const toggleSaveMovie = () => {
+    if (isSaved) {
+      onDelete(movieId);
+      setIsSaved(false);
     } else {
-      setIsLiked(true);
-      onAddMovie(movieInfo);
+      onSave(movieInfo);
+      setIsSaved(true);
     }
   };
   
@@ -41,15 +43,18 @@ const MoviesCard = ({movieInfo, onAddMovie, onDelete}) => {
       {
         pathname === '/saved-movies'
           ?
-          <button className="movies-card__button">
+          <button
+            className="movies-card__button"
+            onClick={() => onDelete(movieId)}
+          >
             <div className="movies-card__uncheck-icon"></div>
           </button>
           :
           <button
-            className={`movies-card__button ${isLiked && 'movies-card__button_active'}`}
-            onClick={handleToggleLike}>
+            className={`movies-card__button ${isSaved && 'movies-card__button_active'}`}
+            onClick={toggleSaveMovie}>
             {
-              isLiked
+              isSaved
                 ? <div className="movies-card__check-icon jump-up"></div>
                 : 'Сохранить'
             }
@@ -60,12 +65,10 @@ const MoviesCard = ({movieInfo, onAddMovie, onDelete}) => {
 };
 
 MoviesCard.propTypes = {
-  nameRU: PropTypes.string,
-  duration: PropTypes.number,
-  image: PropTypes.object,
-  trailerLink: PropTypes.string,
+  movieId: PropTypes.number,
   movieInfo: PropTypes.object,
-  onAddMovie: PropTypes.func,
+  onIsMovieSaved: PropTypes.func,
+  onSave: PropTypes.func,
   onDelete: PropTypes.func
 };
 

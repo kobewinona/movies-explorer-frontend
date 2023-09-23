@@ -92,7 +92,7 @@ const Profile = ({onEdit, onSignOut}) => {
                 ?
                 <li>
                   <button
-                    className="profile__button"
+                    className="profile__button profile__button_style_normal"
                     onClick={handleModeSwitch}
                   >Отменить
                   </button>

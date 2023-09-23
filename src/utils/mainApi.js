@@ -34,7 +34,7 @@ export const signOut = () => {
   }).then(res => returnRes(res));
 };
 
-export const  addMovie = (movieInfo) => {
+export const saveMovie = (movieInfo) => {
   return setRequest(`${mainApiConfig['url']}/movies`, {
     method: 'POST',
     credentials: 'include',
@@ -43,8 +43,17 @@ export const  addMovie = (movieInfo) => {
   }).then(res => returnRes(res));
 };
 
+export const getMovies = () => {
+  return setRequest(`${mainApiConfig['url']}/movies`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: mainApiConfig['headers'],
+  }).then(res => returnRes(res));
+}
+
 export const  deleteMovie = (movieId) => {
   return setRequest(`${mainApiConfig['url']}/movies/${movieId}`, {
+    method: 'DELETE',
     credentials: 'include',
     headers: mainApiConfig['headers']
   }).then(res => returnRes(res));
