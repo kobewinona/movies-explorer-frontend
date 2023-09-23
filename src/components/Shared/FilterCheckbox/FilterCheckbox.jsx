@@ -10,7 +10,9 @@ const FilterCheckbox = ({defaultValue, onUpdate, ...props}) => {
   const {inputName, inputValue, handleInputChange} = useInput(defaultValue);
   
   useEffect(() => {
-    onUpdate(inputName, inputValue);
+    if (inputName && inputValue) {
+      onUpdate(inputName, inputValue);
+    }
   }, [inputValue]);
   
   return (

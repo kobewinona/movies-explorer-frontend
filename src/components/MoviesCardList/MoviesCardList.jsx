@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+
 import {useWidthPaginator} from '../../hooks/useWidthPaginator';
 
 import MoviesCard from '../MoviesCard/MoviesCard';

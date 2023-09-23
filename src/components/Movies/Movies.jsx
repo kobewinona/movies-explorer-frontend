@@ -5,10 +5,10 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
-
-import './Movies.css';
 import SearchQueryErrorMessage from '../SearchQueryErrorMessage/SearchQueryErrorMessage';
 import Preloader from '../Shared/Preloader/Preloader';
+
+import './Movies.css';
 
 
 const Movies = ({isLoading, moviesList, searchedQuery, onSearch, searchQueryErrorMessage, ...props}) => {

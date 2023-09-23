@@ -16,7 +16,7 @@ const InputWithErrorMessage = ({onUpdate, ...props}) => {
   } = useInputWithValidation();
   
   useEffect(() => {
-    if (inputValue) {
+    if (inputName && inputValue) {
       onUpdate(inputName, inputValue);
     }
   }, [inputValue]);

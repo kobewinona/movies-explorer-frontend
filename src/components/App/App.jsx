@@ -3,12 +3,9 @@ import {Route, Routes, useNavigate} from 'react-router-dom';
 
 import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
-import * as moviesApi from '../../utils/moviesApi';
+import {searchQueryNotFoundError, searchQueryUnknownError} from '../../utils/constants';
 import * as mainApi from '../../utils/mainApi';
-import {
-  searchQueryUnknownError,
-  searchQueryNotFoundError
-} from '../../utils/constants';
+import * as moviesApi from '../../utils/moviesApi';
 
 import Login from '../Login/Login';
 import Main from '../Main/Main';
@@ -83,9 +80,10 @@ function App() {
     mainApi.signOut()
       .then(() => {
         setIsLoggedIn(false);
+        localStorage.clear();
         
         validateCredentials();
-  
+        
         navigate('/signin', {replace: true});
       })
       .catch(err => console.log(err));
@@ -103,15 +101,14 @@ function App() {
   
   const searchMovies = (searchQuery) => {
     setIsLoading(true);
-  
+    
     moviesApi.getMovies()
       .then(movies => {
         const moviesList = movies.filter(movie => {
-          return (movie.nameRU.toLowerCase().includes(searchQuery))
+          return (movie.nameRU.toLowerCase().includes(searchQuery));
         });
         if (moviesList?.length > 0) {
           setMoviesList(moviesList.reverse());
-          localStorage.setItem('searchedMoviesList', JSON.stringify(moviesList));
         } else {
           setMoviesList(null);
           setSearchQueryErrorMessage(searchQueryNotFoundError);
@@ -130,7 +127,6 @@ function App() {
     mainApi.getMovies()
       .then(movies => {
         setSavedMoviesList(movies.reverse());
-        localStorage.setItem('savedMoviesList', JSON.stringify(movies));
       })
       .catch(err => console.log(err))
       .finally(() => setIsLoading(false));
@@ -141,7 +137,7 @@ function App() {
       ...prevState, ...query
     }));
     
-    searchMovies(query['movieName']);
+    searchMovies(query?.['movieName']);
   };
   
   const checkIsMovieSaved = (movieId) => {
@@ -158,17 +154,17 @@ function App() {
       updated_at,
       ...movieToAdd
     } = movieInfo;
-
+    
     const imageURL = `https://api.nomoreparties.co${image.url}`;
     const thumbnail = `https://api.nomoreparties.co${image.formats.thumbnail['url']}`;
-  
+    
     const movieData = {
       movieId: id,
       image: imageURL,
       thumbnail,
-      ...movieToAdd,
+      ...movieToAdd
     };
-  
+    
     mainApi.saveMovie(movieData)
       .then(movie => {
         setSavedMoviesList([movie, ...savedMoviesList]);
@@ -194,9 +190,13 @@ function App() {
   // effects
   
   useEffect(() => {
+    if (moviesList) {
+      localStorage.setItem('searchedMoviesList', JSON.stringify(moviesList));
+    }
+  }, [moviesList]);
+  
+  useEffect(() => {
     if (savedMoviesList) {
-      console.log('here');
-      console.log('savedMoviesList', savedMoviesList);
       localStorage.setItem('savedMoviesList', JSON.stringify(savedMoviesList));
     }
   }, [savedMoviesList]);
@@ -211,20 +211,20 @@ function App() {
     validateCredentials();
     setSearchQueryErrorMessage(undefined);
     
-    const queryFromStorage = localStorage.getItem('searchedQuery');
-    const searchedMoviesList = localStorage.getItem('searchedMoviesList');
-    const savedMoviesList = localStorage.getItem('savedMoviesList');
+    const searchQueryFromStorage = localStorage.getItem('searchedQuery');
+    const moviesListFromStorage = localStorage.getItem('searchedMoviesList');
+    const savedMoviesListFromStorage = localStorage.getItem('savedMoviesList');
     
-    if (queryFromStorage) {
-      setSearchedQuery(JSON.parse(queryFromStorage));
+    if (searchQueryFromStorage) {
+      setSearchedQuery(JSON.parse(searchQueryFromStorage));
     }
     
-    if (searchedMoviesList) {
-      setMoviesList(JSON.parse(searchedMoviesList));
+    if (moviesListFromStorage) {
+      setMoviesList(JSON.parse(moviesListFromStorage));
     }
     
-    if (savedMoviesList) {
-      setSavedMoviesList(JSON.parse(savedMoviesList));
+    if (savedMoviesListFromStorage) {
+      setSavedMoviesList(JSON.parse(savedMoviesListFromStorage));
     }
   }, []);
   
