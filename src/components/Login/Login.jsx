@@ -7,8 +7,7 @@ import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErro
 
 import './Login.css';
 
-
-const Login = ({onSignIn}) => {
+const Login = ({isUpdating, onSignIn}) => {
   const [inputValues, setInputValues] = useState({});
   
   const handleValuesUpdate = (name, value) => {
@@ -25,11 +24,10 @@ const Login = ({onSignIn}) => {
     <section className="login">
       <Auth message="Рады видеть!">
         <Form
-          validate={true}
           onSubmit={handleSubmit}
           name="signin"
           submitText="Войти"
-          isUpdating={false}
+          isUpdating={isUpdating}
           showDefaultSubmitButton={true}
         >
           <div>
@@ -59,6 +57,7 @@ const Login = ({onSignIn}) => {
 };
 
 Login.propTypes = {
+  isUpdating: PropTypes.bool,
   onSignIn: PropTypes.func
 };
 

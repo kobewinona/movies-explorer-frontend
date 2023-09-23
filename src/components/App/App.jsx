@@ -61,13 +61,14 @@ function App() {
   const validateCredentials = () => {
     mainApi.getCurrentUser()
       .then(userInfo => {
-        setCurrentUserInfo(userInfo);
-        fetchSavedMovies();
         setIsLoggedIn(true);
+        setCurrentUserInfo(userInfo);
+  
+        loadUserSavedMovies(userInfo['_id']);
       })
       .catch(err => {
         setIsLoggedIn(false);
-        
+      
         console.log(err);
       })
       .finally(() => {
@@ -81,10 +82,13 @@ function App() {
       .then(() => {
         setIsLoggedIn(false);
         localStorage.clear();
+        setSearchedQuery(null);
+        setMoviesList(null);
+        setSavedMoviesList(null);
         
-        validateCredentials();
+        // validateCredentials();
         
-        navigate('/signin', {replace: true});
+        navigate('/', {replace: true});
       })
       .catch(err => console.log(err));
   };
@@ -121,15 +125,24 @@ function App() {
       .finally(() => setIsLoading(false));
   };
   
-  const fetchSavedMovies = () => {
+  const loadUserSavedMovies = (userId) => {
     setIsLoading(true);
-    
-    mainApi.getMovies()
-      .then(movies => {
-        setSavedMoviesList(movies.reverse());
-      })
-      .catch(err => console.log(err))
-      .finally(() => setIsLoading(false));
+  
+    const savedMoviesListFromStorage = localStorage.getItem('savedMoviesList');
+  
+    if (savedMoviesListFromStorage) {
+      setSavedMoviesList(JSON.parse(savedMoviesListFromStorage));
+    } else {
+      mainApi.getMovies()
+        .then(movies => {
+          const currentUserSavedMovies = movies.filter(movie => {
+            return (movie['owner'] === userId)
+          })
+          setSavedMoviesList(currentUserSavedMovies.reverse());
+        })
+        .catch(err => console.log(err))
+        .finally(() => setIsLoading(false));
+    }
   };
   
   const handleSearchQuery = query => {
@@ -173,13 +186,13 @@ function App() {
   };
   
   const handleDeleteMovie = (movieId) => {
-    const movieToDelete = savedMoviesList.find((movie) => {
+    const movieToDelete = savedMoviesList?.find((movie) => {
       return movie.movieId === movieId && movie['_id'];
     });
     
     mainApi.deleteMovie(movieToDelete?.['_id'])
       .then(() => {
-        setSavedMoviesList(savedMoviesList.filter(movie => {
+        setSavedMoviesList(savedMoviesList?.filter(movie => {
           return movie['_id'] !== movieToDelete['_id'];
         }));
       })
@@ -196,7 +209,7 @@ function App() {
   }, [moviesList]);
   
   useEffect(() => {
-    if (savedMoviesList) {
+    if (savedMoviesList?.length > 0) {
       localStorage.setItem('savedMoviesList', JSON.stringify(savedMoviesList));
     }
   }, [savedMoviesList]);
@@ -213,7 +226,6 @@ function App() {
     
     const searchQueryFromStorage = localStorage.getItem('searchedQuery');
     const moviesListFromStorage = localStorage.getItem('searchedMoviesList');
-    const savedMoviesListFromStorage = localStorage.getItem('savedMoviesList');
     
     if (searchQueryFromStorage) {
       setSearchedQuery(JSON.parse(searchQueryFromStorage));
@@ -222,10 +234,6 @@ function App() {
     if (moviesListFromStorage) {
       setMoviesList(JSON.parse(moviesListFromStorage));
     }
-    
-    if (savedMoviesListFromStorage) {
-      setSavedMoviesList(JSON.parse(savedMoviesListFromStorage));
-    }
   }, []);
   
   return (
@@ -233,7 +241,7 @@ function App() {
       <CurrentUserContext.Provider value={currentUserInfo}>
         <Routes>
           <Route path="/signup" element={<Register isUpdating={isUpdating} onSignUp={handleSignUp}/>}/>
-          <Route path="/signin" element={<Login onSignIn={handleSignIn}/>}/>
+          <Route path="/signin" element={<Login isUpdating={isUpdating} onSignIn={handleSignIn}/>}/>
           <Route path="/" element={<Main/>}/>
           <Route path="/movies" element={
             <Movies
