@@ -37,7 +37,7 @@ const Profile = ({onEdit, onSignOut}) => {
       <Header/>
       <main>
         <section className="profile">
-          <p className="profile__greeting">{`Привет, ${currentUser.name}!`}</p>
+          <p className="profile__greeting">{`Привет, ${currentUser?.name}!`}</p>
           {
             isEditModeOn
               ?
@@ -77,11 +77,11 @@ const Profile = ({onEdit, onSignOut}) => {
                 <ul className="profile__data-container">
                   <li className="profile__data-cell">
                     <p className="profile__data-title">Имя</p>
-                    <p className="profile__data-content">{currentUser.name}</p>
+                    <p className="profile__data-content">{currentUser?.name}</p>
                   </li>
                   <li className="profile__data-cell">
                     <p className="profile__data-title">E-mail</p>
-                    <p className="profile__data-content">{currentUser.email}</p>
+                    <p className="profile__data-content">{currentUser?.email}</p>
                   </li>
                 </ul>
               </>

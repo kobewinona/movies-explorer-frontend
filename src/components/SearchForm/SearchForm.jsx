@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
+
 
 import FilterCheckbox from '../Shared/FilterCheckbox/FilterCheckbox';
 import Form from '../Shared/Form/Form';
@@ -9,7 +10,7 @@ import './SearchForm.css';
 
 
 const SearchForm = ({searchedQuery, onSearch}) => {
-  const [searchQuery, setSearchQuery] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(searchedQuery);
   
   const handleValuesUpdate = (name, value) => {
     setSearchQuery(prevState => ({
@@ -20,10 +21,6 @@ const SearchForm = ({searchedQuery, onSearch}) => {
   const handleSubmit = () => {
     onSearch(searchQuery);
   };
-  
-  useEffect(() => {
-    setSearchQuery(searchedQuery);
-  }, []);
   
   return (
     <section className="search-form">

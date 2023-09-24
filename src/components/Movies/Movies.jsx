@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
+
+import {SearchQueryContext} from '../../contexts/SearchQueryContext';
 
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -11,18 +13,20 @@ import Preloader from '../Shared/Preloader/Preloader';
 import './Movies.css';
 
 
-const Movies = ({isLoading, moviesList, searchedQuery, onSearch, searchQueryErrorMessage, ...props}) => {
+const Movies = ({isLoading, moviesList, onSearch, ...props}) => {
+  const searchQuery = useContext(SearchQueryContext);
+  
   return (
     <>
       <Header/>
       <main className="movies">
-        <SearchForm searchedQuery={searchedQuery} onSearch={onSearch}/>
+        <SearchForm searchedQuery={searchQuery?.moviesList} onSearch={onSearch}/>
         {
           isLoading
             ? <Preloader/>
             : moviesList
               ? <MoviesCardList moviesList={moviesList} {...props}/>
-              : <SearchQueryErrorMessage searchQueryErrorMessage={searchQueryErrorMessage}/>
+              : <SearchQueryErrorMessage searchQueryErrorMessage={searchQuery?.errorMessage}/>
         }
       </main>
       <Footer/>
