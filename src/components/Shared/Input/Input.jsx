@@ -6,13 +6,11 @@ import useInput from '../../../hooks/useInput';
 import './Input.css';
 
 
-const Input = ({defaultValue, onUpdate, ...props}) => {
-  const {inputName, inputValue, handleInputChange} = useInput(defaultValue);
+const Input = ({defaultValue, onUpdate, name, ...props}) => {
+  const {inputName, inputValue, handleInputChange} = useInput(name, defaultValue);
   
   useEffect(() => {
-    if (inputName && inputValue) {
-      onUpdate(inputName, inputValue);
-    }
+    onUpdate(inputName, inputValue);
   }, [inputValue]);
   
   return (
@@ -20,6 +18,7 @@ const Input = ({defaultValue, onUpdate, ...props}) => {
       className="input input_type_search"
       value={inputValue || ''}
       onChange={handleInputChange}
+      name={name}
       {...props}
     />
   );
@@ -28,6 +27,7 @@ const Input = ({defaultValue, onUpdate, ...props}) => {
 Input.propTypes = {
   defaultValue: PropTypes.string,
   onUpdate: PropTypes.func,
+  name: PropTypes.string,
   props: PropTypes.any
 }
 

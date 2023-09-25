@@ -7,7 +7,7 @@ import {
 } from '../utils/constants';
 import {nameRegex} from '../utils/regex';
 
-export default function useInputWithValidation(defaultValue) {
+export default function useInputWithValidation(defaultName, defaultValue) {
   const [inputName, setInputName] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [isInputValid, setIsInputValid] = useState(true);
@@ -15,26 +15,29 @@ export default function useInputWithValidation(defaultValue) {
   
   const handleInputChange = event => {
     const target = event.target;
+    const name = target.name;
+    const value = target.value;
     
-    setInputName(target.name);
-    setInputValue(target.value);
+    setInputName(name);
+    setInputValue(value);
   
     setIsInputValid(target.validity.valid);
     setErrorMessage(target.validationMessage);
     
-    if (target.name === 'name') {
-      if (target.value && !nameRegex.test(target.value)) {
+    if (name === 'name') {
+      if (value && !nameRegex.test(value)) {
         setIsInputValid(false);
         setErrorMessage(inputIncorrectNameError);
       }
     } else if (target.type === 'email') {
-      setIsInputValid(validator.isEmail(target.value));
+      setIsInputValid(validator.isEmail(value));
       setErrorMessage(inputIncorrectEmailError);
     }
   };
   
   useEffect(() => {
     if (defaultValue) {
+      setInputName(defaultName);
       setInputValue(defaultValue);
     }
   }, [defaultValue]);

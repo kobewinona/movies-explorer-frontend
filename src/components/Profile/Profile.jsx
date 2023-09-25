@@ -5,22 +5,16 @@ import {Link} from 'react-router-dom';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 
 import Header from '../Header/Header';
+import EditProfileButton from '../Shared/EditProfileButton/EditProfileButton';
 import Form from '../Shared/Form/Form';
 import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErrorMessage';
 
 import './Profile.css';
 
 
-const Profile = ({onEdit, isUpdating, onSignOut, serverErrorMessage, setServerErrorMessage}) => {
+const Profile = ({serverErrorMessage, setServerErrorMessage, ...props}) => {
   const currentUser = useContext(CurrentUserContext);
-  
-  const [isEditModeOn, setIsEditModeOn] = useState(false);
-  
-  const [inputValues, setInputValues] = useState({});
-  
-  const handleModeSwitch = () => {
-    setIsEditModeOn(!isEditModeOn);
-  };
+  const [inputValues, setInputValues] = useState(null);
   
   const handleValuesUpdate = (name, value) => {
     setInputValues(prevValues => ({
@@ -29,9 +23,7 @@ const Profile = ({onEdit, isUpdating, onSignOut, serverErrorMessage, setServerEr
   };
   
   const handleSubmit = () => {
-    onEdit(inputValues);
-  
-    setIsEditModeOn(false);
+    props.onEdit(inputValues);
   };
   
   useEffect(() => {
@@ -45,12 +37,12 @@ const Profile = ({onEdit, isUpdating, onSignOut, serverErrorMessage, setServerEr
         <section className="profile">
           <p className="profile__greeting">{`Привет, ${currentUser?.name}!`}</p>
           {
-            isEditModeOn
+            props.isEditProfileFormOpen
               ?
               <Form
                 showDefaultSubmitButton={true}
                 onSubmit={handleSubmit}
-                isUpdating={isUpdating}
+                isUpdating={props.isUpdating}
                 serverErrorMessage={serverErrorMessage}
                 name="sign-up"
                 submitText="Сохранить"
@@ -95,30 +87,14 @@ const Profile = ({onEdit, isUpdating, onSignOut, serverErrorMessage, setServerEr
               </>
           }
           <ul className="profile__control">
-            {
-              isEditModeOn
-                ?
-                <li>
-                  <button
-                    className="profile__button profile__button_style_normal"
-                    onClick={handleModeSwitch}
-                  >Отменить
-                  </button>
-                </li>
-                :
-                <li>
-                  <button
-                    className="profile__button profile__button_style_normal"
-                    onClick={handleModeSwitch}
-                  >Редактировать
-                  </button>
-                </li>
-            }
+            <li>
+              <EditProfileButton {...props}/>
+            </li>
             <li>
               <Link className="profile__link" to="/signin">
                 <button
-                  className="profile__button profile__button_style_bright"
-                  onClick={onSignOut}
+                  className="profile__sign-out-button"
+                  onClick={props.onSignOut}
                 >Выйти из аккаунта</button>
               </Link>
             </li>
@@ -130,11 +106,15 @@ const Profile = ({onEdit, isUpdating, onSignOut, serverErrorMessage, setServerEr
 };
 
 Profile.propTypes = {
+  onOpenEditForm: PropTypes.func,
+  isEditProfileFormOpen: PropTypes.bool,
   onEdit: PropTypes.func,
+  onCloseEditForm: PropTypes.func,
   isUpdating: PropTypes.bool,
   onSignOut: PropTypes.func,
   serverErrorMessage: PropTypes.string,
-  setServerErrorMessage: PropTypes.func
+  setServerErrorMessage: PropTypes.func,
+  props: PropTypes.object
 };
 
 export default Profile;

@@ -9,14 +9,14 @@
   
   background-color: transparent;
   
-  transition: all .2s ease-out;
+  transition: none;
 }
 
 .input:focus {
   outline: none;
   border: 1.5px solid #8b8b8b;
   
-  transition: all .1s ease-in;
+  transition: none;
 }
 
 .input::placeholder {
@@ -33,5 +33,11 @@
 @media (min-width: 768px) {
   .input {
     padding: 23.5px 23.5px;
+  
+    transition: all .2s ease-out;
+  }
+  
+  .input:focus {
+    transition: all .1s ease-in;
   }
 }

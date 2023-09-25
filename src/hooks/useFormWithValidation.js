@@ -1,23 +1,45 @@
 import {useCallback, useState} from 'react';
+import validator from 'validator/es';
+
+import {nameRegex} from '../utils/regex';
 
 
 export default function useFormWithValidation() {
-  const [inputValues, setInputValues] = useState({});
+  const [inputsValidity, setInputsValidity] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   
-  const handleChange = (event) => {
+  const handleChange = event => {
     const target = event.target;
     const name = target.name;
     const value = target.value;
+    const inputs = Array.from(event.currentTarget.elements);
+  
+    const currentInputsValidity = inputs.reduce((validity, input) => {
+      validity[input.name] = input.validity.valid;
+      return validity;
+    }, {});
+  
+    currentInputsValidity[name] = target.validity.valid;
+  
+    if (name === 'name') {
+      if (value && !nameRegex.test(value)) {
+        currentInputsValidity[name] = false;
+      }
+    } else if (target.type === 'email') {
+      currentInputsValidity[name] = validator.isEmail(value);
+    }
+  
+    setInputsValidity(currentInputsValidity);
     
-    setInputValues({...inputValues, [name]: value});
-    setIsFormValid(target.closest('form').checkValidity());
+    setIsFormValid(Object.values(currentInputsValidity).every(inputValidity => {
+      return inputValidity === true;
+    }));
   };
   
   const resetForm = useCallback((newValues = {}, newIsValid = false) => {
-      setInputValues(newValues);
-      setIsFormValid(newIsValid);
-    }, [setInputValues, setIsFormValid]);
+    setInputsValidity(newValues);
+    setIsFormValid(newIsValid);
+  }, [setInputsValidity, setIsFormValid]);
   
-  return {inputValues, isFormValid, handleChange, resetForm};
+  return {inputsValidity, isFormValid, handleChange, resetForm};
 }

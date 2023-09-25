@@ -28,7 +28,7 @@
   
   margin: 0 auto;
   
-  animation: fadeIn .3s forwards ease-in-out;
+  animation: fadeIn .1s forwards ease-in-out;
 }
 
 .spinner__container {

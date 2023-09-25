@@ -48,6 +48,6 @@ InfoTooltip.propTypes = {
   isUpdateSuccessful: PropTypes.bool,
   toolTipMessage: PropTypes.string,
   onClose: PropTypes.func
-}
+};
 
 export default InfoTooltip;

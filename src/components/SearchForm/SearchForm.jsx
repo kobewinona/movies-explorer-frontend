@@ -12,9 +12,9 @@ import './SearchForm.css';
 const SearchForm = ({searchedQuery, onSearch}) => {
   const [searchQuery, setSearchQuery] = useState(searchedQuery);
   
-  const handleValuesUpdate = (name, value) => {
+  const handleValuesUpdate = (inputName, inputValue) => {
     setSearchQuery(prevState => ({
-      ...prevState, [name]: value
+      ...prevState, [inputName]: inputValue
     }));
   };
   

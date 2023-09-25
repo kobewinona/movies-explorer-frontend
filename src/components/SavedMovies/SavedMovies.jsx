@@ -16,6 +16,8 @@ import './SavedMovies.css';
 const SavedMovies = ({isLoading, moviesList, onSearch, onDeleteMovie}) => {
   const searchQuery = useContext(SearchQueryContext);
   
+  console.log('moviesList', moviesList);
+  
   return (
     <>
       <Header/>

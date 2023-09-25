@@ -5,17 +5,19 @@ import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 import {SearchQueryContext} from '../../contexts/SearchQueryContext';
 import {
+  editProfileSuccessful,
   searchQueryNotFoundError,
   searchQueryUnknownError,
-  signUpSuccessful,
+  searchQueryEmptyQueryError,
   signInSuccessful,
   signOutSuccessful,
-  editProfileSuccessful
+  signUpSuccessful
 } from '../../utils/constants';
 import * as mainApi from '../../utils/mainApi';
 import * as moviesApi from '../../utils/moviesApi';
 import {moviesURL} from '../../utils/props';
 
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import Login from '../Login/Login';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -23,7 +25,6 @@ import NotFound from '../NotFound/NotFound';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import SavedMovies from '../SavedMovies/SavedMovies';
-import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
 import './App.css';
 
@@ -39,6 +40,7 @@ function App() {
   const [savedMoviesList, setSavedMoviesList] = useState(null);
   const [searchQuery, setSearchQuery] = useState(null);
   const [serverErrorMessage, setServerErrorMessage] = useState(undefined);
+  const [isEditProfileFormOpen, setIsEditProfileFormOpen] = useState(false);
   const [isUpdateSuccessful, setIsUpdateSuccessful] = useState(false);
   const [toolTipMessage, setToolTipMessage] = useState(undefined);
   const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
@@ -109,7 +111,7 @@ function App() {
     mainApi.signOut()
       .then(() => {
         validateCredentials();
-  
+        
         setIsUpdateSuccessful(true);
         setToolTipMessage(signOutSuccessful);
         openInfoToolTip();
@@ -128,35 +130,46 @@ function App() {
     mainApi.updateCurrentUser(userInfo)
       .then(newUserInfo => {
         setCurrentUserInfo(newUserInfo);
-  
+        
         setIsUpdateSuccessful(true);
         setToolTipMessage(editProfileSuccessful);
+        closeEditProfileForm();
         openInfoToolTip();
       })
-      .catch(err => {
-        setIsUpdateSuccessful(true);
-        setToolTipMessage('увы(');
-        openInfoToolTip();
-        setServerErrorMessage(err);
-      })
+      .catch(err => setServerErrorMessage(err))
       .finally(() => setIsUpdating(false));
+  };
+  
+  const openEditProfileForm = () => {
+    setIsEditProfileFormOpen(true);
+  };
+  
+  const closeEditProfileForm = () => {
+    setIsEditProfileFormOpen(false);
   };
   
   
   // movies handlers
   // -- moviesList
   
-  const searchMovies = (query) => {
+  const searchMovies = ({movieName = '', showShortfilms = false}) => {
+    if (!movieName) {
+      setIsUpdateSuccessful(false);
+      setToolTipMessage(searchQueryEmptyQueryError);
+      openInfoToolTip();
+      return;
+    }
+  
     setIsLoading(true);
     
     setSearchQuery(prevState => ({
-      ...prevState, errorMessage: undefined, moviesList: query
+      ...prevState, errorMessage: undefined, moviesList: {movieName, showShortfilms}
     }));
     
     moviesApi.getMovies()
       .then(movies => {
         const moviesList = movies.filter(movie => {
-          return (movie.nameRU.toLowerCase().includes(query['movieName']));
+          return (movie.nameRU.toLowerCase().includes(movieName));
         });
         if (moviesList?.length > 0) {
           setMoviesList(moviesList.reverse());
@@ -305,23 +318,19 @@ function App() {
     setIsInfoToolTipOpen(false);
   };
   
-  
-  // initialize effect
+  // initialization effects
   
   useEffect(() => {
     setServerErrorMessage(undefined);
-    validateCredentials();
     setSearchQuery(prevState => ({
       ...prevState, errorMessage: undefined
     }));
     
+    validateCredentials();
+    
     const moviesSearchQueryFromStorage = JSON.parse(
       localStorage.getItem('moviesSearchQuery')
     );
-    const savedMoviesSearchQueryFromStorage = JSON.parse(
-      localStorage.getItem('savedMoviesSearchQuery')
-    );
-    const moviesListFromStorage = JSON.parse(localStorage.getItem('moviesList'));
     
     if (moviesSearchQueryFromStorage) {
       setSearchQuery(prevState => ({
@@ -329,11 +338,19 @@ function App() {
       }));
     }
     
+    const savedMoviesSearchQueryFromStorage = JSON.parse(
+      localStorage.getItem('savedMoviesSearchQuery')
+    );
+    
     if (savedMoviesSearchQueryFromStorage) {
       setSearchQuery(prevState => ({
         ...prevState, savedMoviesList: savedMoviesSearchQueryFromStorage
       }));
     }
+    
+    const moviesListFromStorage = JSON.parse(
+      localStorage.getItem('moviesList')
+    );
     
     if (moviesListFromStorage) {
       setMoviesList(moviesListFromStorage);
@@ -382,7 +399,10 @@ function App() {
             }/>
             <Route path="/profile" element={
               <Profile
+                onOpenEditForm={openEditProfileForm}
+                isEditProfileFormOpen={isEditProfileFormOpen}
                 onEdit={handleEditProfile}
+                onCloseEditForm={closeEditProfileForm}
                 isLoading={isLoading}
                 serverErrorMessage={serverErrorMessage}
                 setServerErrorMessage={setServerErrorMessage}

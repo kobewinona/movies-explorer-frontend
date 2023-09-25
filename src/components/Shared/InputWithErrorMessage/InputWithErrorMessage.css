@@ -14,14 +14,14 @@
   border-bottom: 1px solid #424242;
   padding: 0 0 8px 0;
   
-  transition: all .2s ease-out;
+  transition: none;
 }
 
 .input-with-error-message__input:focus {
   outline: none;
   border-bottom: 1px solid #8b8b8b;
   
-  transition: all .1s ease-in;
+  transition: none;
 }
 
 .input-with-error-message__input::placeholder {
@@ -41,4 +41,14 @@
   line-height: normal;
   
   display: block;
+}
+
+@media (min-width: 768px) {
+  .input-with-error-message__input {
+    transition: all .2s ease-out;
+  }
+  
+  .input-with-error-message__input:focus {
+    transition: all .1s ease-in;
+  }
 }

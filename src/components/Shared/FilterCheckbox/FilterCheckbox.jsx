@@ -6,13 +6,11 @@ import useInput from '../../../hooks/useInput';
 import './FilterCheckbox.css';
 
 
-const FilterCheckbox = ({defaultValue, onUpdate, ...props}) => {
-  const {inputName, inputValue, handleInputChange} = useInput(defaultValue);
+const FilterCheckbox = ({defaultValue, onUpdate, name, ...props}) => {
+  const {inputName, inputValue, handleInputChange} = useInput(name, defaultValue);
   
   useEffect(() => {
-    if (inputName && inputValue) {
-      onUpdate(inputName, inputValue);
-    }
+    onUpdate(inputName, inputValue);
   }, [inputValue]);
   
   return (
@@ -22,6 +20,7 @@ const FilterCheckbox = ({defaultValue, onUpdate, ...props}) => {
         className="filter-checkbox__original-checkbox"
         onChange={handleInputChange}
         checked={inputValue || false}
+        name={name}
         {...props}
       />
       <span className="filter-checkbox__custom-checkbox"></span>
