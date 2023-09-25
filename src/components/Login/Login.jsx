@@ -7,8 +7,10 @@ import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErro
 
 import './Login.css';
 
-const Login = ({isUpdating, onSignIn, authErrorMessage, onClearAuthErrorMessage}) => {
+const Login = ({onSignIn, isUpdating, serverErrorMessage, setServerErrorMessage}) => {
   const [inputValues, setInputValues] = useState({});
+  
+  console.log('serverErrorMessage', serverErrorMessage);
   
   const handleValuesUpdate = (name, value) => {
     setInputValues(prevValues => ({
@@ -21,19 +23,19 @@ const Login = ({isUpdating, onSignIn, authErrorMessage, onClearAuthErrorMessage}
   };
   
   useEffect(() => {
-    onClearAuthErrorMessage();
+    setServerErrorMessage(undefined);
   }, [inputValues]);
   
   return (
     <section className="login">
       <Auth message="Рады видеть!">
         <Form
+          showDefaultSubmitButton={true}
           onSubmit={handleSubmit}
           isUpdating={isUpdating}
-          authErrorMessage={authErrorMessage}
+          serverErrorMessage={serverErrorMessage}
           name="signin"
           submitText="Войти"
-          showDefaultSubmitButton={true}
         >
           <div>
             <p className="login__input-title">E-mail</p>
@@ -62,10 +64,10 @@ const Login = ({isUpdating, onSignIn, authErrorMessage, onClearAuthErrorMessage}
 };
 
 Login.propTypes = {
-  isUpdating: PropTypes.bool,
   onSignIn: PropTypes.func,
-  authErrorMessage: PropTypes.string,
-  onClearAuthErrorMessage: PropTypes.func
+  isUpdating: PropTypes.bool,
+  serverErrorMessage: PropTypes.string,
+  setServerErrorMessage: PropTypes.func
 };
 
 export default Login;

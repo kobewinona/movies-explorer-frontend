@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
@@ -11,7 +11,7 @@ import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErro
 import './Profile.css';
 
 
-const Profile = ({onEdit, onSignOut}) => {
+const Profile = ({onEdit, isUpdating, onSignOut, serverErrorMessage, setServerErrorMessage}) => {
   const currentUser = useContext(CurrentUserContext);
   
   const [isEditModeOn, setIsEditModeOn] = useState(false);
@@ -30,7 +30,13 @@ const Profile = ({onEdit, onSignOut}) => {
   
   const handleSubmit = () => {
     onEdit(inputValues);
+  
+    setIsEditModeOn(false);
   };
+  
+  useEffect(() => {
+    setServerErrorMessage(undefined);
+  }, [inputValues]);
   
   return (
     <>
@@ -42,18 +48,19 @@ const Profile = ({onEdit, onSignOut}) => {
             isEditModeOn
               ?
               <Form
-                validate={true}
-                onSubmit={handleSubmit}
                 showDefaultSubmitButton={true}
+                onSubmit={handleSubmit}
+                isUpdating={isUpdating}
+                serverErrorMessage={serverErrorMessage}
                 name="sign-up"
                 submitText="Сохранить"
-                isUpdating={false}
               >
                 <div>
                   <p className="profile__input-title">Имя</p>
                   <InputWithErrorMessage
+                    defaultValue={currentUser.name}
                     onUpdate={handleValuesUpdate}
-                    name="userName"
+                    name="name"
                     type="text"
                     aria-label="Имя."
                     minLength="2"
@@ -62,8 +69,9 @@ const Profile = ({onEdit, onSignOut}) => {
                   />
                   <p className="register__input-title">E-mail</p>
                   <InputWithErrorMessage
+                    defaultValue={currentUser.email}
                     onUpdate={handleValuesUpdate}
-                    name="userEmail"
+                    name="email"
                     type="email"
                     aria-label="E-mail."
                     minLength="2"
@@ -123,7 +131,10 @@ const Profile = ({onEdit, onSignOut}) => {
 
 Profile.propTypes = {
   onEdit: PropTypes.func,
-  onSignOut: PropTypes.func
+  isUpdating: PropTypes.bool,
+  onSignOut: PropTypes.func,
+  serverErrorMessage: PropTypes.string,
+  setServerErrorMessage: PropTypes.func
 };
 
 export default Profile;

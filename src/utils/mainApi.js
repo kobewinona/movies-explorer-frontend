@@ -34,6 +34,15 @@ export const signOut = () => {
   }).then(res => returnRes(res));
 };
 
+export const updateCurrentUser = (userInfo) => {
+  return setRequest(`${mainApiConfig['url']}/users/me`, {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: mainApiConfig['headers'],
+    body: JSON.stringify(userInfo)
+  }).then(res => returnRes(res));
+};
+
 export const saveMovie = (movieInfo) => {
   return setRequest(`${mainApiConfig['url']}/movies`, {
     method: 'POST',

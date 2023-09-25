@@ -8,7 +8,7 @@ import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErro
 import './Register.css';
 
 
-const Register = ({onSignUp, isUpdating, authErrorMessage, onClearAuthErrorMessage}) => {
+const Register = ({onSignUp, isUpdating, serverErrorMessage, setServerErrorMessage}) => {
   const [inputValues, setInputValues] = useState(null);
   
   const handleValuesUpdate = (name, value) => {
@@ -22,19 +22,19 @@ const Register = ({onSignUp, isUpdating, authErrorMessage, onClearAuthErrorMessa
   };
   
   useEffect(() => {
-    onClearAuthErrorMessage();
+    setServerErrorMessage(undefined);
   }, [inputValues]);
   
   return (
     <section className="register">
       <Auth message="Добро пожаловать!">
         <Form
+          showDefaultSubmitButton={true}
           onSubmit={handleSubmit}
           isUpdating={isUpdating}
-          authErrorMessage={authErrorMessage}
+          authErrorMessage={serverErrorMessage}
           name="signup"
           submitText="Зарегистрироваться"
-          showDefaultSubmitButton={true}
         >
           <div>
             <p className="register__input-title">Имя</p>
@@ -76,8 +76,8 @@ const Register = ({onSignUp, isUpdating, authErrorMessage, onClearAuthErrorMessa
 Register.propTypes = {
   onSignUp: PropTypes.func,
   isUpdating: PropTypes.bool,
-  authErrorMessage: PropTypes.string,
-  onClearAuthErrorMessage: PropTypes.func
+  serverErrorMessage: PropTypes.string,
+  setServerErrorMessage: PropTypes.func
 };
 
 export default Register;

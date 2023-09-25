@@ -8,7 +8,7 @@ import Spinner from '../Spinner/Spinner';
 import './Form.css';
 
 
-const Form = ({onSubmit, isUpdating, authErrorMessage, showDefaultSubmitButton, ...props}) => {
+const Form = ({onSubmit, isUpdating, serverErrorMessage, showDefaultSubmitButton, ...props}) => {
   const {isFormValid, handleChange, resetForm} = useFormWithValidation();
   
   const handleSubmit = event => {
@@ -31,7 +31,7 @@ const Form = ({onSubmit, isUpdating, authErrorMessage, showDefaultSubmitButton, 
       {
         showDefaultSubmitButton &&
         <div>
-          <p className="form__error-message">{authErrorMessage}</p>
+          <p className="form__error-message">{serverErrorMessage}</p>
           <button
             className={`form__submit
           ${!isFormValid && 'form__submit_disabled'}
@@ -53,7 +53,7 @@ Form.propTypes = {
   submitText: PropTypes.string,
   isUpdating: PropTypes.bool,
   children: PropTypes.any,
-  authErrorMessage: PropTypes.string,
+  serverErrorMessage: PropTypes.string,
   showDefaultSubmitButton: PropTypes.bool,
   props: PropTypes.object
 };

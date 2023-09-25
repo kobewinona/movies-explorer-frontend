@@ -4,7 +4,14 @@ import {Route, Routes, useNavigate} from 'react-router-dom';
 import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 import {SearchQueryContext} from '../../contexts/SearchQueryContext';
-import {searchQueryNotFoundError, searchQueryUnknownError} from '../../utils/constants';
+import {
+  searchQueryNotFoundError,
+  searchQueryUnknownError,
+  signUpSuccessful,
+  signInSuccessful,
+  signOutSuccessful,
+  editProfileSuccessful
+} from '../../utils/constants';
 import * as mainApi from '../../utils/mainApi';
 import * as moviesApi from '../../utils/moviesApi';
 import {moviesURL} from '../../utils/props';
@@ -16,6 +23,7 @@ import NotFound from '../NotFound/NotFound';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import SavedMovies from '../SavedMovies/SavedMovies';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
 import './App.css';
 
@@ -30,7 +38,10 @@ function App() {
   const [moviesList, setMoviesList] = useState(null);
   const [savedMoviesList, setSavedMoviesList] = useState(null);
   const [searchQuery, setSearchQuery] = useState(null);
-  const [authErrorMessage, setAuthErrorMessage] = useState(undefined);
+  const [serverErrorMessage, setServerErrorMessage] = useState(undefined);
+  const [isUpdateSuccessful, setIsUpdateSuccessful] = useState(false);
+  const [toolTipMessage, setToolTipMessage] = useState(undefined);
+  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
   
   
   // auth handlers
@@ -42,22 +53,32 @@ function App() {
       .then(() => {
         const {email, password} = userInfo;
         
-        handleSignIn({email, password});
+        handleSignIn({email, password}, signUpSuccessful);
       })
-      .catch(err => setAuthErrorMessage(err))
+      .catch(err => setServerErrorMessage(err))
       .finally(() => setIsUpdating(false));
   };
   
-  const handleSignIn = (userInfo) => {
+  const handleSignIn = (userInfo, message) => {
     setIsUpdating(true);
     
     mainApi.signIn(userInfo)
       .then(() => {
         validateCredentials();
         
+        setIsUpdateSuccessful(true);
+        
+        if (message) {
+          setToolTipMessage(message);
+        } else {
+          setToolTipMessage(signInSuccessful);
+        }
+        
+        openInfoToolTip();
+        
         navigate('/movies', {replace: true});
       })
-      .catch(err => setAuthErrorMessage(err))
+      .catch(err => setServerErrorMessage(err))
       .finally(() => setIsUpdating(false));
   };
   
@@ -70,13 +91,13 @@ function App() {
         loadUserSavedMovies();
       })
       .catch(err => {
+        setServerErrorMessage(err);
+        
         setIsLoggedIn(false);
         localStorage.clear();
         setSearchQuery(null);
         setMoviesList(null);
         setSavedMoviesList(null);
-        
-        console.log('err', err);
       })
       .finally(() => {
         setIsLoading(false);
@@ -88,23 +109,37 @@ function App() {
     mainApi.signOut()
       .then(() => {
         validateCredentials();
+  
+        setIsUpdateSuccessful(true);
+        setToolTipMessage(signOutSuccessful);
+        openInfoToolTip();
         
         navigate('/', {replace: true});
       })
       .catch(err => console.log(err));
   };
   
-  const clearAuthErrorMessage = () => {
-    if (authErrorMessage) {
-      setAuthErrorMessage(undefined);
-    }
-  };
-  
   
   // edit profile handler
   
-  const handleEditProfile = () => {
-    console.log('handled');
+  const handleEditProfile = (userInfo) => {
+    setIsUpdating(true);
+    
+    mainApi.updateCurrentUser(userInfo)
+      .then(newUserInfo => {
+        setCurrentUserInfo(newUserInfo);
+  
+        setIsUpdateSuccessful(true);
+        setToolTipMessage(editProfileSuccessful);
+        openInfoToolTip();
+      })
+      .catch(err => {
+        setIsUpdateSuccessful(true);
+        setToolTipMessage('увы(');
+        openInfoToolTip();
+        setServerErrorMessage(err);
+      })
+      .finally(() => setIsUpdating(false));
   };
   
   
@@ -260,10 +295,21 @@ function App() {
   }, [savedMoviesList]);
   
   
+  // tool-tip handlers
+  
+  const openInfoToolTip = () => {
+    setIsInfoToolTipOpen(true);
+  };
+  
+  const closeInfoToolTip = () => {
+    setIsInfoToolTipOpen(false);
+  };
+  
+  
   // initialize effect
   
   useEffect(() => {
-    setAuthErrorMessage(undefined);
+    setServerErrorMessage(undefined);
     validateCredentials();
     setSearchQuery(prevState => ({
       ...prevState, errorMessage: undefined
@@ -303,16 +349,16 @@ function App() {
               <Register
                 onSignUp={handleSignUp}
                 isUpdating={isUpdating}
-                authErrorMessage={authErrorMessage}
-                onClearAuthErrorMessage={clearAuthErrorMessage}
+                serverErrorMessage={serverErrorMessage}
+                setServerErrorMessage={setServerErrorMessage}
               />
             }/>
             <Route path="/signin" element={
               <Login
                 onSignIn={handleSignIn}
                 isUpdating={isUpdating}
-                authErrorMessage={authErrorMessage}
-                onClearAuthErrorMessage={clearAuthErrorMessage}
+                serverErrorMessage={serverErrorMessage}
+                setServerErrorMessage={setServerErrorMessage}
               />
             }/>
             <Route path="/" element={<Main/>}/>
@@ -334,9 +380,23 @@ function App() {
                 onDeleteMovie={handleDeleteMovie}
               />
             }/>
-            <Route path="/profile" element={<Profile onEdit={handleEditProfile} onSignOut={signOut}/>}/>
+            <Route path="/profile" element={
+              <Profile
+                onEdit={handleEditProfile}
+                isLoading={isLoading}
+                serverErrorMessage={serverErrorMessage}
+                setServerErrorMessage={setServerErrorMessage}
+                onSignOut={signOut}
+              />
+            }/>
             <Route path="*" element={<NotFound/>}/>
           </Routes>
+          <InfoTooltip
+            isOpen={isInfoToolTipOpen}
+            isUpdateSuccessful={isUpdateSuccessful}
+            toolTipMessage={toolTipMessage}
+            onClose={closeInfoToolTip}
+          />
         </SearchQueryContext.Provider>
       </CurrentUserContext.Provider>
     </AuthContext.Provider>
