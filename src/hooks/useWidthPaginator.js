@@ -4,25 +4,19 @@ import {useState, useEffect} from 'react';
 export function useWidthPaginator(deviceWidth) {
   const [moviesCountLimit, setMoviesCountLimit] = useState(4);
   
+  console.log('deviceWidth', deviceWidth);
+  console.log('moviesCountLimit', moviesCountLimit);
+  
   const extendMoviesCountLimit = () => {
-    let increment;
-    let newMoviesCountLimit;
-  
-    if (deviceWidth > 1008) {
-      increment = 3;
-  
-      newMoviesCountLimit = Math.ceil((moviesCountLimit + increment) / 3) * 3;
+    if (deviceWidth > 1188) {
+      setMoviesCountLimit(moviesCountLimit + 3);
     } else {
-      increment = 2;
-  
-      newMoviesCountLimit = Math.ceil((moviesCountLimit + increment) / 2) * 2;
+      setMoviesCountLimit(moviesCountLimit + 2);
     }
-  
-    setMoviesCountLimit(newMoviesCountLimit);
   };
   
   const handleMoviesCountLimit = () => {
-    if (deviceWidth >= 1280) {
+    if (deviceWidth >= 1188) {
       setMoviesCountLimit(12);
     } else if (deviceWidth >= 768) {
       setMoviesCountLimit(8);

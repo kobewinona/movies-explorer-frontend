@@ -211,6 +211,8 @@ function App() {
       ...prevState, errorMessage: undefined, savedMoviesList: query
     }));
     
+    // TODO search should be in movies from local storage
+    
     mainApi.getMovies()
       .then(movies => {
         const savedMoviesList = movies.filter(movie => {
@@ -239,6 +241,8 @@ function App() {
       localStorage.setItem('savedMoviesSearchQuery', JSON.stringify(searchQuery.savedMoviesList));
     }
   }, [searchQuery?.savedMoviesList]);
+  
+  // TODO change logic - saved movies should be loaded once the user is signed in
   
   const loadUserSavedMovies = () => {
     setIsLoading(true);
