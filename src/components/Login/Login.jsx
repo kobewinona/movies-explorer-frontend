@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Auth from '../Auth/Auth';
 
 import Form from '../Shared/Form/Form';
@@ -7,7 +7,7 @@ import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErro
 
 import './Login.css';
 
-const Login = ({isUpdating, onSignIn}) => {
+const Login = ({isUpdating, onSignIn, authErrorMessage, onClearAuthErrorMessage}) => {
   const [inputValues, setInputValues] = useState({});
   
   const handleValuesUpdate = (name, value) => {
@@ -20,14 +20,19 @@ const Login = ({isUpdating, onSignIn}) => {
     onSignIn(inputValues);
   };
   
+  useEffect(() => {
+    onClearAuthErrorMessage();
+  }, [inputValues]);
+  
   return (
     <section className="login">
       <Auth message="Рады видеть!">
         <Form
           onSubmit={handleSubmit}
+          isUpdating={isUpdating}
+          authErrorMessage={authErrorMessage}
           name="signin"
           submitText="Войти"
-          isUpdating={isUpdating}
           showDefaultSubmitButton={true}
         >
           <div>
@@ -58,7 +63,9 @@ const Login = ({isUpdating, onSignIn}) => {
 
 Login.propTypes = {
   isUpdating: PropTypes.bool,
-  onSignIn: PropTypes.func
+  onSignIn: PropTypes.func,
+  authErrorMessage: PropTypes.string,
+  onClearAuthErrorMessage: PropTypes.func
 };
 
 export default Login;

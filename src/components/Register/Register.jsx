@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Auth from '../Auth/Auth';
 import Form from '../Shared/Form/Form';
@@ -8,7 +8,7 @@ import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErro
 import './Register.css';
 
 
-const Register = ({onSignUp, isUpdating}) => {
+const Register = ({onSignUp, isUpdating, authErrorMessage, onClearAuthErrorMessage}) => {
   const [inputValues, setInputValues] = useState(null);
   
   const handleValuesUpdate = (name, value) => {
@@ -21,14 +21,19 @@ const Register = ({onSignUp, isUpdating}) => {
     onSignUp(inputValues);
   };
   
+  useEffect(() => {
+    onClearAuthErrorMessage();
+  }, [inputValues]);
+  
   return (
     <section className="register">
       <Auth message="Добро пожаловать!">
         <Form
           onSubmit={handleSubmit}
+          isUpdating={isUpdating}
+          authErrorMessage={authErrorMessage}
           name="signup"
           submitText="Зарегистрироваться"
-          isUpdating={isUpdating}
           showDefaultSubmitButton={true}
         >
           <div>
@@ -70,7 +75,9 @@ const Register = ({onSignUp, isUpdating}) => {
 
 Register.propTypes = {
   onSignUp: PropTypes.func,
-  isUpdating: PropTypes.bool
+  isUpdating: PropTypes.bool,
+  authErrorMessage: PropTypes.string,
+  onClearAuthErrorMessage: PropTypes.func
 };
 
 export default Register;

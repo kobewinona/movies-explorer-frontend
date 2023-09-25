@@ -24,6 +24,9 @@ export const returnRes = res => {
   if (res.ok) {
     return res.json();
   } else {
-    return Promise.reject(`Ошибка: ${res.status}`)
+    return res.json().then(err => {
+      const errorMessage = `Ошибка: ${res.status}: ${err.message}`;
+      return Promise.reject(errorMessage);
+    });
   }
 };

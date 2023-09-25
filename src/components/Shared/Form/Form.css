@@ -9,6 +9,14 @@
   margin: 0 auto;
 }
 
+.form__error-message {
+  color: #ee3465;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
+  text-align: center;
+}
+
 .form__submit {
   width: 100%;
   
@@ -41,10 +49,10 @@
   background-color: #2f2f2f;
   opacity: .4;
 }
+
 .form__submit_disabled:hover {
   opacity: .4;
 }
-
 
 .form__submit_updated {
   cursor: default;

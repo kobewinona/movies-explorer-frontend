@@ -13,7 +13,7 @@ import Preloader from '../Shared/Preloader/Preloader';
 import './Movies.css';
 
 
-const Movies = ({isLoading, moviesList, onSearch, ...props}) => {
+const Movies = ({isLoading, moviesList, onSearch, onIsMovieSaved, onSaveMovie, onDeleteMovie}) => {
   const searchQuery = useContext(SearchQueryContext);
   
   return (
@@ -25,7 +25,12 @@ const Movies = ({isLoading, moviesList, onSearch, ...props}) => {
           isLoading
             ? <Preloader/>
             : moviesList
-              ? <MoviesCardList moviesList={moviesList} {...props}/>
+              ? <MoviesCardList
+                  moviesList={moviesList}
+                  onIsMovieSaved={onIsMovieSaved}
+                  onSaveMovie={onSaveMovie}
+                  onDeleteMovie={onDeleteMovie}
+                />
               : <SearchQueryErrorMessage searchQueryErrorMessage={searchQuery?.errorMessage}/>
         }
       </main>
@@ -37,14 +42,10 @@ const Movies = ({isLoading, moviesList, onSearch, ...props}) => {
 Movies.propTypes = {
   isLoading: PropTypes.bool,
   moviesList: PropTypes.array,
-  savedMoviesList: PropTypes.array,
-  searchedQuery: PropTypes.object,
   onSearch: PropTypes.func,
-  searchQueryErrorMessage: PropTypes.string,
-  isMovieSaved: PropTypes.func,
+  onIsMovieSaved: PropTypes.func,
   onSaveMovie: PropTypes.func,
   onDeleteMovie: PropTypes.func,
-  props: PropTypes.object
 };
 
 export default Movies;

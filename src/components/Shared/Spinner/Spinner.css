@@ -49,3 +49,7 @@
   
   animation: spinner 1.5s linear infinite;
 }
+
+.spinner__message {
+  margin: 0 auto;
+}

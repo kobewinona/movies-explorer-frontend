@@ -8,16 +8,15 @@ import Spinner from '../Spinner/Spinner';
 import './Form.css';
 
 
-const Form = ({onSubmit, isUpdating, showDefaultSubmitButton, ...props}) => {
-  const {
-    isFormValid,
-    handleChange
-  } = useFormWithValidation();
+const Form = ({onSubmit, isUpdating, authErrorMessage, showDefaultSubmitButton, ...props}) => {
+  const {isFormValid, handleChange, resetForm} = useFormWithValidation();
   
   const handleSubmit = event => {
     event.preventDefault();
     
     onSubmit();
+    
+    resetForm();
   };
   
   return (
@@ -31,15 +30,18 @@ const Form = ({onSubmit, isUpdating, showDefaultSubmitButton, ...props}) => {
       {props.children}
       {
         showDefaultSubmitButton &&
-        <button
-          className={`form__submit
+        <div>
+          <p className="form__error-message">{authErrorMessage}</p>
+          <button
+            className={`form__submit
           ${!isFormValid && 'form__submit_disabled'}
           ${isUpdating && 'form__submit_updated'}`}
-          type="submit"
-          name="submit"
-          disabled={!isFormValid || isUpdating}
-        >{isUpdating ? <Spinner/> : props.submitText || 'Сохранить'}
-        </button>
+            type="submit"
+            name="submit"
+            disabled={!isFormValid || isUpdating}
+          >{isUpdating ? <Spinner/> : props.submitText || 'Сохранить'}
+          </button>
+        </div>
       }
     </form>
   );
@@ -51,7 +53,9 @@ Form.propTypes = {
   submitText: PropTypes.string,
   isUpdating: PropTypes.bool,
   children: PropTypes.any,
-  showDefaultSubmitButton: PropTypes.bool
+  authErrorMessage: PropTypes.string,
+  showDefaultSubmitButton: PropTypes.bool,
+  props: PropTypes.object
 };
 
 export default Form;

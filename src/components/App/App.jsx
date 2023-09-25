@@ -30,6 +30,7 @@ function App() {
   const [moviesList, setMoviesList] = useState(null);
   const [savedMoviesList, setSavedMoviesList] = useState(null);
   const [searchQuery, setSearchQuery] = useState(null);
+  const [authErrorMessage, setAuthErrorMessage] = useState(undefined);
   
   
   // auth handlers
@@ -38,8 +39,12 @@ function App() {
     setIsUpdating(true);
     
     mainApi.signUp(userInfo)
-      .then(() => navigate('/movies', {replace: true}))
-      .catch(err => console.log(err))
+      .then(() => {
+        const {email, password} = userInfo;
+        
+        handleSignIn({email, password});
+      })
+      .catch(err => setAuthErrorMessage(err))
       .finally(() => setIsUpdating(false));
   };
   
@@ -50,9 +55,9 @@ function App() {
       .then(() => {
         validateCredentials();
         
-        navigate('/', {replace: true});
+        navigate('/movies', {replace: true});
       })
-      .catch(err => console.log(err))
+      .catch(err => setAuthErrorMessage(err))
       .finally(() => setIsUpdating(false));
   };
   
@@ -61,7 +66,7 @@ function App() {
       .then(userInfo => {
         setIsLoggedIn(true);
         setCurrentUserInfo(userInfo);
-  
+        
         loadUserSavedMovies();
       })
       .catch(err => {
@@ -70,8 +75,8 @@ function App() {
         setSearchQuery(null);
         setMoviesList(null);
         setSavedMoviesList(null);
-      
-        console.log(err);
+        
+        console.log('err', err);
       })
       .finally(() => {
         setIsLoading(false);
@@ -89,6 +94,12 @@ function App() {
       .catch(err => console.log(err));
   };
   
+  const clearAuthErrorMessage = () => {
+    if (authErrorMessage) {
+      setAuthErrorMessage(undefined);
+    }
+  };
+  
   
   // edit profile handler
   
@@ -98,12 +109,11 @@ function App() {
   
   
   // movies handlers
-  
-  // movies handlers / moviesList
+  // -- moviesList
   
   const searchMovies = (query) => {
     setIsLoading(true);
-  
+    
     setSearchQuery(prevState => ({
       ...prevState, errorMessage: undefined, moviesList: query
     }));
@@ -119,14 +129,14 @@ function App() {
           setMoviesList(null);
           setSearchQuery(prevState => ({
             ...prevState, errorMessage: searchQueryNotFoundError
-          }))
+          }));
         }
       })
       .catch(() => {
         setMoviesList(null);
         setSearchQuery(prevState => ({
           ...prevState, errorMessage: searchQueryUnknownError
-        }))
+        }));
       })
       .finally(() => setIsLoading(false));
   };
@@ -144,15 +154,15 @@ function App() {
   }, [moviesList]);
   
   
-  // movies handlers / savedMoviesList
+  // -- savedMoviesList
   
   const searchSavedMovies = (query) => {
     setIsLoading(true);
-  
+    
     setSearchQuery(prevState => ({
       ...prevState, errorMessage: undefined, savedMoviesList: query
     }));
-  
+    
     mainApi.getMovies()
       .then(movies => {
         const savedMoviesList = movies.filter(movie => {
@@ -164,14 +174,14 @@ function App() {
           setMoviesList(null);
           setSearchQuery(prevState => ({
             ...prevState, errorMessage: searchQueryNotFoundError
-          }))
+          }));
         }
       })
       .catch(() => {
         setMoviesList(null);
         setSearchQuery(prevState => ({
           ...prevState, errorMessage: searchQueryUnknownError
-        }))
+        }));
       })
       .finally(() => setIsLoading(false));
   };
@@ -184,9 +194,9 @@ function App() {
   
   const loadUserSavedMovies = () => {
     setIsLoading(true);
-  
+    
     const savedMoviesListFromStorage = localStorage.getItem('savedMoviesList');
-  
+    
     if (savedMoviesListFromStorage) {
       setSavedMoviesList(JSON.parse(savedMoviesListFromStorage));
     } else {
@@ -253,6 +263,7 @@ function App() {
   // initialize effect
   
   useEffect(() => {
+    setAuthErrorMessage(undefined);
     validateCredentials();
     setSearchQuery(prevState => ({
       ...prevState, errorMessage: undefined
@@ -288,27 +299,41 @@ function App() {
       <CurrentUserContext.Provider value={currentUserInfo}>
         <SearchQueryContext.Provider value={searchQuery}>
           <Routes>
-            <Route path="/signup" element={<Register isUpdating={isUpdating} onSignUp={handleSignUp}/>}/>
-            <Route path="/signin" element={<Login isUpdating={isUpdating} onSignIn={handleSignIn}/>}/>
+            <Route path="/signup" element={
+              <Register
+                onSignUp={handleSignUp}
+                isUpdating={isUpdating}
+                authErrorMessage={authErrorMessage}
+                onClearAuthErrorMessage={clearAuthErrorMessage}
+              />
+            }/>
+            <Route path="/signin" element={
+              <Login
+                onSignIn={handleSignIn}
+                isUpdating={isUpdating}
+                authErrorMessage={authErrorMessage}
+                onClearAuthErrorMessage={clearAuthErrorMessage}
+              />
+            }/>
             <Route path="/" element={<Main/>}/>
-              <Route path="/movies" element={
-                <Movies
-                  isLoading={isLoading}
-                  moviesList={moviesList}
-                  onSearch={searchMovies}
-                  onIsMovieSaved={checkIsMovieSaved}
-                  onSaveMovie={handleSaveMovie}
-                  onDeleteMovie={handleDeleteMovie}
-                />
-              }/>
-              <Route path="/saved-movies" element={
-                <SavedMovies
-                  isLoading={isLoading}
-                  moviesList={savedMoviesList}
-                  onSearch={searchSavedMovies}
-                  onDeleteMovie={handleDeleteMovie}
-                />
-              }/>
+            <Route path="/movies" element={
+              <Movies
+                isLoading={isLoading}
+                moviesList={moviesList}
+                onSearch={searchMovies}
+                onIsMovieSaved={checkIsMovieSaved}
+                onSaveMovie={handleSaveMovie}
+                onDeleteMovie={handleDeleteMovie}
+              />
+            }/>
+            <Route path="/saved-movies" element={
+              <SavedMovies
+                isLoading={isLoading}
+                moviesList={savedMoviesList}
+                onSearch={searchSavedMovies}
+                onDeleteMovie={handleDeleteMovie}
+              />
+            }/>
             <Route path="/profile" element={<Profile onEdit={handleEditProfile} onSignOut={signOut}/>}/>
             <Route path="*" element={<NotFound/>}/>
           </Routes>
