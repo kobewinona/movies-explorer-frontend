@@ -10,8 +10,6 @@ import './Login.css';
 const Login = ({onSignIn, isUpdating, serverErrorMessage, setServerErrorMessage}) => {
   const [inputValues, setInputValues] = useState({});
   
-  console.log('serverErrorMessage', serverErrorMessage);
-  
   const handleValuesUpdate = (name, value) => {
     setInputValues(prevValues => ({
       ...prevValues, [name]: value
@@ -23,7 +21,7 @@ const Login = ({onSignIn, isUpdating, serverErrorMessage, setServerErrorMessage}
   };
   
   useEffect(() => {
-    setServerErrorMessage(undefined);
+    setServerErrorMessage('');
   }, [inputValues]);
   
   return (

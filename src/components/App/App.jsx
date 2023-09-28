@@ -3,12 +3,11 @@ import {Route, Routes, useNavigate} from 'react-router-dom';
 
 import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
-import {SearchQueryContext} from '../../contexts/SearchQueryContext';
 import {
   editProfileSuccessful,
+  searchQueryEmptyQueryError,
   searchQueryNotFoundError,
   searchQueryUnknownError,
-  searchQueryEmptyQueryError,
   signInSuccessful,
   signOutSuccessful,
   signUpSuccessful
@@ -32,17 +31,24 @@ import './App.css';
 function App() {
   const navigate = useNavigate();
   
-  const [currentUserInfo, setCurrentUserInfo] = useState(null);
+  const [currentUserInfo, setCurrentUserInfo] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [moviesList, setMoviesList] = useState(null);
-  const [savedMoviesList, setSavedMoviesList] = useState(null);
-  const [searchQuery, setSearchQuery] = useState(null);
-  const [serverErrorMessage, setServerErrorMessage] = useState(undefined);
+  
+  const [moviesList, setMoviesList] = useState([]);
+  const [moviesSearchQuery, setMoviesSearchQuery] = useState({});
+  
+  const [savedMoviesList, setSavedMoviesList] = useState([]);
+  const [savedMoviesSearchQuery, setSavedMoviesSearchQuery] = useState({});
+  
+  const [searchQueryErrorMessage, setSearchQueryErrorMessage] = useState('');
+  
+  const [serverErrorMessage, setServerErrorMessage] = useState('');
   const [isEditProfileFormOpen, setIsEditProfileFormOpen] = useState(false);
+  
   const [isUpdateSuccessful, setIsUpdateSuccessful] = useState(false);
-  const [toolTipMessage, setToolTipMessage] = useState(undefined);
+  const [toolTipMessage, setToolTipMessage] = useState('');
   const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
   
   
@@ -68,14 +74,13 @@ function App() {
       .then(() => {
         validateCredentials();
         
-        setIsUpdateSuccessful(true);
-        
         if (message) {
           setToolTipMessage(message);
         } else {
           setToolTipMessage(signInSuccessful);
         }
-        
+  
+        setIsUpdateSuccessful(true);
         openInfoToolTip();
         
         navigate('/movies', {replace: true});
@@ -87,23 +92,24 @@ function App() {
   const validateCredentials = () => {
     mainApi.getCurrentUser()
       .then(userInfo => {
-        setIsLoggedIn(true);
         setCurrentUserInfo(userInfo);
+  
+        setIsLoggedIn(true);
         
         loadUserSavedMovies();
       })
       .catch(err => {
+        setIsLoggedIn(false);
+  
         setServerErrorMessage(err);
         
-        setIsLoggedIn(false);
         localStorage.clear();
-        setSearchQuery(null);
-        setMoviesList(null);
-        setSavedMoviesList(null);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        setIsUpdating(false);
+        
+        setMoviesSearchQuery({});
+        setSavedMoviesSearchQuery({});
+        
+        setMoviesList([]);
+        setSavedMoviesList([]);
       });
   };
   
@@ -122,7 +128,7 @@ function App() {
   };
   
   
-  // edit profile handler
+  // edit profile handlers
   
   const handleEditProfile = (userInfo) => {
     setIsUpdating(true);
@@ -150,53 +156,64 @@ function App() {
   
   
   // movies handlers
+  
+  const searchMovies = (movies, query) => {
+    if (movies) {
+      return movies.filter(movie => {
+        let isNameRuMatch;
+        let isNameEuMatch;
+        
+        if (query) {
+          isNameRuMatch = movie['nameRU'].toLowerCase().includes(query.toLowerCase());
+          isNameEuMatch = movie['nameEN'].toLowerCase().includes(query.toLowerCase());
+        }
+        
+        return isNameRuMatch || isNameEuMatch;
+      });
+    }
+  };
+  
+  
   // -- moviesList
   
-  const searchMovies = ({movieName = '', showShortfilms = false}) => {
+  const handleSearchMovies = ({movieName}) => {
     if (!movieName) {
       setIsUpdateSuccessful(false);
       setToolTipMessage(searchQueryEmptyQueryError);
       openInfoToolTip();
       return;
     }
-  
-    setIsLoading(true);
     
-    setSearchQuery(prevState => ({
-      ...prevState, errorMessage: undefined, moviesList: {movieName, showShortfilms}
-    }));
+    setMoviesSearchQuery(prevState => ({...prevState, movieName}));
+    
+    setIsLoading(true);
     
     moviesApi.getMovies()
       .then(movies => {
-        const moviesList = movies.filter(movie => {
-          return (movie.nameRU.toLowerCase().includes(movieName));
-        });
-        if (moviesList?.length > 0) {
-          setMoviesList(moviesList.reverse());
+        const searchedMovies = searchMovies([...movies], movieName);
+        
+        if (searchedMovies?.length > 0) {
+          setMoviesList(searchedMovies.reverse());
         } else {
-          setMoviesList(null);
-          setSearchQuery(prevState => ({
-            ...prevState, errorMessage: searchQueryNotFoundError
-          }));
+          setMoviesList([]);
+          setSearchQueryErrorMessage(searchQueryNotFoundError);
         }
       })
       .catch(() => {
         setMoviesList(null);
-        setSearchQuery(prevState => ({
-          ...prevState, errorMessage: searchQueryUnknownError
-        }));
+        setSearchQueryErrorMessage(searchQueryUnknownError);
       })
       .finally(() => setIsLoading(false));
   };
   
   useEffect(() => {
-    if (searchQuery?.moviesList) {
-      localStorage.setItem('moviesSearchQuery', JSON.stringify(searchQuery.moviesList));
+    if (Object.keys(moviesSearchQuery).length > 0) {
+      localStorage.setItem('moviesSearchQuery', JSON.stringify(moviesSearchQuery));
     }
-  }, [searchQuery?.moviesList]);
+  }, [moviesSearchQuery]);
   
   useEffect(() => {
-    if (moviesList?.length > 0) {
+    if (moviesList.length > 0) {
       localStorage.setItem('moviesList', JSON.stringify(moviesList));
     }
   }, [moviesList]);
@@ -204,54 +221,38 @@ function App() {
   
   // -- savedMoviesList
   
-  const searchSavedMovies = (query) => {
-    setIsLoading(true);
+  const handleSearchSavedMovies = ({movieName}) => {
+    if (!movieName) {
+      setIsUpdateSuccessful(false);
+      setToolTipMessage(searchQueryEmptyQueryError);
+      openInfoToolTip();
+      return;
+    }
     
-    setSearchQuery(prevState => ({
-      ...prevState, errorMessage: undefined, savedMoviesList: query
-    }));
+    setSavedMoviesSearchQuery(prevState => ({...prevState, movieName}));
     
-    // TODO search should be in movies from local storage
+    const newSearchedSavedMovies = searchMovies([...savedMoviesList], movieName);
     
-    mainApi.getMovies()
-      .then(movies => {
-        const savedMoviesList = movies.filter(movie => {
-          return (movie.nameRU.toLowerCase().includes(query['movieName']));
-        });
-        if (savedMoviesList?.length > 0) {
-          setSavedMoviesList(savedMoviesList.reverse());
-        } else {
-          setMoviesList(null);
-          setSearchQuery(prevState => ({
-            ...prevState, errorMessage: searchQueryNotFoundError
-          }));
-        }
-      })
-      .catch(() => {
-        setMoviesList(null);
-        setSearchQuery(prevState => ({
-          ...prevState, errorMessage: searchQueryUnknownError
-        }));
-      })
-      .finally(() => setIsLoading(false));
+    if (newSearchedSavedMovies.length > 0) {
+      setSavedMoviesList(newSearchedSavedMovies.reverse());
+    } else {
+      setSearchQueryErrorMessage(searchQueryNotFoundError);
+    }
   };
   
   useEffect(() => {
-    if (searchQuery?.savedMoviesList) {
-      localStorage.setItem('savedMoviesSearchQuery', JSON.stringify(searchQuery.savedMoviesList));
-    }
-  }, [searchQuery?.savedMoviesList]);
-  
-  // TODO change logic - saved movies should be loaded once the user is signed in
+  }, [savedMoviesSearchQuery]);
   
   const loadUserSavedMovies = () => {
-    setIsLoading(true);
-    
     const savedMoviesListFromStorage = localStorage.getItem('savedMoviesList');
     
     if (savedMoviesListFromStorage) {
       setSavedMoviesList(JSON.parse(savedMoviesListFromStorage));
     } else {
+      // console.log('loading movies...');
+      
+      setIsLoading(true);
+      
       mainApi.getMovies()
         .then(movies => setSavedMoviesList(movies.reverse()))
         .catch(err => console.log(err))
@@ -259,36 +260,28 @@ function App() {
     }
   };
   
-  const checkIsMovieSaved = (movieId) => {
-    return (savedMoviesList?.some(movie => movie.movieId === movieId));
+  const handleIsMovieSaved = movieId => {
+    return (savedMoviesList.some(movie => movie.movieId === movieId));
   };
   
-  const handleSaveMovie = (movieInfo) => {
+  const handleSaveMovie = movieInfo => {
     const {
-      id,
-      image,
+      id, image,
       // eslint-disable-next-line no-unused-vars
-      created_at,
-      // eslint-disable-next-line no-unused-vars
-      updated_at,
+      created_at, updated_at,
       ...movieToAdd
     } = movieInfo;
     
-    const imageURL = `${moviesURL}${image.url}`;
-    const thumbnail = `${moviesURL}${image.formats.thumbnail['url']}`;
-    
     const movieData = {
       movieId: id,
-      image: imageURL,
-      thumbnail,
+      image: `${moviesURL}${image.url}`,
+      thumbnail: `${moviesURL}${image.formats.thumbnail['url']}`,
       ...movieToAdd
     };
     
     mainApi.saveMovie(movieData)
-      .then(movie => {
-        setSavedMoviesList([movie, ...savedMoviesList]);
-      })
-      .catch(err => console.log('err', err));
+      .then(movie => setSavedMoviesList([...savedMoviesList, movie]))
+      .catch(err => console.log(err));
   };
   
   const handleDeleteMovie = (movieId) => {
@@ -306,7 +299,7 @@ function App() {
   };
   
   useEffect(() => {
-    if (savedMoviesList?.length > 0) {
+    if (savedMoviesList.length > 0) {
       localStorage.setItem('savedMoviesList', JSON.stringify(savedMoviesList));
     }
   }, [savedMoviesList]);
@@ -322,106 +315,113 @@ function App() {
     setIsInfoToolTipOpen(false);
   };
   
+  
   // initialization effects
   
   useEffect(() => {
     setServerErrorMessage(undefined);
-    setSearchQuery(prevState => ({
-      ...prevState, errorMessage: undefined
-    }));
+    setSearchQueryErrorMessage(undefined);
     
     validateCredentials();
     
     const moviesSearchQueryFromStorage = JSON.parse(
       localStorage.getItem('moviesSearchQuery')
     );
-    
+
     if (moviesSearchQueryFromStorage) {
-      setSearchQuery(prevState => ({
-        ...prevState, moviesList: moviesSearchQueryFromStorage
-      }));
+      setMoviesSearchQuery(moviesSearchQueryFromStorage);
     }
-    
-    const savedMoviesSearchQueryFromStorage = JSON.parse(
-      localStorage.getItem('savedMoviesSearchQuery')
-    );
-    
-    if (savedMoviesSearchQueryFromStorage) {
-      setSearchQuery(prevState => ({
-        ...prevState, savedMoviesList: savedMoviesSearchQueryFromStorage
-      }));
-    }
-    
+
+    // const savedMoviesSearchQueryFromStorage = JSON.parse(
+    //   localStorage.getItem('savedMoviesSearchQuery')
+    // );
+    //
+    // if (savedMoviesSearchQueryFromStorage) {
+    //   setSavedMoviesSearchQuery(savedMoviesSearchQueryFromStorage);
+    // }
+
     const moviesListFromStorage = JSON.parse(
       localStorage.getItem('moviesList')
     );
-    
+
     if (moviesListFromStorage) {
       setMoviesList(moviesListFromStorage);
+    }
+  
+    const savedMoviesListFromStorage = JSON.parse(
+      localStorage.getItem('savedMoviesList')
+    );
+  
+    if (savedMoviesListFromStorage) {
+      setSavedMoviesList(savedMoviesListFromStorage);
     }
   }, []);
   
   return (
     <AuthContext.Provider value={isLoggedIn}>
       <CurrentUserContext.Provider value={currentUserInfo}>
-        <SearchQueryContext.Provider value={searchQuery}>
-          <Routes>
-            <Route path="/signup" element={
-              <Register
-                onSignUp={handleSignUp}
-                isUpdating={isUpdating}
-                serverErrorMessage={serverErrorMessage}
-                setServerErrorMessage={setServerErrorMessage}
-              />
-            }/>
-            <Route path="/signin" element={
-              <Login
-                onSignIn={handleSignIn}
-                isUpdating={isUpdating}
-                serverErrorMessage={serverErrorMessage}
-                setServerErrorMessage={setServerErrorMessage}
-              />
-            }/>
-            <Route path="/" element={<Main/>}/>
-            <Route path="/movies" element={
-              <Movies
-                isLoading={isLoading}
-                moviesList={moviesList}
-                onSearch={searchMovies}
-                onIsMovieSaved={checkIsMovieSaved}
-                onSaveMovie={handleSaveMovie}
-                onDeleteMovie={handleDeleteMovie}
-              />
-            }/>
-            <Route path="/saved-movies" element={
-              <SavedMovies
-                isLoading={isLoading}
-                moviesList={savedMoviesList}
-                onSearch={searchSavedMovies}
-                onDeleteMovie={handleDeleteMovie}
-              />
-            }/>
-            <Route path="/profile" element={
-              <Profile
-                onOpenEditForm={openEditProfileForm}
-                isEditProfileFormOpen={isEditProfileFormOpen}
-                onEdit={handleEditProfile}
-                onCloseEditForm={closeEditProfileForm}
-                isLoading={isLoading}
-                serverErrorMessage={serverErrorMessage}
-                setServerErrorMessage={setServerErrorMessage}
-                onSignOut={signOut}
-              />
-            }/>
-            <Route path="*" element={<NotFound/>}/>
-          </Routes>
-          <InfoTooltip
-            isOpen={isInfoToolTipOpen}
-            isUpdateSuccessful={isUpdateSuccessful}
-            toolTipMessage={toolTipMessage}
-            onClose={closeInfoToolTip}
-          />
-        </SearchQueryContext.Provider>
+        <Routes>
+          <Route path="/signup" element={
+            <Register
+              onSignUp={handleSignUp}
+              isUpdating={isUpdating}
+              serverErrorMessage={serverErrorMessage}
+              setServerErrorMessage={setServerErrorMessage}
+            />
+          }/>
+          <Route path="/signin" element={
+            <Login
+              onSignIn={handleSignIn}
+              isUpdating={isUpdating}
+              serverErrorMessage={serverErrorMessage}
+              setServerErrorMessage={setServerErrorMessage}
+            />
+          }/>
+          <Route path="/" element={<Main/>}/>
+          <Route path="/movies" element={
+            <Movies
+              isLoading={isLoading}
+              moviesList={moviesList}
+              searchQuery={moviesSearchQuery}
+              setSearchQuery={setMoviesSearchQuery}
+              onSearch={handleSearchMovies}
+              searchQueryErrorMessage={searchQueryErrorMessage}
+              onIsMovieSaved={handleIsMovieSaved}
+              onSaveMovie={handleSaveMovie}
+              onDeleteMovie={handleDeleteMovie}
+            />
+          }/>
+          <Route path="/saved-movies" element={
+            <SavedMovies
+              isLoading={isLoading}
+              moviesList={savedMoviesList}
+              searchQuery={savedMoviesSearchQuery}
+              setSearchQuery={setSavedMoviesSearchQuery}
+              onSearch={handleSearchSavedMovies}
+              searchQueryErrorMessage={searchQueryErrorMessage}
+              onDeleteMovie={handleDeleteMovie}
+            />
+          }/>
+          <Route path="/profile" element={
+            <Profile
+              onOpenEditForm={openEditProfileForm}
+              isEditProfileFormOpen={isEditProfileFormOpen}
+              onEdit={handleEditProfile}
+              onCloseEditForm={closeEditProfileForm}
+              isLoading={isLoading}
+              serverErrorMessage={serverErrorMessage}
+              setServerErrorMessage={setServerErrorMessage}
+              onSignOut={signOut}
+            />
+          }/>
+          <Route path="*" element={<NotFound/>}/>
+        </Routes>
+        <InfoTooltip
+          isOpen={isInfoToolTipOpen}
+          isUpdateSuccessful={isUpdateSuccessful}
+          toolTipMessage={toolTipMessage}
+          onClose={closeInfoToolTip}
+        />
       </CurrentUserContext.Provider>
     </AuthContext.Provider>
   );

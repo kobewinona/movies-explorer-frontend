@@ -9,8 +9,12 @@ import './FilterCheckbox.css';
 const FilterCheckbox = ({defaultValue, onUpdate, name, ...props}) => {
   const {inputName, inputValue, handleInputChange} = useInput(name, defaultValue);
   
+  // console.log('defaultValue', defaultValue);
+  
   useEffect(() => {
-    onUpdate(inputName, inputValue);
+    if (inputValue !== undefined) {
+      onUpdate({[inputName]: inputValue});
+    }
   }, [inputValue]);
   
   return (
@@ -31,6 +35,7 @@ const FilterCheckbox = ({defaultValue, onUpdate, name, ...props}) => {
 FilterCheckbox.propTypes = {
   defaultValue: PropTypes.bool,
   onUpdate: PropTypes.func,
+  onSubmit: PropTypes.func,
   name: PropTypes.string
 };
 

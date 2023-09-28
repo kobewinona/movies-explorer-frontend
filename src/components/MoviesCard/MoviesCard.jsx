@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
 
 import {moviesURL} from '../../utils/props';
@@ -7,16 +7,16 @@ import {moviesURL} from '../../utils/props';
 import './MoviesCard.css';
 
 
-const MoviesCard = ({movieId, movieInfo, onIsMovieSaved, onSave, onDelete}) => {
+const MoviesCard = ({movieId, movieInfo, isSavedOnLoad, onSave, onDelete}) => {
   const {pathname} = useLocation();
   const {nameRU, duration, image, trailerLink} = movieInfo;
   const imageURL = image.url ? `${moviesURL}${image.url}` : image;
   const durationHours = Math.floor(duration / 60);
   const durationMinutes = duration % 60;
   const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const [isSaved, setIsSaved] = useState(onIsMovieSaved?.(movieInfo.id));
+  const [isSaved, setIsSaved] = useState(false);
   
-  const toggleSaveMovie = () => {
+  const handleSaveMovie = () => {
     if (isSaved) {
       onDelete(movieId);
       setIsSaved(false);
@@ -25,6 +25,12 @@ const MoviesCard = ({movieId, movieInfo, onIsMovieSaved, onSave, onDelete}) => {
       setIsSaved(true);
     }
   };
+  
+  useEffect(() => {
+    if (isSavedOnLoad) {
+      setIsSaved(isSavedOnLoad);
+    }
+  }, [isSavedOnLoad]);
   
   return (
     <li className="movies-card">
@@ -40,6 +46,7 @@ const MoviesCard = ({movieId, movieInfo, onIsMovieSaved, onSave, onDelete}) => {
           onLoad={() => setIsImageLoaded(true)}
         />
       </a>
+      {/*TODO place in a separate component*/}
       {
         pathname === '/saved-movies'
           ?
@@ -52,7 +59,7 @@ const MoviesCard = ({movieId, movieInfo, onIsMovieSaved, onSave, onDelete}) => {
           :
           <button
             className={`movies-card__button ${isSaved && 'movies-card__button_active'}`}
-            onClick={toggleSaveMovie}>
+            onClick={handleSaveMovie}>
             {
               isSaved
                 ? <div className="movies-card__check-icon jump-up"></div>
@@ -67,7 +74,7 @@ const MoviesCard = ({movieId, movieInfo, onIsMovieSaved, onSave, onDelete}) => {
 MoviesCard.propTypes = {
   movieId: PropTypes.number,
   movieInfo: PropTypes.object,
-  onIsMovieSaved: PropTypes.func,
+  isSavedOnLoad: PropTypes.bool,
   onSave: PropTypes.func,
   onDelete: PropTypes.func
 };

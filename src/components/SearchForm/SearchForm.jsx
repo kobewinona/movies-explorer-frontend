@@ -9,13 +9,15 @@ import Input from '../Shared/Input/Input';
 import './SearchForm.css';
 
 
-const SearchForm = ({searchedQuery, onSearch}) => {
-  const [searchQuery, setSearchQuery] = useState(searchedQuery);
+const SearchForm = ({searchedQuery, onFilter, onSearch}) => {
+  const [searchQuery, setSearchQuery] = useState();
   
   const handleValuesUpdate = (inputName, inputValue) => {
-    setSearchQuery(prevState => ({
-      ...prevState, [inputName]: inputValue
-    }));
+    if (inputName && inputValue) {
+      setSearchQuery(prevState => ({
+        ...prevState, [inputName]: inputValue
+      }));
+    }
   };
   
   const handleSubmit = () => {
@@ -44,7 +46,8 @@ const SearchForm = ({searchedQuery, onSearch}) => {
           <div className="search-form__filter-container">
             <FilterCheckbox
               defaultValue={searchedQuery?.['showShortfilms']}
-              onUpdate={handleValuesUpdate}
+              onUpdate={onFilter}
+              onSubmit={handleSubmit}
               name="showShortfilms"
               type="checkbox"
               aria-label="Фильтр по короткометражным фильмам."
@@ -62,6 +65,7 @@ const SearchForm = ({searchedQuery, onSearch}) => {
 
 SearchForm.propTypes = {
   searchedQuery: PropTypes.object,
+  onFilter: PropTypes.func,
   onSearch: PropTypes.func
 }
 

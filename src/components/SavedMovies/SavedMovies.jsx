@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
-
-import {SearchQueryContext} from '../../contexts/SearchQueryContext';
+import React, {useEffect, useState} from 'react';
+import useSearch from '../../hooks/useSearch';
+import useDurationFilter from '../../hooks/useDurationFilter';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -13,22 +14,51 @@ import Preloader from '../Shared/Preloader/Preloader';
 import './SavedMovies.css';
 
 
-const SavedMovies = ({isLoading, moviesList, onSearch, onDeleteMovie}) => {
-  const searchQuery = useContext(SearchQueryContext);
+const SavedMovies = ({isLoading, moviesList, searchQueryErrorMessage, onDeleteMovie}) => {
+  const [searchQuery, setSearchQuery] = useState({});
+  const {searchedMoviesList, queryInput, handleQuerySubmit} = useSearch(moviesList);
+  const {filteredMoviesList, filterInput, handleFilterUpdate} = useDurationFilter(searchedMoviesList);
+  const [storedValue, setStoredValue] = useLocalStorage('savedMoviesSearchQuery');
   
-  console.log('moviesList', moviesList);
+  useEffect(() => {
+    setSearchQuery(storedValue);
+  }, []);
+  
+  useEffect(() => {
+    setStoredValue({...queryInput, ...filterInput});
+  }, [queryInput, filterInput]);
+  
+  
+  useEffect(() => {
+    if (searchQuery && Object.keys(searchQuery)?.length > 0) {
+      const {movieName} = searchQuery;
+      const movieNameObj = {movieName};
+  
+      handleQuerySubmit(movieNameObj);
+    }
+  }, [moviesList]);
+  
+  useEffect(() => {
+    if (searchQuery && Object.keys(searchQuery)?.length > 0) {
+      const {showShortfilms} = searchQuery;
+      const showShortfilmsObj = {showShortfilms};
+      
+      handleFilterUpdate(showShortfilmsObj);
+      setSearchQuery(prevState => ({...prevState, ...filterInput}));
+    }
+  }, [searchedMoviesList, queryInput]);
   
   return (
     <>
       <Header/>
       <main className="saved-movies">
-        <SearchForm searchedQuery={searchQuery?.savedMoviesList} onSearch={onSearch}/>
+        <SearchForm searchedQuery={searchQuery} onFilter={handleFilterUpdate} onSearch={handleQuerySubmit}/>
         {
           isLoading
             ? <Preloader/>
-            : moviesList
-              ? <MoviesCardList moviesList={moviesList} onDeleteMovie={onDeleteMovie}/>
-              : <SearchQueryErrorMessage searchQueryErrorMessage={searchQuery?.errorMessage}/>
+            : searchQueryErrorMessage
+              ? <SearchQueryErrorMessage searchQueryErrorMessage={searchQueryErrorMessage}/>
+              : <MoviesCardList moviesList={filteredMoviesList} onDeleteMovie={onDeleteMovie}/>
         }
       </main>
       <Footer/>
@@ -39,7 +69,10 @@ const SavedMovies = ({isLoading, moviesList, onSearch, onDeleteMovie}) => {
 SavedMovies.propTypes = {
   isLoading: PropTypes.bool,
   moviesList: PropTypes.array,
+  searchQuery: PropTypes.object,
   onSearch: PropTypes.func,
+  setSearchQuery: PropTypes.func,
+  searchQueryErrorMessage: PropTypes.string,
   onDeleteMovie: PropTypes.func
 };
 

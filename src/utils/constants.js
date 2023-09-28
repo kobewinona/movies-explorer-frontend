@@ -1,6 +1,8 @@
-export const inputIncorrectEmailError = 'Please enter an email address.';
-export const inputIncorrectNameError = 'Please use only Latin or Cyrillic ' +
-  'letters and 1 space or hyphen in-between if needed.';
+export const serverUnknownError = 'Что-то пошло не так...';
+
+export const inputIncorrectEmailError = 'Поле должно содержать Email.';
+export const inputIncorrectNameError = 'Поле должно содержать только буквы латинского алфавита, кириллицу' +
+  'пробел или дефис между словами.';
 
 export const searchQueryUnknownError = 'Во время запроса произошла ошибка. ' +
   'Возможно, проблема с соединением или сервер недоступен. ' +

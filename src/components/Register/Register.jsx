@@ -9,7 +9,7 @@ import './Register.css';
 
 
 const Register = ({onSignUp, isUpdating, serverErrorMessage, setServerErrorMessage}) => {
-  const [inputValues, setInputValues] = useState(null);
+  const [inputValues, setInputValues] = useState({});
   
   const handleValuesUpdate = (name, value) => {
     setInputValues(prevState => ({
@@ -22,7 +22,7 @@ const Register = ({onSignUp, isUpdating, serverErrorMessage, setServerErrorMessa
   };
   
   useEffect(() => {
-    setServerErrorMessage(undefined);
+    setServerErrorMessage('');
   }, [inputValues]);
   
   return (
@@ -32,7 +32,7 @@ const Register = ({onSignUp, isUpdating, serverErrorMessage, setServerErrorMessa
           showDefaultSubmitButton={true}
           onSubmit={handleSubmit}
           isUpdating={isUpdating}
-          authErrorMessage={serverErrorMessage}
+          serverErrorMessage={serverErrorMessage}
           name="signup"
           submitText="Зарегистрироваться"
         >

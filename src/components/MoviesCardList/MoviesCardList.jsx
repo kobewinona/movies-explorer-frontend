@@ -12,6 +12,8 @@ const MoviesCardList = ({moviesList, onIsMovieSaved, onSaveMovie, onDeleteMovie}
   const [deviceWidth, setDeviceWidth] = useState(0);
   const {extendMoviesCountLimit, moviesCountLimit} = useWidthPaginator(deviceWidth);
   
+  // console.log('moviesList', moviesList);
+  
   const handleDeviceWidthResize = () => {
     setDeviceWidth(window.innerWidth);
   };
@@ -33,6 +35,8 @@ const MoviesCardList = ({moviesList, onIsMovieSaved, onSaveMovie, onDeleteMovie}
     };
   }, []);
   
+  // TODO remove more button from SavedMovies
+  
   return (
     <section className="movies-card-list">
       {
@@ -49,7 +53,7 @@ const MoviesCardList = ({moviesList, onIsMovieSaved, onSaveMovie, onDeleteMovie}
                     image={movie.image}
                     trailerLink={movie.trailerLink}
                     movieInfo={movie}
-                    onIsMovieSaved={onIsMovieSaved}
+                    isSavedOnLoad={onIsMovieSaved?.(movie.id)}
                     onSave={onSaveMovie}
                     onDelete={onDeleteMovie}
                   />
@@ -75,6 +79,7 @@ const MoviesCardList = ({moviesList, onIsMovieSaved, onSaveMovie, onDeleteMovie}
 
 MoviesCardList.propTypes = {
   moviesList: PropTypes.array,
+  savedMoviesList: PropTypes.array,
   onIsMovieSaved: PropTypes.func,
   onSaveMovie: PropTypes.func,
   onDeleteMovie: PropTypes.func
