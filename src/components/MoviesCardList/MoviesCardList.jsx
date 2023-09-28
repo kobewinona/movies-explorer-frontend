@@ -12,8 +12,6 @@ const MoviesCardList = ({moviesList, onIsMovieSaved, onSaveMovie, onDeleteMovie}
   const [deviceWidth, setDeviceWidth] = useState(0);
   const {extendMoviesCountLimit, moviesCountLimit} = useWidthPaginator(deviceWidth);
   
-  // console.log('moviesList', moviesList);
-  
   const handleDeviceWidthResize = () => {
     setDeviceWidth(window.innerWidth);
   };
