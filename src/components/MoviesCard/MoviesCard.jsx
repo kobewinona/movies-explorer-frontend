@@ -27,9 +27,7 @@ const MoviesCard = ({movieId, movieInfo, isSavedOnLoad, onSave, onDelete}) => {
   };
   
   useEffect(() => {
-    if (isSavedOnLoad) {
-      setIsSaved(isSavedOnLoad);
-    }
+    setIsSaved(isSavedOnLoad);
   }, [isSavedOnLoad]);
   
   return (

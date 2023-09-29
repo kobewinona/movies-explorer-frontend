@@ -176,6 +176,26 @@ function App() {
   
   // -- moviesList
   
+  const getAllMovies = () => {
+    moviesApi.getMovies()
+      .then(movies => {
+        // const searchedMovies = searchMovies([...movies], movieName);
+        setMoviesList(movies.reverse());
+        // if (searchedMovies?.length > 0) {
+        //   setMoviesList(movies.reverse());
+        // }
+        // else {
+        //   setMoviesList([]);
+        //   setSearchQueryErrorMessage(searchQueryNotFoundError);
+        // }
+      })
+      .catch(() => {
+        setMoviesList(null);
+        setSearchQueryErrorMessage(searchQueryUnknownError);
+      })
+      .finally(() => setIsLoading(false));
+  };
+  
   const handleSearchMovies = ({movieName}) => {
     if (!movieName) {
       setIsUpdateSuccessful(false);
@@ -343,6 +363,8 @@ function App() {
     const moviesListFromStorage = JSON.parse(
       localStorage.getItem('moviesList')
     );
+  
+    console.log('moviesListFromStorage', moviesListFromStorage);
 
     if (moviesListFromStorage) {
       setMoviesList(moviesListFromStorage);
@@ -382,6 +404,7 @@ function App() {
             <Movies
               isLoading={isLoading}
               moviesList={moviesList}
+              getAllMovies={getAllMovies}
               searchQuery={moviesSearchQuery}
               setSearchQuery={setMoviesSearchQuery}
               onSearch={handleSearchMovies}
