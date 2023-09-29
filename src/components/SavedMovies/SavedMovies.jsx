@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
+
 import useSearch from '../../hooks/useSearch';
 import useDurationFilter from '../../hooks/useDurationFilter';
 import useLocalStorage from '../../hooks/useLocalStorage';
@@ -16,43 +17,41 @@ import './SavedMovies.css';
 
 const SavedMovies = ({isLoading, moviesList, searchQueryErrorMessage, onDeleteMovie}) => {
   const [searchQuery, setSearchQuery] = useState({});
-  const {searchedMoviesList, queryInput, handleQuerySubmit} = useSearch(moviesList);
-  const {filteredMoviesList, filterInput, handleFilterUpdate} = useDurationFilter(searchedMoviesList);
+  const {searchedMoviesList, queryName, queryValue, searchMovies, handleQuerySubmit} = useSearch(moviesList);
+  const {filteredMoviesList, filterName, filterValue, handleFilterUpdate} = useDurationFilter(searchedMoviesList);
   const [storedValue, setStoredValue] = useLocalStorage('savedMoviesSearchQuery');
-  const prevSearchQueryRef = useRef(searchQuery);
   
   useEffect(() => {
     setSearchQuery(prevState => ({...prevState, ...storedValue}));
-  }, []);
+    
+    if (storedValue && Object.keys(storedValue).length > 0) {
+      const {movieName} = storedValue;
   
-  useEffect(() => {
-    setStoredValue({...queryInput, ...filterInput});
-  }, [queryInput, filterInput]);
-  
-  useEffect(() => {
-    const { movieName } = searchQuery;
-    if (movieName !== prevSearchQueryRef.current.movieName) {
-      const movieNameObj = { movieName };
-      handleQuerySubmit(movieNameObj);
+      searchMovies(movieName);
     }
-    prevSearchQueryRef.current = searchQuery;
-  }, [searchQuery, moviesList]);
+  }, [moviesList, storedValue]);
   
   useEffect(() => {
-    if (searchQuery && Object.keys(searchQuery)?.length > 0) {
-      const {showShortfilms} = searchQuery;
-      const showShortfilmsObj = {showShortfilms};
-      
-      handleFilterUpdate(showShortfilmsObj);
-      setSearchQuery(prevState => ({...prevState, ...filterInput}));
+    if (queryName && queryValue !== undefined) {
+      setStoredValue(prevState => ({...prevState, [queryName]: queryValue}));
     }
-  }, [searchedMoviesList, queryInput]);
+  }, [queryName, queryValue]);
+  
+  useEffect(() => {
+    if (filterName && filterValue !== undefined) {
+      setStoredValue(prevState => ({...prevState, [filterName]: filterValue}));
+    }
+  }, [filterName, filterValue]);
   
   return (
     <>
       <Header/>
       <main className="saved-movies">
-        <SearchForm searchedQuery={searchQuery} onFilter={handleFilterUpdate} onSearch={handleQuerySubmit}/>
+        <SearchForm
+          searchedQuery={searchQuery}
+          onFilter={handleFilterUpdate}
+          onSearch={handleQuerySubmit}
+        />
         {
           isLoading
             ? <Preloader/>
@@ -69,9 +68,6 @@ const SavedMovies = ({isLoading, moviesList, searchQueryErrorMessage, onDeleteMo
 SavedMovies.propTypes = {
   isLoading: PropTypes.bool,
   moviesList: PropTypes.array,
-  searchQuery: PropTypes.object,
-  onSearch: PropTypes.func,
-  setSearchQuery: PropTypes.func,
   searchQueryErrorMessage: PropTypes.string,
   onDeleteMovie: PropTypes.func
 };

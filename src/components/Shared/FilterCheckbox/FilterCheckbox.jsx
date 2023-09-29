@@ -12,8 +12,10 @@ const FilterCheckbox = ({defaultValue, onUpdate, name, ...props}) => {
   // console.log('defaultValue', defaultValue);
   
   useEffect(() => {
+    // console.log('defaultValue', defaultValue);
+    // console.log('inputValue', inputValue);
     if (inputValue !== undefined) {
-      onUpdate({[inputName]: inputValue});
+      onUpdate(inputName, inputValue);
     }
   }, [inputValue]);
   

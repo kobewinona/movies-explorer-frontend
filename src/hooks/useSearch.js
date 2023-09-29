@@ -2,14 +2,15 @@ import {useCallback, useEffect, useState} from 'react';
 
 
 export default function useSearch(moviesList) {
-  const [queryInput, setQueryInput] = useState({});
+  const [queryName, setQueryName] = useState('');
+  const [queryValue, setQueryValue] = useState('');
   const [searchedMoviesList, setSearchedMoviesList] = useState([]);
   
-  const searchMovies = useCallback((movies, {movieName}) => {
-    if (movieName) {
-      setSearchedMoviesList(movies.filter(movie => {
-        const isNameRuMatch = movie['nameRU']?.toLowerCase().includes(movieName.toLowerCase());
-        const isNameEuMatch = movie['nameEN']?.toLowerCase().includes(movieName.toLowerCase());
+  const searchMovies = useCallback((queryValue) => {
+    if (queryValue) {
+      setSearchedMoviesList(moviesList.filter(movie => {
+        const isNameRuMatch = movie['nameRU']?.toLowerCase().includes(queryValue.toLowerCase());
+        const isNameEuMatch = movie['nameEN']?.toLowerCase().includes(queryValue.toLowerCase());
         return isNameRuMatch || isNameEuMatch;
       }));
     } else {
@@ -18,18 +19,17 @@ export default function useSearch(moviesList) {
   }, [moviesList]);
   
   useEffect(() => {
-    if (Object.keys(queryInput).length > 0) {
-      searchMovies(moviesList, queryInput);
+    if (queryName && queryValue) {
+      searchMovies(queryValue);
     } else {
       setSearchedMoviesList(moviesList);
     }
-  }, [moviesList, queryInput, searchMovies]);
+  }, [moviesList, queryName, queryValue]);
   
-  const handleQuerySubmit = useCallback((query) => {
-    if (query && query !== queryInput) {
-      setQueryInput({...query});
-    }
-  }, [queryInput]);
+  const handleQuerySubmit = (name, value) => {
+    setQueryName(name);
+    setQueryValue(value);
+  };
   
-  return {searchedMoviesList, queryInput, handleQuerySubmit};
+  return {searchedMoviesList, queryName, queryValue, searchMovies, handleQuerySubmit};
 }

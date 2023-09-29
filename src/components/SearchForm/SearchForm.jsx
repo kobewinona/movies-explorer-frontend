@@ -10,18 +10,23 @@ import './SearchForm.css';
 
 
 const SearchForm = ({searchedQuery, onFilter, onSearch}) => {
-  const [searchQuery, setSearchQuery] = useState();
+  const [queryName, setQueryName] = useState('');
+  const [queryValue, setQueryValue] = useState('');
   
   const handleValuesUpdate = (inputName, inputValue) => {
-    if (inputName && inputValue) {
-      setSearchQuery(prevState => ({
-        ...prevState, [inputName]: inputValue
-      }));
-    }
+    // if (inputName && inputValue !== undefined) {
+    //   setQueryName(inputName);
+    //   setQueryValue(inputValue);
+    // }
+    setQueryName(inputName);
+    setQueryValue(inputValue);
   };
   
   const handleSubmit = () => {
-    onSearch(searchQuery);
+    console.log('queryName', queryName);
+    console.log('queryValue', queryValue);
+    
+    onSearch(queryName, queryValue);
   };
   
   return (

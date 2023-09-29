@@ -395,7 +395,6 @@ function App() {
             <SavedMovies
               isLoading={isLoading}
               moviesList={savedMoviesList}
-              searchQuery={savedMoviesSearchQuery}
               setSearchQuery={setSavedMoviesSearchQuery}
               onSearch={handleSearchSavedMovies}
               searchQueryErrorMessage={searchQueryErrorMessage}

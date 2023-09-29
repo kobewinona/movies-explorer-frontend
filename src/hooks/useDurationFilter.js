@@ -1,34 +1,29 @@
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 
 export default function useDurationFilter(moviesList) {
-  const [filterInput, setFilterInput] = useState({showShortfilms: false});
+  const [filterName, setFilterName] = useState('');
+  const [filterValue, setFilterValue] = useState(false);
   const [filteredMoviesList, setFilteredMoviesList] = useState([]);
   
-  const filterMovies = useCallback((movies, {showShortfilms}) => {
-    if (showShortfilms) {
-      setFilteredMoviesList(movies.filter(movie => {
-        return movie['duration'] ? movie['duration'] <= 40 : false;
-      }));
-    } else {
-      setFilteredMoviesList(moviesList);
-    }
+  const filterMovies = useCallback((filterValue) => {
+    setFilteredMoviesList(moviesList.filter(movie => {
+      return (movie['duration'] && filterValue) ? movie['duration'] <= 40 : true;
+    }));
   }, [moviesList]);
   
-  const handleFilterUpdate = (filter) => {
-    // console.log('here');
-    // console.log('filter', filter);
-    if (filter?.showShortfilms !== undefined) {
-      console.log('here');
-      console.log('filter', filter);
-      
-      setFilterInput({...filter});
-  
-      filterMovies(moviesList, filter);
+  useEffect(() => {
+    if (filterName && filterValue) {
+      filterMovies(filterValue);
     } else {
       setFilteredMoviesList(moviesList);
     }
+  }, [moviesList, filterName, filterValue]);
+  
+  const handleFilterUpdate = (name, value) => {
+    setFilterName(name);
+    setFilterValue(value);
   };
   
-  return {filteredMoviesList, filterInput, handleFilterUpdate};
+  return {filteredMoviesList, filterName, filterValue, handleFilterUpdate};
 }

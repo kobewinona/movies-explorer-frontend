@@ -12,10 +12,20 @@ export default function useLocalStorage(key, initialValue) {
     }
   });
   
+  // const setValue = (value) => {
+  //   try {
+  //     setStoredValue(value);
+  //     localStorage.setItem(key, JSON.stringify(value));
+  //   } catch (error) {
+  //     console.error('Error setting data to local storage:', error);
+  //   }
+  // };
+  
   const setValue = (value) => {
     try {
-      setStoredValue(value);
-      localStorage.setItem(key, JSON.stringify(value));
+      const newValue = value instanceof Function ? value(storedValue) : value;
+      setStoredValue(newValue);
+      localStorage.setItem(key, JSON.stringify(newValue));
     } catch (error) {
       console.error('Error setting data to local storage:', error);
     }
