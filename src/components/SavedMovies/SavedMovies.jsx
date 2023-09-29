@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
-import useSearch from '../../hooks/useSearch';
-import useDurationFilter from '../../hooks/useDurationFilter';
-import useLocalStorage from '../../hooks/useLocalStorage';
+import {useMovies} from '../../hooks/useMovies';
 
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -15,33 +13,14 @@ import Preloader from '../Shared/Preloader/Preloader';
 import './SavedMovies.css';
 
 
-const SavedMovies = ({isLoading, moviesList, searchQueryErrorMessage, onDeleteMovie}) => {
-  const [searchQuery, setSearchQuery] = useState({});
-  const {searchedMoviesList, queryName, queryValue, searchMovies, handleQuerySubmit} = useSearch(moviesList);
-  const {filteredMoviesList, filterName, filterValue, handleFilterUpdate} = useDurationFilter(searchedMoviesList);
-  const [storedValue, setStoredValue] = useLocalStorage('savedMoviesSearchQuery');
-  
-  useEffect(() => {
-    setSearchQuery(prevState => ({...prevState, ...storedValue}));
-    
-    if (storedValue && Object.keys(storedValue).length > 0) {
-      const {movieName} = storedValue;
-  
-      searchMovies(movieName);
-    }
-  }, [moviesList, storedValue]);
-  
-  useEffect(() => {
-    if (queryName && queryValue !== undefined) {
-      setStoredValue(prevState => ({...prevState, [queryName]: queryValue}));
-    }
-  }, [queryName, queryValue]);
-  
-  useEffect(() => {
-    if (filterName && filterValue !== undefined) {
-      setStoredValue(prevState => ({...prevState, [filterName]: filterValue}));
-    }
-  }, [filterName, filterValue]);
+const SavedMovies = ({isLoading, moviesList, onDeleteMovie}) => {
+  const {
+    searchQuery,
+    searchQueryErrorMessage,
+    filteredMoviesList,
+    handleQuerySubmit,
+    handleFilterUpdate
+  } = useMovies('savedMoviesSearchQuery', moviesList);
   
   return (
     <>

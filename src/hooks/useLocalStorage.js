@@ -2,7 +2,7 @@ import {useState} from 'react';
 
 
 export default function useLocalStorage(key, initialValue) {
-  const [storedValue, setStoredValue] = useState(() => {
+  const [storedValue, setValue] = useState(() => {
     try {
       const item = localStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
@@ -12,24 +12,15 @@ export default function useLocalStorage(key, initialValue) {
     }
   });
   
-  // const setValue = (value) => {
-  //   try {
-  //     setStoredValue(value);
-  //     localStorage.setItem(key, JSON.stringify(value));
-  //   } catch (error) {
-  //     console.error('Error setting data to local storage:', error);
-  //   }
-  // };
-  
-  const setValue = (value) => {
+  const setStoredValue = (value) => {
     try {
       const newValue = value instanceof Function ? value(storedValue) : value;
-      setStoredValue(newValue);
+      setValue(newValue);
       localStorage.setItem(key, JSON.stringify(newValue));
     } catch (error) {
       console.error('Error setting data to local storage:', error);
     }
   };
   
-  return [storedValue, setValue];
+  return {storedValue, setStoredValue};
 }

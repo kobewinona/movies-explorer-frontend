@@ -5,9 +5,7 @@ import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 import {
   editProfileSuccessful,
-  searchQueryEmptyQueryError,
-  searchQueryNotFoundError,
-  searchQueryUnknownError,
+  // searchQueryEmptyQueryError,
   signInSuccessful,
   signOutSuccessful,
   signUpSuccessful
@@ -37,12 +35,7 @@ function App() {
   const [isUpdating, setIsUpdating] = useState(false);
   
   const [moviesList, setMoviesList] = useState([]);
-  const [moviesSearchQuery, setMoviesSearchQuery] = useState({});
-  
   const [savedMoviesList, setSavedMoviesList] = useState([]);
-  const [savedMoviesSearchQuery, setSavedMoviesSearchQuery] = useState({});
-  
-  const [searchQueryErrorMessage, setSearchQueryErrorMessage] = useState('');
   
   const [serverErrorMessage, setServerErrorMessage] = useState('');
   const [isEditProfileFormOpen, setIsEditProfileFormOpen] = useState(false);
@@ -96,7 +89,7 @@ function App() {
   
         setIsLoggedIn(true);
         
-        loadUserSavedMovies();
+        getAllSavedMovies();
       })
       .catch(err => {
         setIsLoggedIn(false);
@@ -104,9 +97,6 @@ function App() {
         setServerErrorMessage(err);
         
         localStorage.clear();
-        
-        setMoviesSearchQuery({});
-        setSavedMoviesSearchQuery({});
         
         setMoviesList([]);
         setSavedMoviesList([]);
@@ -157,83 +147,19 @@ function App() {
   
   // movies handlers
   
-  const searchMovies = (movies, query) => {
-    if (movies) {
-      return movies.filter(movie => {
-        let isNameRuMatch;
-        let isNameEuMatch;
-        
-        if (query) {
-          isNameRuMatch = movie['nameRU'].toLowerCase().includes(query.toLowerCase());
-          isNameEuMatch = movie['nameEN'].toLowerCase().includes(query.toLowerCase());
-        }
-        
-        return isNameRuMatch || isNameEuMatch;
-      });
-    }
-  };
-  
-  
   // -- moviesList
   
   const getAllMovies = () => {
-    moviesApi.getMovies()
-      .then(movies => {
-        // const searchedMovies = searchMovies([...movies], movieName);
-        setMoviesList(movies.reverse());
-        // if (searchedMovies?.length > 0) {
-        //   setMoviesList(movies.reverse());
-        // }
-        // else {
-        //   setMoviesList([]);
-        //   setSearchQueryErrorMessage(searchQueryNotFoundError);
-        // }
-      })
-      .catch(() => {
-        setMoviesList(null);
-        setSearchQueryErrorMessage(searchQueryUnknownError);
-      })
-      .finally(() => setIsLoading(false));
-  };
-  
-  const handleSearchMovies = ({movieName}) => {
-    if (!movieName) {
-      setIsUpdateSuccessful(false);
-      setToolTipMessage(searchQueryEmptyQueryError);
-      openInfoToolTip();
-      return;
-    }
-    
-    setMoviesSearchQuery(prevState => ({...prevState, movieName}));
-    
     setIsLoading(true);
     
     moviesApi.getMovies()
-      .then(movies => {
-        const searchedMovies = searchMovies([...movies], movieName);
-        
-        if (searchedMovies?.length > 0) {
-          setMoviesList(searchedMovies.reverse());
-        } else {
-          setMoviesList([]);
-          setSearchQueryErrorMessage(searchQueryNotFoundError);
-        }
-      })
-      .catch(() => {
-        setMoviesList(null);
-        setSearchQueryErrorMessage(searchQueryUnknownError);
-      })
+      .then(movies => setMoviesList(movies.reverse()))
+      .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
   };
   
   useEffect(() => {
-    if (Object.keys(moviesSearchQuery).length > 0) {
-      localStorage.setItem('moviesSearchQuery', JSON.stringify(moviesSearchQuery));
-    }
-  }, [moviesSearchQuery]);
-  
-  useEffect(() => {
-    if (moviesList.length > 0) {
+    if (moviesList?.length > 0) {
       localStorage.setItem('moviesList', JSON.stringify(moviesList));
     }
   }, [moviesList]);
@@ -241,36 +167,12 @@ function App() {
   
   // -- savedMoviesList
   
-  const handleSearchSavedMovies = ({movieName}) => {
-    if (!movieName) {
-      setIsUpdateSuccessful(false);
-      setToolTipMessage(searchQueryEmptyQueryError);
-      openInfoToolTip();
-      return;
-    }
-    
-    setSavedMoviesSearchQuery(prevState => ({...prevState, movieName}));
-    
-    const newSearchedSavedMovies = searchMovies([...savedMoviesList], movieName);
-    
-    if (newSearchedSavedMovies.length > 0) {
-      setSavedMoviesList(newSearchedSavedMovies.reverse());
-    } else {
-      setSearchQueryErrorMessage(searchQueryNotFoundError);
-    }
-  };
-  
-  useEffect(() => {
-  }, [savedMoviesSearchQuery]);
-  
-  const loadUserSavedMovies = () => {
+  const getAllSavedMovies = () => {
     const savedMoviesListFromStorage = localStorage.getItem('savedMoviesList');
     
     if (savedMoviesListFromStorage) {
       setSavedMoviesList(JSON.parse(savedMoviesListFromStorage));
     } else {
-      // console.log('loading movies...');
-      
       setIsLoading(true);
       
       mainApi.getMovies()
@@ -279,6 +181,12 @@ function App() {
         .finally(() => setIsLoading(false));
     }
   };
+  
+  useEffect(() => {
+    if (savedMoviesList?.length > 0) {
+      localStorage.setItem('savedMoviesList', JSON.stringify(savedMoviesList));
+    }
+  }, [savedMoviesList]);
   
   const handleIsMovieSaved = movieId => {
     return (savedMoviesList.some(movie => movie.movieId === movieId));
@@ -318,12 +226,6 @@ function App() {
       .catch(err => console.log('err', err));
   };
   
-  useEffect(() => {
-    if (savedMoviesList.length > 0) {
-      localStorage.setItem('savedMoviesList', JSON.stringify(savedMoviesList));
-    }
-  }, [savedMoviesList]);
-  
   
   // tool-tip handlers
   
@@ -340,31 +242,12 @@ function App() {
   
   useEffect(() => {
     setServerErrorMessage(undefined);
-    setSearchQueryErrorMessage(undefined);
     
     validateCredentials();
-    
-    const moviesSearchQueryFromStorage = JSON.parse(
-      localStorage.getItem('moviesSearchQuery')
-    );
-
-    if (moviesSearchQueryFromStorage) {
-      setMoviesSearchQuery(moviesSearchQueryFromStorage);
-    }
-
-    // const savedMoviesSearchQueryFromStorage = JSON.parse(
-    //   localStorage.getItem('savedMoviesSearchQuery')
-    // );
-    //
-    // if (savedMoviesSearchQueryFromStorage) {
-    //   setSavedMoviesSearchQuery(savedMoviesSearchQueryFromStorage);
-    // }
 
     const moviesListFromStorage = JSON.parse(
       localStorage.getItem('moviesList')
     );
-  
-    console.log('moviesListFromStorage', moviesListFromStorage);
 
     if (moviesListFromStorage) {
       setMoviesList(moviesListFromStorage);
@@ -405,10 +288,6 @@ function App() {
               isLoading={isLoading}
               moviesList={moviesList}
               getAllMovies={getAllMovies}
-              searchQuery={moviesSearchQuery}
-              setSearchQuery={setMoviesSearchQuery}
-              onSearch={handleSearchMovies}
-              searchQueryErrorMessage={searchQueryErrorMessage}
               onIsMovieSaved={handleIsMovieSaved}
               onSaveMovie={handleSaveMovie}
               onDeleteMovie={handleDeleteMovie}
@@ -418,9 +297,6 @@ function App() {
             <SavedMovies
               isLoading={isLoading}
               moviesList={savedMoviesList}
-              setSearchQuery={setSavedMoviesSearchQuery}
-              onSearch={handleSearchSavedMovies}
-              searchQueryErrorMessage={searchQueryErrorMessage}
               onDeleteMovie={handleDeleteMovie}
             />
           }/>

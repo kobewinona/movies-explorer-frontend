@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
-import useDurationFilter from '../../hooks/useDurationFilter';
-import useLocalStorage from '../../hooks/useLocalStorage';
-import useSearch from '../../hooks/useSearch';
+import {useMovies} from '../../hooks/useMovies';
 
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -15,55 +13,33 @@ import Preloader from '../Shared/Preloader/Preloader';
 import './Movies.css';
 
 
-const Movies = ({isLoading, moviesList, getAllMovies, searchQueryErrorMessage, ...props}) => {
-  const [searchQuery, setSearchQuery] = useState({});
-  const {searchedMoviesList, queryName, queryValue, searchMovies, handleQuerySubmit} = useSearch(moviesList);
-  const {filteredMoviesList, filterName, filterValue, handleFilterUpdate} = useDurationFilter(searchedMoviesList);
-  const [storedValue, setStoredValue] = useLocalStorage('moviesSearchQuery');
+const Movies = ({isLoading, moviesList, getAllMovies, ...props}) => {
+  const [shouldFetch, setShouldFetch] = useState(false);
+  const {
+    searchQuery,
+    searchQueryErrorMessage,
+    filteredMoviesList,
+    handleQuerySubmit,
+    handleFilterUpdate
+  } = useMovies('moviesSearchQuery', moviesList);
+  
+  const onQuerySubmit = (name, value) => {
+    handleQuerySubmit(name, value);
+    setShouldFetch(true);
+  };
   
   useEffect(() => {
-    getAllMovies();
-  }, []);
-  
-  useEffect(() => {
-    setSearchQuery(prevState => ({...prevState, ...storedValue}));
-    
-    if (storedValue && Object.keys(storedValue).length > 0) {
-      const {movieName} = storedValue;
-      
-      searchMovies(movieName);
+    if (shouldFetch) {
+      getAllMovies();
+      setShouldFetch(false);
     }
-  }, [moviesList, storedValue]);
-  
-  useEffect(() => {
-    if (queryName && queryValue !== undefined) {
-      setStoredValue(prevState => ({...prevState, [queryName]: queryValue}));
-    }
-  }, [queryName, queryValue]);
-  
-  useEffect(() => {
-    if (filterName && filterValue !== undefined) {
-      setStoredValue(prevState => ({...prevState, [filterName]: filterValue}));
-    }
-  }, [filterName, filterValue]);
-  
-  useEffect(() => {
-    console.log('moviesList', moviesList);
-  }, [moviesList]);
-  
-  useEffect(() => {
-    console.log('searchedMoviesList', searchedMoviesList);
-  }, [searchedMoviesList]);
-  
-  useEffect(() => {
-    console.log('filteredMoviesList', filteredMoviesList);
-  }, [filteredMoviesList]);
+  }, [shouldFetch]);
   
   return (
     <>
       <Header/>
       <main className="movies">
-        <SearchForm searchedQuery={searchQuery} onFilter={handleFilterUpdate} onSearch={handleQuerySubmit}/>
+        <SearchForm searchedQuery={searchQuery} onFilter={handleFilterUpdate} onSearch={onQuerySubmit}/>
         {
           isLoading
             ? <Preloader/>
