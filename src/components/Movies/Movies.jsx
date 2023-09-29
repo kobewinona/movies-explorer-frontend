@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {useState, useEffect} from 'react';
 
-import {useMovies} from '../../hooks/useMovies';
+import useMovies from '../../hooks/useMovies';
 
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -22,26 +22,19 @@ const Movies = ({isLoading, serverErrorMessage, moviesList, getAllMovies, onUseT
     handleQuerySubmit,
     handleFilterUpdate
   } = useMovies('moviesSearchQuery', moviesList, onUseToolTip);
-  
+
   const onQuerySubmit = (name, value) => {
     handleQuerySubmit(name, value);
     
-    if (value !== '') {
-      setShouldFetch(true);
-    }
+    setShouldFetch(value !== '');
   };
-  
+
   useEffect(() => {
     if (shouldFetch) {
       getAllMovies();
       setShouldFetch(false);
     }
   }, [shouldFetch]);
-  
-  // TODO delete when fix reload from storage
-  useEffect(() => {
-    getAllMovies();
-  }, []);
   
   return (
     <>

@@ -3,7 +3,7 @@ import useLocalStorage from './useLocalStorage';
 import useSearch from './useSearch';
 import useDurationFilter from './useDurationFilter';
 
-export const useMovies = (key, moviesList, onUseToolTip) => {
+export default function useMovies(key, moviesList, onUseToolTip) {
   const [searchQuery, setSearchQuery] = useState({});
   const [searchQueryErrorMessage, setSearchQueryErrorMessage] = useState('');
   const {
@@ -26,7 +26,7 @@ export const useMovies = (key, moviesList, onUseToolTip) => {
     setSearchQuery(prevState => ({ ...prevState, ...storedValue }));
     
     if (storedValue && Object.keys(storedValue).length > 0) {
-      const { movieName } = storedValue;
+      const {movieName} = storedValue;
       searchMovies(movieName);
     }
   }, [moviesList, storedValue]);
@@ -51,4 +51,4 @@ export const useMovies = (key, moviesList, onUseToolTip) => {
     handleQuerySubmit,
     handleFilterUpdate,
   };
-};
+}

@@ -26,27 +26,18 @@ export default function useSearch(moviesList, setSearchQueryErrorMessage, onUseT
         setSearchedMoviesList(searchResult);
       }
     }
-    else {
-      setSearchQueryErrorMessage('');
-      setSearchedMoviesList(moviesList);
-    }
   }, [moviesList]);
   
   useEffect(() => {
-    console.log('moviesList', moviesList);
-    
     if (queryName && queryValue) {
       searchMovies(queryValue);
       setSearchQueryErrorMessage('');
+    } else {
+      setSearchedMoviesList(moviesList);
     }
-    // else {
-    //   setSearchedMoviesList(moviesList);
-    // }
   }, [moviesList, queryName, queryValue]);
   
   const handleQuerySubmit = useCallback((name, value) => {
-    console.log('value', value);
-    
     if (value === '') {
       setSearchQueryErrorMessage('');
       onUseToolTip(false, searchQueryEmptyQueryError);

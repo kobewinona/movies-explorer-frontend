@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {useMovies} from '../../hooks/useMovies';
+import useMovies from '../../hooks/useMovies';
 
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';

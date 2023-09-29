@@ -3,6 +3,7 @@ import {Route, Routes, useNavigate} from 'react-router-dom';
 
 import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
+import useLocalStorage from '../../hooks/useLocalStorage';
 import {
   editProfileSuccessful,
   searchQueryUnknownError,
@@ -44,6 +45,15 @@ function App() {
   const [isUpdateSuccessful, setIsUpdateSuccessful] = useState(false);
   const [toolTipMessage, setToolTipMessage] = useState('');
   const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
+  
+  const {
+    storedValue: storedMoviesList,
+    setStoredValue: setStoredMoviesList
+  } = useLocalStorage('moviesList', null);
+  const {
+    storedValue: storedSavedMoviesList,
+    setStoredValue: setStoredSavedMoviesList
+  } = useLocalStorage('savedMoviesList', null);
   
   
   // auth handlers
@@ -138,42 +148,48 @@ function App() {
   
   // movies handlers
   
-  // -- moviesList
-  
   const getAllMovies = () => {
     setIsLoading(true);
     setServerErrorMessage('');
     
     moviesApi.getMovies()
-      .then(movies => setMoviesList(movies.reverse()))
+      .then(movies => {
+        setStoredMoviesList(movies.reverse());
+        setMoviesList(movies);
+      })
       .catch(() => setServerErrorMessage(searchQueryUnknownError))
       .finally(() => setIsLoading(false));
   };
   
-  
-  // -- savedMoviesList
-  
   const getAllSavedMovies = () => {
     setServerErrorMessage('');
-    const savedMoviesListFromStorage = localStorage.getItem('savedMoviesList');
+    // const savedMoviesListFromStorage = localStorage.getItem('savedMoviesList');
+    // console.log('storedSavedMoviesList', storedSavedMoviesList);
+    // console.log('savedMoviesListFromStorage', savedMoviesListFromStorage);
     
-    if (savedMoviesListFromStorage) {
-      setSavedMoviesList(JSON.parse(savedMoviesListFromStorage));
+    if (storedSavedMoviesList) {
+      // console.log('go here?');
+      setSavedMoviesList(storedSavedMoviesList.sort());
     } else {
       setIsLoading(true);
       
+      console.log('loading saved movies...');
+      
       mainApi.getMovies()
-        .then(movies => setSavedMoviesList(movies.reverse()))
+        .then(movies => {
+          setSavedMoviesList(movies.reverse());
+          setStoredSavedMoviesList(movies);
+        })
         .catch(() => setServerErrorMessage(searchQueryUnknownError))
         .finally(() => setIsLoading(false));
     }
   };
   
-  useEffect(() => {
-    if (savedMoviesList?.length > 0) {
-      localStorage.setItem('savedMoviesList', JSON.stringify(savedMoviesList));
-    }
-  }, [savedMoviesList]);
+  // useEffect(() => {
+  //   if (savedMoviesList?.length > 0) {
+  //     setStoredSavedMoviesList(savedMoviesList);
+  //   }
+  // }, [savedMoviesList]);
   
   const handleIsMovieSaved = movieId => {
     return (savedMoviesList.some(movie => movie.movieId === movieId));
@@ -237,21 +253,13 @@ function App() {
     setServerErrorMessage(undefined);
     
     validateCredentials();
-
-    const moviesListFromStorage = JSON.parse(
-      localStorage.getItem('moviesList')
-    );
-
-    if (moviesListFromStorage) {
-      setMoviesList(moviesListFromStorage);
+    
+    if (storedMoviesList) {
+      setMoviesList(storedMoviesList.sort());
     }
-  
-    const savedMoviesListFromStorage = JSON.parse(
-      localStorage.getItem('savedMoviesList')
-    );
-  
-    if (savedMoviesListFromStorage) {
-      setSavedMoviesList(savedMoviesListFromStorage);
+    
+    if (storedSavedMoviesList) {
+      setSavedMoviesList(storedSavedMoviesList.sort());
     }
   }, []);
   

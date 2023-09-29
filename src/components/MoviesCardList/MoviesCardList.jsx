@@ -33,10 +33,6 @@ const MoviesCardList = ({moviesList, onIsMovieSaved, onSaveMovie, onDeleteMovie}
     };
   }, []);
   
-  useEffect(() => {
-    console.log('moviesList', moviesList);
-  }, [moviesList]);
-  
   // TODO remove more button from SavedMovies
   
   return (
