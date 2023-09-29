@@ -5,7 +5,7 @@ import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 import {
   editProfileSuccessful,
-  // searchQueryEmptyQueryError,
+  searchQueryUnknownError,
   signInSuccessful,
   signOutSuccessful,
   signUpSuccessful
@@ -33,6 +33,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  // const [searchQueryErrorMessage, setSearchQueryErrorMessage] = useState('');
   
   const [moviesList, setMoviesList] = useState([]);
   const [savedMoviesList, setSavedMoviesList] = useState([]);
@@ -66,15 +67,8 @@ function App() {
     mainApi.signIn(userInfo)
       .then(() => {
         validateCredentials();
-        
-        if (message) {
-          setToolTipMessage(message);
-        } else {
-          setToolTipMessage(signInSuccessful);
-        }
   
-        setIsUpdateSuccessful(true);
-        openInfoToolTip();
+        handleInfoToolTip(true, message ?? signInSuccessful);
         
         navigate('/movies', {replace: true});
       })
@@ -108,9 +102,7 @@ function App() {
       .then(() => {
         validateCredentials();
         
-        setIsUpdateSuccessful(true);
-        setToolTipMessage(signOutSuccessful);
-        openInfoToolTip();
+        handleInfoToolTip(true, signOutSuccessful);
         
         navigate('/', {replace: true});
       })
@@ -127,10 +119,9 @@ function App() {
       .then(newUserInfo => {
         setCurrentUserInfo(newUserInfo);
         
-        setIsUpdateSuccessful(true);
-        setToolTipMessage(editProfileSuccessful);
+        handleInfoToolTip(true, editProfileSuccessful);
+        
         closeEditProfileForm();
-        openInfoToolTip();
       })
       .catch(err => setServerErrorMessage(err))
       .finally(() => setIsUpdating(false));
@@ -151,23 +142,19 @@ function App() {
   
   const getAllMovies = () => {
     setIsLoading(true);
+    setServerErrorMessage('');
     
     moviesApi.getMovies()
       .then(movies => setMoviesList(movies.reverse()))
-      .catch((err) => console.log(err))
+      .catch(() => setServerErrorMessage(searchQueryUnknownError))
       .finally(() => setIsLoading(false));
   };
-  
-  useEffect(() => {
-    if (moviesList?.length > 0) {
-      localStorage.setItem('moviesList', JSON.stringify(moviesList));
-    }
-  }, [moviesList]);
   
   
   // -- savedMoviesList
   
   const getAllSavedMovies = () => {
+    setServerErrorMessage('');
     const savedMoviesListFromStorage = localStorage.getItem('savedMoviesList');
     
     if (savedMoviesListFromStorage) {
@@ -177,7 +164,7 @@ function App() {
       
       mainApi.getMovies()
         .then(movies => setSavedMoviesList(movies.reverse()))
-        .catch(err => console.log(err))
+        .catch(() => setServerErrorMessage(searchQueryUnknownError))
         .finally(() => setIsLoading(false));
     }
   };
@@ -237,6 +224,12 @@ function App() {
     setIsInfoToolTipOpen(false);
   };
   
+  const handleInfoToolTip = (isSuccessful, toolTipMessage) => {
+    setIsUpdateSuccessful(isSuccessful);
+    setToolTipMessage(toolTipMessage);
+    openInfoToolTip();
+  };
+  
   
   // initialization effects
   
@@ -286,8 +279,10 @@ function App() {
           <Route path="/movies" element={
             <Movies
               isLoading={isLoading}
+              serverErrorMessage={serverErrorMessage}
               moviesList={moviesList}
               getAllMovies={getAllMovies}
+              onUseToolTip={handleInfoToolTip}
               onIsMovieSaved={handleIsMovieSaved}
               onSaveMovie={handleSaveMovie}
               onDeleteMovie={handleDeleteMovie}
@@ -296,7 +291,9 @@ function App() {
           <Route path="/saved-movies" element={
             <SavedMovies
               isLoading={isLoading}
+              serverErrorMessage={serverErrorMessage}
               moviesList={savedMoviesList}
+              onUseToolTip={handleInfoToolTip}
               onDeleteMovie={handleDeleteMovie}
             />
           }/>

@@ -25,5 +25,10 @@ export default function useDurationFilter(moviesList) {
     setFilterValue(value);
   };
   
-  return {filteredMoviesList, filterName, filterValue, handleFilterUpdate};
+  return {
+    filteredMoviesList,
+    filterName,
+    filterValue,
+    handleFilterUpdate
+  };
 }

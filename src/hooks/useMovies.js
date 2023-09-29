@@ -3,9 +3,7 @@ import useLocalStorage from './useLocalStorage';
 import useSearch from './useSearch';
 import useDurationFilter from './useDurationFilter';
 
-import {searchQueryUnknownError} from '../utils/constants';
-
-export const useMovies = (key, moviesList) => {
+export const useMovies = (key, moviesList, onUseToolTip) => {
   const [searchQuery, setSearchQuery] = useState({});
   const [searchQueryErrorMessage, setSearchQueryErrorMessage] = useState('');
   const {
@@ -14,7 +12,7 @@ export const useMovies = (key, moviesList) => {
     queryValue,
     searchMovies,
     handleQuerySubmit
-  } = useSearch(moviesList, setSearchQueryErrorMessage);
+  } = useSearch(moviesList, setSearchQueryErrorMessage, onUseToolTip);
   const {
     filteredMoviesList,
     filterName,
@@ -45,14 +43,9 @@ export const useMovies = (key, moviesList) => {
     }
   }, [filterName, filterValue]);
   
-  useEffect(() => {
-    if (!moviesList) {
-      setSearchQueryErrorMessage(searchQueryUnknownError);
-    }
-  }, [moviesList]);
-  
   return {
     searchQuery,
+    setSearchQueryErrorMessage,
     searchQueryErrorMessage,
     filteredMoviesList,
     handleQuerySubmit,

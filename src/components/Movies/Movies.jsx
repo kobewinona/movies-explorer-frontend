@@ -13,7 +13,7 @@ import Preloader from '../Shared/Preloader/Preloader';
 import './Movies.css';
 
 
-const Movies = ({isLoading, moviesList, getAllMovies, ...props}) => {
+const Movies = ({isLoading, serverErrorMessage, moviesList, getAllMovies, onUseToolTip, ...props}) => {
   const [shouldFetch, setShouldFetch] = useState(false);
   const {
     searchQuery,
@@ -21,11 +21,14 @@ const Movies = ({isLoading, moviesList, getAllMovies, ...props}) => {
     filteredMoviesList,
     handleQuerySubmit,
     handleFilterUpdate
-  } = useMovies('moviesSearchQuery', moviesList);
+  } = useMovies('moviesSearchQuery', moviesList, onUseToolTip);
   
   const onQuerySubmit = (name, value) => {
     handleQuerySubmit(name, value);
-    setShouldFetch(true);
+    
+    if (value !== '') {
+      setShouldFetch(true);
+    }
   };
   
   useEffect(() => {
@@ -35,6 +38,11 @@ const Movies = ({isLoading, moviesList, getAllMovies, ...props}) => {
     }
   }, [shouldFetch]);
   
+  // TODO delete when fix reload from storage
+  useEffect(() => {
+    getAllMovies();
+  }, []);
+  
   return (
     <>
       <Header/>
@@ -43,8 +51,10 @@ const Movies = ({isLoading, moviesList, getAllMovies, ...props}) => {
         {
           isLoading
             ? <Preloader/>
-            : searchQueryErrorMessage
-              ? <SearchQueryErrorMessage searchQueryErrorMessage={searchQueryErrorMessage}/>
+            : searchQueryErrorMessage || serverErrorMessage
+              ? <SearchQueryErrorMessage
+                  searchQueryErrorMessage={searchQueryErrorMessage || serverErrorMessage}
+                />
               : <MoviesCardList moviesList={filteredMoviesList} {...props}/>
         }
       </main>
@@ -55,12 +65,10 @@ const Movies = ({isLoading, moviesList, getAllMovies, ...props}) => {
 
 Movies.propTypes = {
   isLoading: PropTypes.bool,
+  serverErrorMessage: PropTypes.string,
   moviesList: PropTypes.array,
   getAllMovies: PropTypes.func,
-  searchQuery: PropTypes.object,
-  setSearchQuery: PropTypes.func,
-  onSearch: PropTypes.func,
-  searchQueryErrorMessage: PropTypes.string,
+  onUseToolTip: PropTypes.func,
   onIsMovieSaved: PropTypes.func,
   onSaveMovie: PropTypes.func,
   onDeleteMovie: PropTypes.func

@@ -33,6 +33,10 @@ const MoviesCardList = ({moviesList, onIsMovieSaved, onSaveMovie, onDeleteMovie}
     };
   }, []);
   
+  useEffect(() => {
+    console.log('moviesList', moviesList);
+  }, [moviesList]);
+  
   // TODO remove more button from SavedMovies
   
   return (
@@ -41,7 +45,7 @@ const MoviesCardList = ({moviesList, onIsMovieSaved, onSaveMovie, onDeleteMovie}
         <>
           <ul className="movies-card-list__container">
             {
-              moviesList.map((movie, index) => {
+              moviesList?.map((movie, index) => {
                 return (index < moviesCountLimit &&
                   <MoviesCard
                     key={index}
@@ -61,7 +65,7 @@ const MoviesCardList = ({moviesList, onIsMovieSaved, onSaveMovie, onDeleteMovie}
           </ul>
           <div className="movies-card-list__more-button-container">
             {
-              moviesList.length > moviesCountLimit &&
+              moviesList?.length > moviesCountLimit &&
               <button
                 className="movies-card-list__more-button"
                 onClick={extendMoviesCountLimit}

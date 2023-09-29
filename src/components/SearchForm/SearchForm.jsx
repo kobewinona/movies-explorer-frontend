@@ -14,12 +14,10 @@ const SearchForm = ({searchedQuery, onFilter, onSearch}) => {
   const [queryValue, setQueryValue] = useState('');
   
   const handleValuesUpdate = (inputName, inputValue) => {
-    // if (inputName && inputValue !== undefined) {
-    //   setQueryName(inputName);
-    //   setQueryValue(inputValue);
-    // }
-    setQueryName(inputName);
-    setQueryValue(inputValue);
+    if (inputName && inputValue !== undefined) {
+      setQueryName(inputName);
+      setQueryValue(inputValue);
+    }
   };
   
   const handleSubmit = () => {
@@ -28,6 +26,10 @@ const SearchForm = ({searchedQuery, onFilter, onSearch}) => {
     
     onSearch(queryName, queryValue);
   };
+  
+  // useEffect(() => {
+  //   handleSubmit();
+  // }, []);
   
   return (
     <section className="search-form">
