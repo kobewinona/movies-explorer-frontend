@@ -34,7 +34,10 @@ const MoviesCardList = ({moviesList, onIsMovieSaved, onSaveMovie, onDeleteMovie}
               })
             }
           </ul>
-          <MoreButton moviesList={moviesList} setMoviesCountLimit={setMoviesCountLimit}/>
+          <MoreButton
+            moviesList={moviesList}
+            setMoviesCountLimit={setMoviesCountLimit}
+          />
         </>
       }
     </section>

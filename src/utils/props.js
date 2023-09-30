@@ -1,5 +1,7 @@
 export const moviesURL = 'https://api.nomoreparties.co';
 
+export const authRequiredRoutes = ['/movies', '/saved-movies', '/profile'];
+
 export const mainApiConfig = {
   url: 'http://localhost:3000',
   headers: {

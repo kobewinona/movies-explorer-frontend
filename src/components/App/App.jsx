@@ -5,12 +5,13 @@ import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import {
+  serverUnknownError,
   editProfileSuccessful,
   searchQueryUnknownError,
   signInSuccessful,
   signOutSuccessful,
   signUpSuccessful
-} from '../../utils/constants';
+} from '../../utils/resultMessages';
 import * as mainApi from '../../utils/mainApi';
 import * as moviesApi from '../../utils/moviesApi';
 import {moviesURL} from '../../utils/props';
@@ -21,6 +22,7 @@ import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import NotFound from '../NotFound/NotFound';
 import Profile from '../Profile/Profile';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Register from '../Register/Register';
 import SavedMovies from '../SavedMovies/SavedMovies';
 
@@ -32,7 +34,7 @@ function App() {
   
   const [currentUserInfo, setCurrentUserInfo] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   
   const [moviesList, setMoviesList] = useState([]);
@@ -71,26 +73,32 @@ function App() {
   };
   
   const handleSignIn = (userInfo, message) => {
+    setIsLoading(true);
     setIsUpdating(true);
     
     mainApi.signIn(userInfo)
       .then(() => {
+        setIsLoggedIn(true);
+        
         validateCredentials();
         
         handleInfoToolTip(true, message ?? signInSuccessful);
         
-        navigate('/movies', {replace: true});
+        navigate('/movies');
       })
       .catch((err) => setServerErrorMessage(err))
-      .finally(() => setIsUpdating(false));
+      .finally(() => {
+        setIsLoading(false);
+        setIsUpdating(false);
+      });
   };
   
   const validateCredentials = () => {
     mainApi.getCurrentUser()
       .then((userInfo) => {
-        setCurrentUserInfo(userInfo);
-        
         setIsLoggedIn(true);
+        
+        setCurrentUserInfo(userInfo);
         
         getAllSavedMovies();
       })
@@ -103,7 +111,8 @@ function App() {
         
         setMoviesList([]);
         setSavedMoviesList([]);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
   
   const signOut = () => {
@@ -115,7 +124,7 @@ function App() {
         
         navigate('/', {replace: true});
       })
-      .catch((err) => handleInfoToolTip(false, err));
+      .catch(() => handleInfoToolTip(false, serverUnknownError));
   };
   
   
@@ -148,7 +157,7 @@ function App() {
   // movies handlers
   
   const getAllMovies = () => {
-    setIsLoading(true);
+    setIsUpdating(true);
     setServerErrorMessage('');
     
     moviesApi.getMovies()
@@ -157,7 +166,7 @@ function App() {
         setMoviesList(movies);
       })
       .catch(() => setServerErrorMessage(searchQueryUnknownError))
-      .finally(() => setIsLoading(false));
+      .finally(() => setIsUpdating(false));
   };
   
   const getAllSavedMovies = () => {
@@ -166,12 +175,12 @@ function App() {
     if (storedSavedMoviesList) {
       setSavedMoviesList(storedSavedMoviesList.sort());
     } else {
-      setIsLoading(true);
+      setIsUpdating(true);
       
       mainApi.getMovies()
         .then((movies) => setSavedMoviesList(movies.reverse()))
         .catch(() => setServerErrorMessage(searchQueryUnknownError))
-        .finally(() => setIsLoading(false));
+        .finally(() => setIsUpdating(false));
     }
   };
   
@@ -253,12 +262,18 @@ function App() {
     }
   }, []);
   
+  useEffect(() => {
+    console.log('isLoggedIn in App', isLoggedIn);
+  }, [isLoggedIn]);
+  
   return (
     <AuthContext.Provider value={isLoggedIn}>
       <CurrentUserContext.Provider value={currentUserInfo}>
         <Routes>
           <Route path="/signup" element={
-            <Register
+            <ProtectedRoute
+              element={Register}
+              isLoading={isLoading}
               onSignUp={handleSignUp}
               isUpdating={isUpdating}
               serverErrorMessage={serverErrorMessage}
@@ -266,7 +281,9 @@ function App() {
             />
           }/>
           <Route path="/signin" element={
-            <Login
+            <ProtectedRoute
+              element={Login}
+              isLoading={isLoading}
               onSignIn={handleSignIn}
               isUpdating={isUpdating}
               serverErrorMessage={serverErrorMessage}
@@ -275,8 +292,10 @@ function App() {
           }/>
           <Route path="/" element={<Main/>}/>
           <Route path="/movies" element={
-            <Movies
+            <ProtectedRoute
+              element={Movies}
               isLoading={isLoading}
+              isUpdating={isUpdating}
               serverErrorMessage={serverErrorMessage}
               moviesList={moviesList}
               getAllMovies={getAllMovies}
@@ -287,8 +306,10 @@ function App() {
             />
           }/>
           <Route path="/saved-movies" element={
-            <SavedMovies
+            <ProtectedRoute
+              element={SavedMovies}
               isLoading={isLoading}
+              isUpdating={isUpdating}
               serverErrorMessage={serverErrorMessage}
               moviesList={savedMoviesList}
               onUseToolTip={handleInfoToolTip}
@@ -296,12 +317,13 @@ function App() {
             />
           }/>
           <Route path="/profile" element={
-            <Profile
+            <ProtectedRoute
+              element={Profile}
+              isLoading={isLoading}
               onOpenEditForm={openEditProfileForm}
               isEditProfileFormOpen={isEditProfileFormOpen}
               onEdit={handleEditProfile}
               onCloseEditForm={closeEditProfileForm}
-              isLoading={isLoading}
               serverErrorMessage={serverErrorMessage}
               setServerErrorMessage={setServerErrorMessage}
               onSignOut={signOut}

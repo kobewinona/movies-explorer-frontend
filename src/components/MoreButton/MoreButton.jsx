@@ -34,8 +34,12 @@ const MoreButton = ({moviesList, setMoviesCountLimit}) => {
   }, []);
   
   useEffect(() => {
-    setMoviesCountLimit(moviesCountLimit)
-  }, [moviesCountLimit]);
+    if (pathname !== '/movies') {
+      setMoviesCountLimit(moviesList?.length);
+    } else {
+      setMoviesCountLimit(moviesCountLimit)
+    }
+  }, [moviesCountLimit, moviesList, pathname, setMoviesCountLimit]);
   
   return (
     <div className="more-button">
@@ -47,7 +51,7 @@ const MoreButton = ({moviesList, setMoviesCountLimit}) => {
             onClick={extendMoviesCountLimit}
           >Ещё
           </button>
-        : setMoviesCountLimit((prevState) => prevState + moviesList?.length)
+        : null
       }
     </div>
   );

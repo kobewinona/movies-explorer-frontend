@@ -13,7 +13,7 @@ import Preloader from '../Shared/Preloader/Preloader';
 import './Movies.css';
 
 
-const Movies = ({isLoading, serverErrorMessage, moviesList, getAllMovies, onUseToolTip, ...props}) => {
+const Movies = ({isUpdating, serverErrorMessage, moviesList, getAllMovies, onUseToolTip, ...props}) => {
   const [shouldFetch, setShouldFetch] = useState(false);
   const {
     searchQuery,
@@ -42,8 +42,8 @@ const Movies = ({isLoading, serverErrorMessage, moviesList, getAllMovies, onUseT
       <main className="movies">
         <SearchForm searchedQuery={searchQuery} onFilter={handleFilterUpdate} onSearch={onQuerySubmit}/>
         {
-          isLoading
-            ? <Preloader/>
+          isUpdating
+            ? <Preloader size="normal"/>
             : searchQueryErrorMessage || serverErrorMessage
               ? <SearchQueryErrorMessage
                 searchQueryErrorMessage={searchQueryErrorMessage || serverErrorMessage}
@@ -57,7 +57,7 @@ const Movies = ({isLoading, serverErrorMessage, moviesList, getAllMovies, onUseT
 };
 
 Movies.propTypes = {
-  isLoading: PropTypes.bool,
+  isUpdating: PropTypes.bool,
   serverErrorMessage: PropTypes.string,
   moviesList: PropTypes.array,
   getAllMovies: PropTypes.func,

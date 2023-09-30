@@ -13,7 +13,7 @@ import Preloader from '../Shared/Preloader/Preloader';
 import './SavedMovies.css';
 
 
-const SavedMovies = ({isLoading, serverErrorMessage, moviesList, onUseToolTip, onDeleteMovie}) => {
+const SavedMovies = ({isUpdating, serverErrorMessage, moviesList, onUseToolTip, onDeleteMovie}) => {
   const {
     searchQuery,
     searchQueryErrorMessage,
@@ -32,7 +32,7 @@ const SavedMovies = ({isLoading, serverErrorMessage, moviesList, onUseToolTip, o
           onSearch={handleQuerySubmit}
         />
         {
-          isLoading
+          isUpdating
             ? <Preloader/>
             : searchQueryErrorMessage || serverErrorMessage
               ? <SearchQueryErrorMessage
@@ -47,7 +47,7 @@ const SavedMovies = ({isLoading, serverErrorMessage, moviesList, onUseToolTip, o
 };
 
 SavedMovies.propTypes = {
-  isLoading: PropTypes.bool,
+  isUpdating: PropTypes.bool,
   serverErrorMessage: PropTypes.string,
   moviesList: PropTypes.array,
   onUseToolTip: PropTypes.func,

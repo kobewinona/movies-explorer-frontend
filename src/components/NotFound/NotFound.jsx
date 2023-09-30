@@ -1,10 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 import './NotFound.css';
 
 
 const NotFound = () => {
+  const navigate = useNavigate();
+  
   return (
     <main>
       <section className="not-found">
@@ -12,7 +14,7 @@ const NotFound = () => {
           <p className="not-found__status">404</p>
           <p className="not-found__description">Страница не найдена</p>
         </div>
-        <Link className="not-found__link" to="/">Назад</Link>
+        <button className="not-found__go-back-button" onClick={() => navigate(-1)}>Назад</button>
       </section>
     </main>
   );

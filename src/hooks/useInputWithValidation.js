@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import validator from 'validator/es';
 
-import {inputIncorrectEmailError, inputIncorrectNameError} from '../utils/constants';
+import {inputIncorrectEmailError, inputIncorrectNameError} from '../utils/resultMessages';
 import {nameRegex} from '../utils/regex';
 
 
