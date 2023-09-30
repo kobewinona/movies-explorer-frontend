@@ -163,33 +163,24 @@ function App() {
   
   const getAllSavedMovies = () => {
     setServerErrorMessage('');
-    // const savedMoviesListFromStorage = localStorage.getItem('savedMoviesList');
-    // console.log('storedSavedMoviesList', storedSavedMoviesList);
-    // console.log('savedMoviesListFromStorage', savedMoviesListFromStorage);
     
     if (storedSavedMoviesList) {
-      // console.log('go here?');
       setSavedMoviesList(storedSavedMoviesList.sort());
     } else {
       setIsLoading(true);
       
-      console.log('loading saved movies...');
-      
       mainApi.getMovies()
-        .then(movies => {
-          setSavedMoviesList(movies.reverse());
-          setStoredSavedMoviesList(movies);
-        })
+        .then(movies => setSavedMoviesList(movies.reverse()))
         .catch(() => setServerErrorMessage(searchQueryUnknownError))
         .finally(() => setIsLoading(false));
     }
   };
   
-  // useEffect(() => {
-  //   if (savedMoviesList?.length > 0) {
-  //     setStoredSavedMoviesList(savedMoviesList);
-  //   }
-  // }, [savedMoviesList]);
+  useEffect(() => {
+    if (savedMoviesList?.length > 0) {
+      setStoredSavedMoviesList(savedMoviesList);
+    }
+  }, [savedMoviesList]);
   
   const handleIsMovieSaved = movieId => {
     return (savedMoviesList.some(movie => movie.movieId === movieId));
@@ -200,17 +191,17 @@ function App() {
       id, image,
       // eslint-disable-next-line no-unused-vars
       created_at, updated_at,
-      ...movieToAdd
+      ...restMovieInfo
     } = movieInfo;
     
-    const movieData = {
+    const movieToSave = {
       movieId: id,
       image: `${moviesURL}${image.url}`,
       thumbnail: `${moviesURL}${image.formats.thumbnail['url']}`,
-      ...movieToAdd
+      ...restMovieInfo
     };
     
-    mainApi.saveMovie(movieData)
+    mainApi.saveMovie(movieToSave)
       .then(movie => setSavedMoviesList([...savedMoviesList, movie]))
       .catch(err => console.log(err));
   };
