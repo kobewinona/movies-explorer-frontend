@@ -3,7 +3,7 @@ export const moviesURL = 'https://api.nomoreparties.co';
 export const authRequiredRoutes = ['/movies', '/saved-movies', '/profile'];
 
 export const mainApiConfig = {
-  url: 'http://localhost:3000',
+  url: 'https://api.movies.dk.nomoredomainsicu.ru',
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json'

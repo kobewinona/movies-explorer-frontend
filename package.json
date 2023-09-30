@@ -20,7 +20,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "deploy": "npm update && npm run build && scp -r ./build/* dklimkin@158.160.2.19:/home/dklimkin/movies-explorer-fronted"
   },
   "eslintConfig": {
     "extends": [
