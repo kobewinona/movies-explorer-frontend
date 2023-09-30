@@ -9,11 +9,7 @@ import './FilterCheckbox.css';
 const FilterCheckbox = ({defaultValue, onUpdate, name, ...props}) => {
   const {inputName, inputValue, handleInputChange} = useInput(name, defaultValue);
   
-  // console.log('defaultValue', defaultValue);
-  
   useEffect(() => {
-    // console.log('defaultValue', defaultValue);
-    // console.log('inputValue', inputValue);
     if (inputValue !== undefined) {
       onUpdate(inputName, inputValue);
     }

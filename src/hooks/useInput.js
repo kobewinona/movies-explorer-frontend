@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 
-// Custom hook for input validation
+
 export default function useInput(defaultName, defaultValue) {
   const [inputName, setInputName] = useState(defaultName);
   const [inputValue, setInputValue] = useState(defaultValue);

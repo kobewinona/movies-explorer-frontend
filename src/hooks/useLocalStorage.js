@@ -6,8 +6,8 @@ export default function useLocalStorage(key, initialValue) {
     try {
       const item = localStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
-    } catch (error) {
-      console.error('Error accessing local storage:', error);
+    } catch(err) {
+      console.error(err);
       return initialValue;
     }
   });
@@ -17,8 +17,8 @@ export default function useLocalStorage(key, initialValue) {
       const newValue = value instanceof Function ? value(storedValue) : value;
       setValue(newValue);
       localStorage.setItem(key, JSON.stringify(newValue));
-    } catch (error) {
-      console.error('Error setting data to local storage:', error);
+    } catch(err) {
+      console.error(err);
     }
   };
   

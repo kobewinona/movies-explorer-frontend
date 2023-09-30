@@ -1,7 +1,9 @@
 import {useEffect, useState} from 'react';
+
+import useDurationFilter from './useDurationFilter';
 import useLocalStorage from './useLocalStorage';
 import useSearch from './useSearch';
-import useDurationFilter from './useDurationFilter';
+
 
 export default function useMovies(key, moviesList, onUseToolTip) {
   const [searchQuery, setSearchQuery] = useState({});
@@ -23,7 +25,7 @@ export default function useMovies(key, moviesList, onUseToolTip) {
   
   useEffect(() => {
     setSearchQueryErrorMessage('');
-    setSearchQuery(prevState => ({ ...prevState, ...storedValue }));
+    setSearchQuery((prevState) => ({...prevState, ...storedValue}));
     
     if (storedValue && Object.keys(storedValue).length > 0) {
       const {movieName} = storedValue;
@@ -33,13 +35,13 @@ export default function useMovies(key, moviesList, onUseToolTip) {
   
   useEffect(() => {
     if (queryName && queryValue !== undefined) {
-      setStoredValue(prevState => ({ ...prevState, [queryName]: queryValue }));
+      setStoredValue((prevState) => ({...prevState, [queryName]: queryValue}));
     }
   }, [queryName, queryValue]);
   
   useEffect(() => {
     if (filterName && filterValue !== undefined) {
-      setStoredValue(prevState => ({ ...prevState, [filterName]: filterValue }));
+      setStoredValue((prevState) => ({...prevState, [filterName]: filterValue}));
     }
   }, [filterName, filterValue]);
   
@@ -49,6 +51,6 @@ export default function useMovies(key, moviesList, onUseToolTip) {
     searchQueryErrorMessage,
     filteredMoviesList,
     handleQuerySubmit,
-    handleFilterUpdate,
+    handleFilterUpdate
   };
 }

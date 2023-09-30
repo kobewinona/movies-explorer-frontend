@@ -1,11 +1,9 @@
 import {useEffect, useState} from 'react';
 import validator from 'validator/es';
 
-import {
-  inputIncorrectEmailError,
-  inputIncorrectNameError,
-} from '../utils/constants';
+import {inputIncorrectEmailError, inputIncorrectNameError} from '../utils/constants';
 import {nameRegex} from '../utils/regex';
+
 
 export default function useInputWithValidation(defaultName, defaultValue) {
   const [inputName, setInputName] = useState('');
@@ -20,7 +18,7 @@ export default function useInputWithValidation(defaultName, defaultValue) {
     
     setInputName(name);
     setInputValue(value);
-  
+    
     setIsInputValid(target.validity.valid);
     setErrorMessage(target.validationMessage);
     

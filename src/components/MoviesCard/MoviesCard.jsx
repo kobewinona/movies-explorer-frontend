@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types';
-import React, {useState, useEffect} from 'react';
-import {useLocation} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+// import {useLocation} from 'react-router-dom';
 
 import {moviesURL} from '../../utils/props';
 
 import './MoviesCard.css';
+import MovieCardButton from '../MovieCardButton/MovieCardButton';
 
 
 const MoviesCard = ({movieId, movieInfo, isSavedOnLoad, onSave, onDelete}) => {
-  const {pathname} = useLocation();
+  // const {pathname} = useLocation();
   const {nameRU, duration, image, trailerLink} = movieInfo;
   const imageURL = image.url ? `${moviesURL}${image.url}` : image;
   const durationHours = Math.floor(duration / 60);
@@ -44,27 +45,7 @@ const MoviesCard = ({movieId, movieInfo, isSavedOnLoad, onSave, onDelete}) => {
           onLoad={() => setIsImageLoaded(true)}
         />
       </a>
-      {/*TODO place in a separate component*/}
-      {
-        pathname === '/saved-movies'
-          ?
-          <button
-            className="movies-card__button"
-            onClick={() => onDelete(movieId)}
-          >
-            <div className="movies-card__uncheck-icon"></div>
-          </button>
-          :
-          <button
-            className={`movies-card__button ${isSaved && 'movies-card__button_active'}`}
-            onClick={handleSaveMovie}>
-            {
-              isSaved
-                ? <div className="movies-card__check-icon jump-up"></div>
-                : 'Сохранить'
-            }
-          </button>
-      }
+      <MovieCardButton isSaved={isSaved} onSave={handleSaveMovie} onDelete={onDelete} movieId={movieId}/>
     </li>
   );
 };

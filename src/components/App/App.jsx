@@ -34,7 +34,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  // const [searchQueryErrorMessage, setSearchQueryErrorMessage] = useState('');
   
   const [moviesList, setMoviesList] = useState([]);
   const [savedMoviesList, setSavedMoviesList] = useState([]);
@@ -67,7 +66,7 @@ function App() {
         
         handleSignIn({email, password}, signUpSuccessful);
       })
-      .catch(err => setServerErrorMessage(err))
+      .catch((err) => setServerErrorMessage(err))
       .finally(() => setIsUpdating(false));
   };
   
@@ -77,27 +76,27 @@ function App() {
     mainApi.signIn(userInfo)
       .then(() => {
         validateCredentials();
-  
+        
         handleInfoToolTip(true, message ?? signInSuccessful);
         
         navigate('/movies', {replace: true});
       })
-      .catch(err => setServerErrorMessage(err))
+      .catch((err) => setServerErrorMessage(err))
       .finally(() => setIsUpdating(false));
   };
   
   const validateCredentials = () => {
     mainApi.getCurrentUser()
-      .then(userInfo => {
+      .then((userInfo) => {
         setCurrentUserInfo(userInfo);
-  
+        
         setIsLoggedIn(true);
         
         getAllSavedMovies();
       })
-      .catch(err => {
+      .catch((err) => {
         setIsLoggedIn(false);
-  
+        
         setServerErrorMessage(err);
         
         localStorage.clear();
@@ -116,7 +115,7 @@ function App() {
         
         navigate('/', {replace: true});
       })
-      .catch(err => console.log(err));
+      .catch((err) => handleInfoToolTip(false, err));
   };
   
   
@@ -126,14 +125,14 @@ function App() {
     setIsUpdating(true);
     
     mainApi.updateCurrentUser(userInfo)
-      .then(newUserInfo => {
+      .then((newUserInfo) => {
         setCurrentUserInfo(newUserInfo);
         
         handleInfoToolTip(true, editProfileSuccessful);
         
         closeEditProfileForm();
       })
-      .catch(err => setServerErrorMessage(err))
+      .catch((err) => setServerErrorMessage(err))
       .finally(() => setIsUpdating(false));
   };
   
@@ -153,7 +152,7 @@ function App() {
     setServerErrorMessage('');
     
     moviesApi.getMovies()
-      .then(movies => {
+      .then((movies) => {
         setStoredMoviesList(movies.reverse());
         setMoviesList(movies);
       })
@@ -170,7 +169,7 @@ function App() {
       setIsLoading(true);
       
       mainApi.getMovies()
-        .then(movies => setSavedMoviesList(movies.reverse()))
+        .then((movies) => setSavedMoviesList(movies.reverse()))
         .catch(() => setServerErrorMessage(searchQueryUnknownError))
         .finally(() => setIsLoading(false));
     }
@@ -178,7 +177,7 @@ function App() {
   
   useEffect(() => {
     if (savedMoviesList?.length > 0) {
-      setStoredSavedMoviesList(savedMoviesList);
+      setStoredSavedMoviesList(savedMoviesList.sort());
     }
   }, [savedMoviesList]);
   
@@ -202,8 +201,8 @@ function App() {
     };
     
     mainApi.saveMovie(movieToSave)
-      .then(movie => setSavedMoviesList([...savedMoviesList, movie]))
-      .catch(err => console.log(err));
+      .then((movie) => setSavedMoviesList([...savedMoviesList, movie]))
+      .catch((err) => handleInfoToolTip(false, err));
   };
   
   const handleDeleteMovie = (movieId) => {
@@ -217,7 +216,7 @@ function App() {
           return movie['_id'] !== movieToDelete['_id'];
         }));
       })
-      .catch(err => console.log('err', err));
+      .catch((err) => handleInfoToolTip(err));
   };
   
   

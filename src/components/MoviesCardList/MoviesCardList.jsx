@@ -77,7 +77,6 @@ const MoviesCardList = ({moviesList, onIsMovieSaved, onSaveMovie, onDeleteMovie}
 
 MoviesCardList.propTypes = {
   moviesList: PropTypes.array,
-  savedMoviesList: PropTypes.array,
   onIsMovieSaved: PropTypes.func,
   onSaveMovie: PropTypes.func,
   onDeleteMovie: PropTypes.func

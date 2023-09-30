@@ -36,7 +36,7 @@ const SavedMovies = ({isLoading, serverErrorMessage, moviesList, onUseToolTip, o
             ? <Preloader/>
             : searchQueryErrorMessage || serverErrorMessage
               ? <SearchQueryErrorMessage
-                  searchQueryErrorMessage={searchQueryErrorMessage || serverErrorMessage}
+                searchQueryErrorMessage={searchQueryErrorMessage || serverErrorMessage}
               />
               : <MoviesCardList moviesList={filteredMoviesList} onDeleteMovie={onDeleteMovie}/>
         }
@@ -51,7 +51,6 @@ SavedMovies.propTypes = {
   serverErrorMessage: PropTypes.string,
   moviesList: PropTypes.array,
   onUseToolTip: PropTypes.func,
-  searchQueryErrorMessage: PropTypes.string,
   onDeleteMovie: PropTypes.func
 };
 

@@ -1,6 +1,6 @@
-import {useState, useCallback, useEffect} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
-import {searchQueryNotFoundError, searchQueryEmptyQueryError} from '../utils/constants';
+import {searchQueryEmptyQueryError, searchQueryNotFoundError} from '../utils/constants';
 
 
 export default function useSearch(moviesList, setSearchQueryErrorMessage, onUseToolTip) {
@@ -21,8 +21,7 @@ export default function useSearch(moviesList, setSearchQueryErrorMessage, onUseT
       if (searchResult?.length <= 0) {
         setSearchQueryErrorMessage(searchQueryNotFoundError);
         setSearchedMoviesList([]);
-      }
-      else {
+      } else {
         setSearchedMoviesList(searchResult);
       }
     }

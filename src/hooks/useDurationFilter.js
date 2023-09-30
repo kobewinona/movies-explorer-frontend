@@ -7,7 +7,7 @@ export default function useDurationFilter(moviesList) {
   const [filteredMoviesList, setFilteredMoviesList] = useState([]);
   
   const filterMovies = useCallback((filterValue) => {
-    setFilteredMoviesList(moviesList.filter(movie => {
+    setFilteredMoviesList(moviesList.filter((movie) => {
       return (movie['duration'] && filterValue) ? movie['duration'] <= 40 : true;
     }));
   }, [moviesList]);

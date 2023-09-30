@@ -13,14 +13,14 @@ export default function useFormWithValidation() {
     const name = target.name;
     const value = target.value;
     const inputs = Array.from(event.currentTarget.elements);
-  
+    
     const currentInputsValidity = inputs.reduce((validity, input) => {
       validity[input.name] = input.validity.valid;
       return validity;
     }, {});
-  
+    
     currentInputsValidity[name] = target.validity.valid;
-  
+    
     if (name === 'name') {
       if (value && !nameRegex.test(value)) {
         currentInputsValidity[name] = false;
@@ -28,10 +28,10 @@ export default function useFormWithValidation() {
     } else if (target.type === 'email') {
       currentInputsValidity[name] = validator.isEmail(value);
     }
-  
+    
     setInputsValidity(currentInputsValidity);
     
-    setIsFormValid(Object.values(currentInputsValidity).every(inputValidity => {
+    setIsFormValid(Object.values(currentInputsValidity).every((inputValidity) => {
       return inputValidity === true;
     }));
   };

@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
-import Auth from '../Auth/Auth';
 
+import Auth from '../Auth/Auth';
 import Form from '../Shared/Form/Form';
 import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErrorMessage';
 
 import './Login.css';
+
 
 const Login = ({onSignIn, isUpdating, serverErrorMessage, setServerErrorMessage}) => {
   const [inputValues, setInputValues] = useState({});

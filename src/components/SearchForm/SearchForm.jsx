@@ -21,15 +21,8 @@ const SearchForm = ({searchedQuery, onFilter, onSearch}) => {
   };
   
   const handleSubmit = () => {
-    console.log('queryName', queryName);
-    console.log('queryValue', queryValue);
-    
     onSearch(queryName, queryValue);
   };
-  
-  // useEffect(() => {
-  //   handleSubmit();
-  // }, []);
   
   return (
     <section className="search-form">
@@ -74,6 +67,6 @@ SearchForm.propTypes = {
   searchedQuery: PropTypes.object,
   onFilter: PropTypes.func,
   onSearch: PropTypes.func
-}
+};
 
 export default SearchForm;

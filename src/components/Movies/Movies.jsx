@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import useMovies from '../../hooks/useMovies';
 
@@ -22,13 +22,13 @@ const Movies = ({isLoading, serverErrorMessage, moviesList, getAllMovies, onUseT
     handleQuerySubmit,
     handleFilterUpdate
   } = useMovies('moviesSearchQuery', moviesList, onUseToolTip);
-
+  
   const onQuerySubmit = (name, value) => {
     handleQuerySubmit(name, value);
     
     setShouldFetch(value !== '');
   };
-
+  
   useEffect(() => {
     if (shouldFetch) {
       getAllMovies();
@@ -46,8 +46,8 @@ const Movies = ({isLoading, serverErrorMessage, moviesList, getAllMovies, onUseT
             ? <Preloader/>
             : searchQueryErrorMessage || serverErrorMessage
               ? <SearchQueryErrorMessage
-                  searchQueryErrorMessage={searchQueryErrorMessage || serverErrorMessage}
-                />
+                searchQueryErrorMessage={searchQueryErrorMessage || serverErrorMessage}
+              />
               : <MoviesCardList moviesList={filteredMoviesList} {...props}/>
         }
       </main>
