@@ -124,7 +124,7 @@ function App() {
         
         navigate('/', {replace: true});
       })
-      .catch(() => handleInfoToolTip(false, serverUnknownError));
+      .catch(() => handleInfoToolTip(false, serverUnknownError))
   };
   
   
@@ -261,10 +261,6 @@ function App() {
       setSavedMoviesList(storedSavedMoviesList.sort());
     }
   }, []);
-  
-  useEffect(() => {
-    console.log('isLoggedIn in App', isLoggedIn);
-  }, [isLoggedIn]);
   
   return (
     <AuthContext.Provider value={isLoggedIn}>

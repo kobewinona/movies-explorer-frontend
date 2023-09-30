@@ -4,7 +4,8 @@ import validator from 'validator/es';
 import {nameRegex} from '../utils/regex';
 
 
-export default function useFormWithValidation() {
+export default function useFormWithValidation(initialValues) {
+  const [currentValues, setCurrentValues] = useState({});
   const [inputsValidity, setInputsValidity] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   
@@ -13,6 +14,8 @@ export default function useFormWithValidation() {
     const name = target.name;
     const value = target.value;
     const inputs = Array.from(event.currentTarget.elements);
+  
+    setCurrentValues(prevValues => ({ ...prevValues, [name]: value }));
     
     const currentInputsValidity = inputs.reduce((validity, input) => {
       validity[input.name] = input.validity.valid;
@@ -30,10 +33,12 @@ export default function useFormWithValidation() {
     }
     
     setInputsValidity(currentInputsValidity);
+  
+    setIsFormValid(Object.values(currentInputsValidity).every(Boolean));
     
-    setIsFormValid(Object.values(currentInputsValidity).every((inputValidity) => {
-      return inputValidity === true;
-    }));
+    if (initialValues) {
+      setIsFormValid(Object.keys(currentValues).every(key => value !== initialValues?.[key]));
+    }
   };
   
   const resetForm = useCallback((newValues = {}, newIsValid = false) => {

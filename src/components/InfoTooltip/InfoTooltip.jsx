@@ -19,8 +19,6 @@ const InfoTooltip = ({isOpen, isUpdateSuccessful, toolTipMessage, onClose}) => {
     }
     
     return () => document.removeEventListener('keydown', handleKeyDown);
-    
-    // eslint-disable-next-line
   }, [isOpen]);
   
   return (

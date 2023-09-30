@@ -30,6 +30,10 @@ const Profile = ({serverErrorMessage, setServerErrorMessage, ...props}) => {
     setServerErrorMessage(undefined);
   }, [inputValues]);
   
+  useEffect(() => {
+    return () => props.onCloseEditForm();
+  }, []);
+  
   return (
     <>
       <Header/>
@@ -41,6 +45,7 @@ const Profile = ({serverErrorMessage, setServerErrorMessage, ...props}) => {
               ?
               <Form
                 showDefaultSubmitButton={true}
+                initialValues={currentUser}
                 onSubmit={handleSubmit}
                 isUpdating={props.isUpdating}
                 serverErrorMessage={serverErrorMessage}

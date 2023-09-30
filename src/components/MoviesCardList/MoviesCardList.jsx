@@ -19,7 +19,7 @@ const MoviesCardList = ({moviesList, onIsMovieSaved, onSaveMovie, onDeleteMovie}
               moviesList?.map((movie, index) => {
                 return (index < moviesCountLimit &&
                   <MoviesCard
-                    key={index}
+                    key={movie.id}
                     movieId={movie.id ? movie.id : movie.movieId}
                     nameRU={movie.nameRU}
                     duration={movie.duration}

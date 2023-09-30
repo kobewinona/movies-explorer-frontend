@@ -8,14 +8,14 @@ import Spinner from '../Spinner/Spinner';
 import './Form.css';
 
 
-const Form = ({onSubmit, isUpdating, serverErrorMessage, showDefaultSubmitButton, ...props}) => {
-  const {isFormValid, handleChange, resetForm} = useFormWithValidation();
+const Form = ({showDefaultSubmitButton, initialValues, onSubmit, isUpdating, serverErrorMessage, ...props}) => {
+  const {isFormValid, handleChange, resetForm} = useFormWithValidation(initialValues);
   
   const handleSubmit = event => {
     event.preventDefault();
     
     onSubmit();
-    
+
     resetForm();
   };
   
@@ -48,13 +48,14 @@ const Form = ({onSubmit, isUpdating, serverErrorMessage, showDefaultSubmitButton
 };
 
 Form.propTypes = {
+  showDefaultSubmitButton: PropTypes.bool,
+  initialValues: PropTypes.object,
   onSubmit: PropTypes.func,
   name: PropTypes.string,
   submitText: PropTypes.string,
   isUpdating: PropTypes.bool,
   children: PropTypes.any,
   serverErrorMessage: PropTypes.string,
-  showDefaultSubmitButton: PropTypes.bool,
   props: PropTypes.object
 };
 
