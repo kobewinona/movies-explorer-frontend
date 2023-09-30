@@ -27,6 +27,16 @@ const Login = ({onSignIn, isUpdating, serverErrorMessage, setServerErrorMessage}
     }
   }, [inputValues]);
   
+  useEffect(() => {
+    return () => {
+      setServerErrorMessage('');
+    }
+  }, []);
+  
+  useEffect(() => {
+    console.log('serverErrorMessage', serverErrorMessage);
+  }, [serverErrorMessage]);
+  
   return (
     <section className="login">
       <Auth message="Рады видеть!">

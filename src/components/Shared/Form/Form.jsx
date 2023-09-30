@@ -13,7 +13,7 @@ const Form = ({showDefaultSubmitButton, initialValues, onSubmit, isUpdating, ser
   
   const handleSubmit = event => {
     event.preventDefault();
-    
+
     onSubmit();
 
     resetForm();

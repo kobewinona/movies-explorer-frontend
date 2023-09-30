@@ -27,6 +27,12 @@ const Register = ({onSignUp, isUpdating, serverErrorMessage, setServerErrorMessa
     }
   }, [inputValues]);
   
+  useEffect(() => {
+    return () => {
+      setServerErrorMessage('');
+    }
+  }, []);
+  
   return (
     <section className="register">
       <Auth message="Добро пожаловать!">

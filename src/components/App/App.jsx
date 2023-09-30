@@ -158,7 +158,6 @@ function App() {
   
   const getAllMovies = () => {
     setIsUpdating(true);
-    setServerErrorMessage('');
     
     moviesApi.getMovies()
       .then((movies) => {
@@ -170,8 +169,6 @@ function App() {
   };
   
   const getAllSavedMovies = () => {
-    setServerErrorMessage('');
-    
     if (storedSavedMoviesList) {
       setSavedMoviesList(storedSavedMoviesList.sort());
     } else {
@@ -249,9 +246,11 @@ function App() {
   // initialization effects
   
   useEffect(() => {
-    setServerErrorMessage(undefined);
-    
-    validateCredentials();
+    if (isLoggedIn) {
+      validateCredentials();
+    } else {
+      setIsLoading(false);
+    }
     
     if (storedMoviesList) {
       setMoviesList(storedMoviesList.sort());
