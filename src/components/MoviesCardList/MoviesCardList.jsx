@@ -1,39 +1,14 @@
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
-import {useWidthPaginator} from '../../hooks/useWidthPaginator';
-
+import MoreButton from '../MoreButton/MoreButton';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
 import './MoviesCardList.css';
 
 
 const MoviesCardList = ({moviesList, onIsMovieSaved, onSaveMovie, onDeleteMovie}) => {
-  const [deviceWidth, setDeviceWidth] = useState(0);
-  const {extendMoviesCountLimit, moviesCountLimit} = useWidthPaginator(deviceWidth);
-  
-  const handleDeviceWidthResize = () => {
-    setDeviceWidth(window.innerWidth);
-  };
-  
-  useEffect(() => {
-    setDeviceWidth(window.innerWidth);
-    
-    let timer;
-    
-    window.addEventListener('resize', () => {
-      timer = setTimeout(() => {
-        handleDeviceWidthResize();
-      }, 400);
-    });
-    
-    return () => {
-      window.removeEventListener('resize', handleDeviceWidthResize);
-      clearTimeout(timer);
-    };
-  }, []);
-  
-  // TODO remove more button from SavedMovies
+  const [moviesCountLimit, setMoviesCountLimit] = useState(0);
   
   return (
     <section className="movies-card-list">
@@ -59,16 +34,7 @@ const MoviesCardList = ({moviesList, onIsMovieSaved, onSaveMovie, onDeleteMovie}
               })
             }
           </ul>
-          <div className="movies-card-list__more-button-container">
-            {
-              moviesList?.length > moviesCountLimit &&
-              <button
-                className="movies-card-list__more-button"
-                onClick={extendMoviesCountLimit}
-              >Ещё
-              </button>
-            }
-          </div>
+          <MoreButton moviesList={moviesList} setMoviesCountLimit={setMoviesCountLimit}/>
         </>
       }
     </section>
