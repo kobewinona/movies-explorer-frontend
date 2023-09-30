@@ -22,7 +22,9 @@ const Register = ({onSignUp, isUpdating, serverErrorMessage, setServerErrorMessa
   };
   
   useEffect(() => {
-    setServerErrorMessage('');
+    if (Object.keys(inputValues)?.length > 0) {
+      setServerErrorMessage('');
+    }
   }, [inputValues]);
   
   return (

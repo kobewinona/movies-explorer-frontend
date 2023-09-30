@@ -22,7 +22,9 @@ const Login = ({onSignIn, isUpdating, serverErrorMessage, setServerErrorMessage}
   };
   
   useEffect(() => {
-    setServerErrorMessage('');
+    if (Object.keys(inputValues)?.length > 0) {
+      setServerErrorMessage('');
+    }
   }, [inputValues]);
   
   return (
