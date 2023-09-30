@@ -225,7 +225,7 @@ function App() {
           return movie['_id'] !== movieToDelete['_id'];
         }));
       })
-      .catch((err) => handleInfoToolTip(err));
+      .catch((err) => handleInfoToolTip(false, err));
   };
   
   
