@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+
+import useServerErrorMessage from '../../hooks/useServerErrorMessage';
 
 import Auth from '../Auth/Auth';
 import Form from '../Shared/Form/Form';
@@ -8,8 +11,10 @@ import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErro
 import './Register.css';
 
 
-const Register = ({onSignUp, isUpdating, serverErrorMessage, setServerErrorMessage}) => {
+const Register = ({isLoggedIn, onSignUp, isUpdating, serverErrorMessage, setServerErrorMessage}) => {
+  const navigate = useNavigate();
   const [inputValues, setInputValues] = useState({});
+  useServerErrorMessage(inputValues, setServerErrorMessage);
   
   const handleValuesUpdate = (name, value) => {
     setInputValues(prevState => ({
@@ -22,16 +27,10 @@ const Register = ({onSignUp, isUpdating, serverErrorMessage, setServerErrorMessa
   };
   
   useEffect(() => {
-    if (Object.keys(inputValues)?.length > 0) {
-      setServerErrorMessage('');
+    if (isLoggedIn) {
+      navigate('/', {replace: true});
     }
-  }, [inputValues]);
-  
-  useEffect(() => {
-    return () => {
-      setServerErrorMessage('');
-    }
-  }, []);
+  }, [isLoggedIn]);
   
   return (
     <section className="register">
@@ -82,6 +81,7 @@ const Register = ({onSignUp, isUpdating, serverErrorMessage, setServerErrorMessa
 };
 
 Register.propTypes = {
+  isLoggedIn: PropTypes.bool,
   onSignUp: PropTypes.func,
   isUpdating: PropTypes.bool,
   serverErrorMessage: PropTypes.string,

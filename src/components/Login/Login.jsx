@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+
+import useServerErrorMessage from '../../hooks/useServerErrorMessage';
 
 import Auth from '../Auth/Auth';
 import Form from '../Shared/Form/Form';
@@ -8,8 +11,10 @@ import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErro
 import './Login.css';
 
 
-const Login = ({onSignIn, isUpdating, serverErrorMessage, setServerErrorMessage}) => {
+const Login = ({isLoggedIn, onSignIn, isUpdating, serverErrorMessage, setServerErrorMessage}) => {
+  const navigate = useNavigate();
   const [inputValues, setInputValues] = useState({});
+  useServerErrorMessage(inputValues, setServerErrorMessage);
   
   const handleValuesUpdate = (name, value) => {
     setInputValues(prevValues => ({
@@ -22,20 +27,10 @@ const Login = ({onSignIn, isUpdating, serverErrorMessage, setServerErrorMessage}
   };
   
   useEffect(() => {
-    if (Object.keys(inputValues)?.length > 0) {
-      setServerErrorMessage('');
+    if (isLoggedIn) {
+      navigate('/', {replace: true});
     }
-  }, [inputValues]);
-  
-  useEffect(() => {
-    return () => {
-      setServerErrorMessage('');
-    }
-  }, []);
-  
-  useEffect(() => {
-    console.log('serverErrorMessage', serverErrorMessage);
-  }, [serverErrorMessage]);
+  }, [isLoggedIn]);
   
   return (
     <section className="login">
@@ -75,6 +70,7 @@ const Login = ({onSignIn, isUpdating, serverErrorMessage, setServerErrorMessage}
 };
 
 Login.propTypes = {
+  isLoggedIn: PropTypes.bool,
   onSignIn: PropTypes.func,
   isUpdating: PropTypes.bool,
   serverErrorMessage: PropTypes.string,

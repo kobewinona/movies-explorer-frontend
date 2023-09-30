@@ -4,17 +4,17 @@ import {Route, Routes, useNavigate} from 'react-router-dom';
 import {AuthContext} from '../../contexts/AuthContext';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import * as mainApi from '../../utils/mainApi';
+import * as moviesApi from '../../utils/moviesApi';
+import {moviesURL} from '../../utils/props';
 import {
-  serverUnknownError,
   editProfileSuccessful,
   searchQueryUnknownError,
+  serverUnknownError,
   signInSuccessful,
   signOutSuccessful,
   signUpSuccessful
 } from '../../utils/resultMessages';
-import * as mainApi from '../../utils/mainApi';
-import * as moviesApi from '../../utils/moviesApi';
-import {moviesURL} from '../../utils/props';
 
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import Login from '../Login/Login';
@@ -105,12 +105,12 @@ function App() {
       .catch((err) => {
         setIsLoggedIn(false);
         
-        setServerErrorMessage(err);
-        
         localStorage.clear();
         
         setMoviesList([]);
         setSavedMoviesList([]);
+  
+        console.error(err);
       })
       .finally(() => setIsLoading(false));
   };
@@ -124,7 +124,7 @@ function App() {
         
         navigate('/', {replace: true});
       })
-      .catch(() => handleInfoToolTip(false, serverUnknownError))
+      .catch(() => handleInfoToolTip(false, serverUnknownError));
   };
   
   
@@ -246,11 +246,7 @@ function App() {
   // initialization effects
   
   useEffect(() => {
-    if (isLoggedIn) {
-      validateCredentials();
-    } else {
-      setIsLoading(false);
-    }
+    validateCredentials();
     
     if (storedMoviesList) {
       setMoviesList(storedMoviesList.sort());
@@ -261,14 +257,17 @@ function App() {
     }
   }, []);
   
+  useEffect(() => {
+    console.log('isLoggedIn', isLoggedIn);
+  }, [isLoggedIn]);
+  
   return (
     <AuthContext.Provider value={isLoggedIn}>
       <CurrentUserContext.Provider value={currentUserInfo}>
         <Routes>
           <Route path="/signup" element={
-            <ProtectedRoute
-              element={Register}
-              isLoading={isLoading}
+            <Register
+              isLoggedIn={isLoggedIn}
               onSignUp={handleSignUp}
               isUpdating={isUpdating}
               serverErrorMessage={serverErrorMessage}
@@ -276,9 +275,8 @@ function App() {
             />
           }/>
           <Route path="/signin" element={
-            <ProtectedRoute
-              element={Login}
-              isLoading={isLoading}
+            <Login
+              isLoggedIn={isLoggedIn}
               onSignIn={handleSignIn}
               isUpdating={isUpdating}
               serverErrorMessage={serverErrorMessage}
