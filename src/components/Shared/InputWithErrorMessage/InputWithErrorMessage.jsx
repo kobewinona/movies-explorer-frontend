@@ -1,26 +1,34 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import useInputWithValidation from '../../../hooks/useInputWithValidation';
 
 import './InputWithErrorMessage.css';
 
 
-const InputWithErrorMessage = ({onUpdate, ...props}) => {
+const InputWithErrorMessage = ({defaultValue, onUpdate, name, ...props}) => {
   const {
+    inputName,
     inputValue,
     isInputValid,
     errorMessage,
     handleInputChange
-  } = useInputWithValidation(onUpdate);
+  } = useInputWithValidation(name, defaultValue);
+  
+  useEffect(() => {
+    if (inputName && inputValue) {
+      onUpdate(inputName, inputValue);
+    }
+  }, [inputValue]);
   
   return (
     <div className="input-with-error-message">
       <input
         className={`input-with-error-message__input
-        ${!isInputValid && 'input-with-error-message_invalid'}`}
+        ${!isInputValid && 'input-with-error-message__input_invalid'}`}
         onChange={handleInputChange}
         value={inputValue || ''}
+        name={name}
         {...props}
       />
       <span
@@ -32,9 +40,10 @@ const InputWithErrorMessage = ({onUpdate, ...props}) => {
 };
 
 InputWithErrorMessage.propTypes = {
-  name: PropTypes.string,
+  defaultValue: PropTypes.string,
   onUpdate: PropTypes.func,
-  defaultValue: PropTypes.string
+  name: PropTypes.string,
+  props: PropTypes.any
 };
 
 export default InputWithErrorMessage;

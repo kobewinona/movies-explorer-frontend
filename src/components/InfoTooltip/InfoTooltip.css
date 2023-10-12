@@ -1,0 +1,146 @@
+@keyframes grow {
+  from {
+    opacity: 0;
+    scale: .5;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.grow {
+  animation: grow .2s ease-in forwards;
+}
+
+@keyframes shrink {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: .5;
+  }
+}
+
+.shrink {
+  animation: shrink .2s ease-out forwards;
+}
+
+.info-tooltip {
+  width: 100%;
+  height: 100vh;
+  
+  visibility: hidden;
+  opacity: 0;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  position: fixed;
+  z-index: 900;
+  
+  top: 0;
+  left: 0;
+  
+  transition: all .3s ease-in;
+}
+
+.info-tooltip::before {
+  content: '';
+  
+  width: 100vw;
+  height: 100vh;
+  
+  background-color: #202020;
+  
+  position: fixed;
+  z-index: -1;
+  
+  top: 0;
+  left: 0;
+}
+
+.info-tooltip:focus {
+  outline: none;
+}
+
+.info-tooltip::before {
+  opacity: .5;
+}
+
+.info-tooltip_opened {
+  visibility: visible;
+  
+  opacity: 1;
+  
+  transition: all .3s ease-out;
+}
+
+.info-tooltip__container {
+  width: calc(100% - (14px * 2));
+  max-width: 345px;
+  
+  background-color: #272727;
+  
+  position: relative;
+  
+  margin: 0 auto;
+  border-radius: 10px;
+  padding: 50px 0;
+}
+
+.info-tooltip__pict {
+  width: 120px;
+  height: 120px;
+  
+  display: block;
+  
+  margin: 0 auto 40px auto;
+}
+
+.info-tooltip__pict_status_accept {
+  background-image: url('../../images/tooltip-accept-pict.svg');
+}
+
+.info-tooltip__pict_status_reject {
+  background-image: url('../../images/tooltip-reject-pict.svg');
+}
+
+.info-tooltip__message {
+  max-width: 244px;
+  
+  font-size: clamp(20px, 5vw, 24px);
+  font-weight: 900;
+  line-height: clamp(24px, 6vw, 29px);
+  text-align: center;
+  
+  display: block;
+  
+  margin: 0 auto;
+}
+
+@media (min-width: 425px) {
+  .info-tooltip__container {
+    width: calc(100% - (40px * 2));
+    max-width: 430px;
+  }
+}
+
+@media (min-width: 520px) {
+  .info-tooltip__container {
+    padding: 60px 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .info-tooltip__pict {
+    margin: 0 auto 32px auto;
+  }
+  
+  .info-tooltip__message {
+    max-width: 358px;
+  }
+}

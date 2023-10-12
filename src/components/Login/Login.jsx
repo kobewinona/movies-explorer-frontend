@@ -1,15 +1,20 @@
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
-import Auth from '../Auth/Auth';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
+import useServerErrorMessage from '../../hooks/useServerErrorMessage';
+
+import Auth from '../Auth/Auth';
 import Form from '../Shared/Form/Form';
 import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErrorMessage';
 
 import './Login.css';
 
 
-const Login = ({onSignIn}) => {
+const Login = ({isLoggedIn, onSignIn, isUpdating, serverErrorMessage, setServerErrorMessage}) => {
+  const navigate = useNavigate();
   const [inputValues, setInputValues] = useState({});
+  useServerErrorMessage(inputValues, setServerErrorMessage);
   
   const handleValuesUpdate = (name, value) => {
     setInputValues(prevValues => ({
@@ -21,22 +26,28 @@ const Login = ({onSignIn}) => {
     onSignIn(inputValues);
   };
   
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/', {replace: true});
+    }
+  }, [isLoggedIn]);
+  
   return (
     <section className="login">
       <Auth message="Рады видеть!">
         <Form
-          validate={true}
-          onSubmit={handleSubmit}
-          name="sign-in"
-          submitText="Войти"
-          isUpdating={false}
           showDefaultSubmitButton={true}
+          onSubmit={handleSubmit}
+          isUpdating={isUpdating}
+          serverErrorMessage={serverErrorMessage}
+          name="signin"
+          submitText="Войти"
         >
           <div>
             <p className="login__input-title">E-mail</p>
             <InputWithErrorMessage
               onUpdate={handleValuesUpdate}
-              name="userEmail"
+              name="email"
               placeholder="E-mail"
               type="email"
               aria-label="E-mail."
@@ -59,7 +70,11 @@ const Login = ({onSignIn}) => {
 };
 
 Login.propTypes = {
-  onSignIn: PropTypes.func
+  isLoggedIn: PropTypes.bool,
+  onSignIn: PropTypes.func,
+  isUpdating: PropTypes.bool,
+  serverErrorMessage: PropTypes.string,
+  setServerErrorMessage: PropTypes.func
 };
 
 export default Login;

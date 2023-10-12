@@ -26,7 +26,7 @@
   transition: opacity .4s ease-out;
 }
 
-.nav-tab__link_accented {
+.nav-tab__link_active {
   font-weight: 500;
 }
 

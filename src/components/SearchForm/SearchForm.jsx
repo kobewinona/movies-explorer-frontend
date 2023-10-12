@@ -1,18 +1,27 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import React, {useState} from 'react';
 
-import useInput from '../../hooks/useInput';
 
 import FilterCheckbox from '../Shared/FilterCheckbox/FilterCheckbox';
 import Form from '../Shared/Form/Form';
+import Input from '../Shared/Input/Input';
 
 import './SearchForm.css';
 
 
-const SearchForm = () => {
-  const {inputValue, handleInputChange} = useInput();
+const SearchForm = ({searchedQuery, onFilter, onSearch}) => {
+  const [queryName, setQueryName] = useState('');
+  const [queryValue, setQueryValue] = useState('');
+  
+  const handleValuesUpdate = (inputName, inputValue) => {
+    if (inputName && inputValue !== undefined) {
+      setQueryName(inputName);
+      setQueryValue(inputValue);
+    }
+  };
   
   const handleSubmit = () => {
-    console.log('handled');
+    onSearch(queryName, queryValue);
   };
   
   return (
@@ -25,11 +34,10 @@ const SearchForm = () => {
           isUpdating={false}
           showDefaultSubmitButton={false}
         >
-          <input
-            className="search-form__search-query-input"
-            onChange={handleInputChange}
-            value={inputValue || ''}
-            name="searchQuery"
+          <Input
+            defaultValue={searchedQuery?.['movieName']}
+            onUpdate={handleValuesUpdate}
+            name="movieName"
             type="text"
             aria-label="Запрос поиска."
             placeholder="Фильм"
@@ -37,10 +45,13 @@ const SearchForm = () => {
           />
           <div className="search-form__filter-container">
             <FilterCheckbox
-              name="shortfilms"
+              defaultValue={searchedQuery?.['showShortfilms']}
+              onUpdate={onFilter}
+              onSubmit={handleSubmit}
+              name="showShortfilms"
               type="checkbox"
               aria-label="Фильтр по короткометражным фильмам."
-              placeholder="Фильтр по короткометражным фильмам"
+              placeholder="Короткометражки"
               required
             />
             <p className="search-form__filter-name">Короткометражки</p>
@@ -50,6 +61,12 @@ const SearchForm = () => {
       </div>
     </section>
   );
+};
+
+SearchForm.propTypes = {
+  searchedQuery: PropTypes.object,
+  onFilter: PropTypes.func,
+  onSearch: PropTypes.func
 };
 
 export default SearchForm;

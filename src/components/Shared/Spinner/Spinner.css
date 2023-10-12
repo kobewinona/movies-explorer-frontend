@@ -1,0 +1,55 @@
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.spinner {
+  width: 30%;
+  height: 100%;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 10px;
+  align-items: center;
+  
+  margin: 0 auto;
+  
+  animation: fadeIn .1s forwards ease-in-out;
+}
+
+.spinner__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  margin: 0 auto;
+}
+
+.spinner__wheel {
+  width: 10px;
+  height: 10px;
+  
+  border: 3px solid #eee;
+  border-top: 3px solid rgba(0, 0, 0, .2);
+  border-radius: 50%;
+  
+  animation: spinner 1.5s linear infinite;
+}
+
+.spinner__message {
+  margin: 0 auto;
+}

@@ -1,0 +1,21 @@
+.edit-profile-button {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+  
+  background-color: transparent;
+  opacity: 1;
+  
+  border: none;
+  padding: 0;
+  
+  transition: opacity .4s ease-out;
+}
+
+.edit-profile-button:hover {
+  opacity: .5;
+  
+  transition: opacity .2s ease-in;
+}

@@ -1,0 +1,28 @@
+.search-query-error-message {
+  width: calc(100% - 10px * 2);
+  max-width: 708px;
+  
+  margin: 0 auto;
+}
+
+.search-query-error-message__text {
+  height: 100%;
+  
+  color: #8b8b8b;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: normal;
+  text-align: center;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .search-query-error-message {
+    width: calc(100% - (30px * 2));
+    max-width: 1140px;
+  }
+}

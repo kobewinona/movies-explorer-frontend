@@ -12,6 +12,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
+    "validator": "^13.11.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -19,7 +20,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "deploy": "npm update && npm run build && scp -r ./build/* dklimkin@158.160.2.19:/home/dklimkin/movies-explorer-fronted"
   },
   "eslintConfig": {
     "extends": [
@@ -40,9 +42,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "eslint": "^8.48.0",
     "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "eslint-plugin-react-hooks": "^4.6.0"
   }
 }

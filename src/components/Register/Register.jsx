@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
-// import {Link} from 'react-router-dom';
-// import logo from '../../images/logo.svg';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+
+import useServerErrorMessage from '../../hooks/useServerErrorMessage';
+
 import Auth from '../Auth/Auth';
 import Form from '../Shared/Form/Form';
 import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErrorMessage';
@@ -9,12 +11,14 @@ import InputWithErrorMessage from '../Shared/InputWithErrorMessage/InputWithErro
 import './Register.css';
 
 
-const Register = ({onSignUp}) => {
+const Register = ({isLoggedIn, onSignUp, isUpdating, serverErrorMessage, setServerErrorMessage}) => {
+  const navigate = useNavigate();
   const [inputValues, setInputValues] = useState({});
+  useServerErrorMessage(inputValues, setServerErrorMessage);
   
   const handleValuesUpdate = (name, value) => {
-    setInputValues(prevValues => ({
-      ...prevValues, [name]: value
+    setInputValues(prevState => ({
+      ...prevState, [name]: value
     }));
   };
   
@@ -22,21 +26,28 @@ const Register = ({onSignUp}) => {
     onSignUp(inputValues);
   };
   
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/', {replace: true});
+    }
+  }, [isLoggedIn]);
+  
   return (
     <section className="register">
       <Auth message="Добро пожаловать!">
         <Form
-          onSubmit={handleSubmit}
-          name="sign-up"
-          submitText="Зарегистрироваться"
-          isUpdating={false}
           showDefaultSubmitButton={true}
+          onSubmit={handleSubmit}
+          isUpdating={isUpdating}
+          serverErrorMessage={serverErrorMessage}
+          name="signup"
+          submitText="Зарегистрироваться"
         >
           <div>
             <p className="register__input-title">Имя</p>
             <InputWithErrorMessage
               onUpdate={handleValuesUpdate}
-              name="userName"
+              name="name"
               placeholder="Имя"
               type="text"
               aria-label="Имя."
@@ -47,7 +58,7 @@ const Register = ({onSignUp}) => {
             <p className="register__input-title">E-mail</p>
             <InputWithErrorMessage
               onUpdate={handleValuesUpdate}
-              name="userEmail"
+              name="email"
               placeholder="E-mail"
               type="email"
               aria-label="E-mail."
@@ -70,8 +81,11 @@ const Register = ({onSignUp}) => {
 };
 
 Register.propTypes = {
+  isLoggedIn: PropTypes.bool,
   onSignUp: PropTypes.func,
-  showDefaultSubmitButton: PropTypes.bool
+  isUpdating: PropTypes.bool,
+  serverErrorMessage: PropTypes.string,
+  setServerErrorMessage: PropTypes.func
 };
 
 export default Register;
