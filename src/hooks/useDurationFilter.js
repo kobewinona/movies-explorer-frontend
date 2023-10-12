@@ -1,5 +1,7 @@
 import {useCallback, useEffect, useState} from 'react';
 
+import {SHORT_FILM_DURATION} from '../utils/constants';
+
 
 export default function useDurationFilter(moviesList) {
   const [filterName, setFilterName] = useState('');
@@ -8,7 +10,7 @@ export default function useDurationFilter(moviesList) {
   
   const filterMovies = useCallback((filterValue) => {
     setFilteredMoviesList(moviesList.filter((movie) => {
-      return (movie['duration'] && filterValue) ? movie['duration'] <= 40 : true;
+      return (movie['duration'] && filterValue) ? movie['duration'] <= SHORT_FILM_DURATION : true;
     }));
   }, [moviesList]);
   

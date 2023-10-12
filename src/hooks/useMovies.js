@@ -1,11 +1,10 @@
 import {useEffect, useState} from 'react';
 
 import useDurationFilter from './useDurationFilter';
-import useLocalStorage from './useLocalStorage';
 import useSearch from './useSearch';
 
 
-export default function useMovies(key, moviesList, onUseToolTip) {
+export default function useMovies(moviesSearchQuery, moviesList, onUseToolTip) {
   const [searchQuery, setSearchQuery] = useState({});
   const [searchQueryErrorMessage, setSearchQueryErrorMessage] = useState('');
   const {
@@ -21,27 +20,25 @@ export default function useMovies(key, moviesList, onUseToolTip) {
     filterValue,
     handleFilterUpdate
   } = useDurationFilter(searchedMoviesList);
-  const {storedValue, setStoredValue} = useLocalStorage(key);
   
   useEffect(() => {
     setSearchQueryErrorMessage('');
-    setSearchQuery((prevState) => ({...prevState, ...storedValue}));
     
-    if (storedValue && Object.keys(storedValue).length > 0) {
-      const {movieName} = storedValue;
+    if (moviesSearchQuery && Object.keys(moviesSearchQuery).length > 0) {
+      const {movieName} = moviesSearchQuery;
       searchMovies(movieName);
     }
-  }, [moviesList, storedValue]);
+  }, [moviesList, moviesSearchQuery]);
   
   useEffect(() => {
     if (queryName && queryValue !== undefined) {
-      setStoredValue((prevState) => ({...prevState, [queryName]: queryValue}));
+      setSearchQuery((prevState) => ({...prevState, [queryName]: queryValue}));
     }
   }, [queryName, queryValue]);
   
   useEffect(() => {
     if (filterName && filterValue !== undefined) {
-      setStoredValue((prevState) => ({...prevState, [filterName]: filterValue}));
+      setSearchQuery((prevState) => ({...prevState, [filterName]: filterValue}));
     }
   }, [filterName, filterValue]);
   

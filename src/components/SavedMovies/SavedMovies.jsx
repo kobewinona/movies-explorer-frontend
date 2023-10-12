@@ -20,7 +20,7 @@ const SavedMovies = ({isUpdating, serverErrorMessage, moviesList, onUseToolTip, 
     filteredMoviesList,
     handleQuerySubmit,
     handleFilterUpdate
-  } = useMovies('savedMoviesSearchQuery', moviesList, onUseToolTip);
+  } = useMovies(null, moviesList, onUseToolTip);
   
   return (
     <>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 import ProfileLink from '../Shared/ProfileLink/ProfileLink';
 
@@ -11,18 +11,22 @@ const NavTab = () => {
     <nav className="nav-tab">
       <ul className="nav-tab__list">
         <li>
-          <Link
-            className="nav-tab__link nav-tab__link_accented"
+          <NavLink
+            className={({isActive}) => {
+              return (`nav-tab__link ${isActive && 'nav-tab__link_active'}`)
+            }}
             to="/movies"
           >Фильмы
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link
-            className="nav-tab__link"
+          <NavLink
+            className={({isActive}) => {
+              return (`nav-tab__link ${isActive && 'nav-tab__link_active'}`)
+            }}
             to="/saved-movies"
           >Сохранённые фильмы
-          </Link>
+          </NavLink>
         </li>
       </ul>
       <ProfileLink/>

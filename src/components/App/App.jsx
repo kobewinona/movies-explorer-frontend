@@ -257,10 +257,6 @@ function App() {
     }
   }, []);
   
-  useEffect(() => {
-    console.log('isLoggedIn', isLoggedIn);
-  }, [isLoggedIn]);
-  
   return (
     <AuthContext.Provider value={isLoggedIn}>
       <CurrentUserContext.Provider value={currentUserInfo}>

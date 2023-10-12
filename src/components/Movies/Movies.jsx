@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 import useMovies from '../../hooks/useMovies';
 
@@ -16,18 +17,26 @@ import './Movies.css';
 const Movies = ({isUpdating, serverErrorMessage, moviesList, getAllMovies, onUseToolTip, ...props}) => {
   const [shouldFetch, setShouldFetch] = useState(false);
   const {
+    storedValue: moviesSearchQuery,
+    setStoredValue: setMoviesSearchQuery
+  } = useLocalStorage('moviesSearchQuery');
+  const {
     searchQuery,
     searchQueryErrorMessage,
     filteredMoviesList,
     handleQuerySubmit,
     handleFilterUpdate
-  } = useMovies('moviesSearchQuery', moviesList, onUseToolTip);
+  } = useMovies(moviesSearchQuery, moviesList, onUseToolTip);
   
   const onQuerySubmit = (name, value) => {
     handleQuerySubmit(name, value);
     
-    setShouldFetch(value !== '');
+    setShouldFetch(value !== '' && moviesList?.length <= 0);
   };
+  
+  useEffect(() => {
+    setMoviesSearchQuery((prevState) => ({...prevState, ...searchQuery}));
+  }, [searchQuery]);
   
   useEffect(() => {
     if (shouldFetch) {
@@ -40,7 +49,7 @@ const Movies = ({isUpdating, serverErrorMessage, moviesList, getAllMovies, onUse
     <>
       <Header/>
       <main className="movies">
-        <SearchForm searchedQuery={searchQuery} onFilter={handleFilterUpdate} onSearch={onQuerySubmit}/>
+        <SearchForm searchedQuery={moviesSearchQuery} onFilter={handleFilterUpdate} onSearch={onQuerySubmit}/>
         {
           isUpdating
             ? <Preloader size="normal"/>
