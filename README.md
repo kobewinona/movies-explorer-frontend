@@ -65,7 +65,7 @@ Doing this project I also learnt a lot about methods to protect a website from `
 
 ### custom hooks
 
-In this project I learned more about writing my own custom hooks for encapsulating some shared logic of interacting with movies database. For example I wrote a custom hook for saving data into local storage with a callback function for updating previous state, which mimics the behaviour of default React `useState` hook. 
+In this project I learned more about writing my own custom hooks for encapsulating some shared logic of interacting with movies database. For example, I wrote a custom hook for saving data into local storage with a callback function for updating previous state, which mimics the behaviour of default React `useState` hook. 
 
 ### requests validation
 
