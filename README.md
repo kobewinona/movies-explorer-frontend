@@ -1,7 +1,12 @@
 [![cover](/images/movies-explorer-readme.jpg)](https://movies.dk.nomoredomainsrocks.ru)
 
 # Movies-Explorer
-[![React](https://img.shields.io/npm/v/react?style=flat-square)](https://www.npmjs.com/package/react)
+![Project Status](https://img.shields.io/badge/status-complete-lightgreen?style=flat-square)
+
+[![react](https://img.shields.io/npm/v/react?style=flat-square&label=react)](https://www.npmjs.com/package/react)
+[![react-dom](https://img.shields.io/npm/v/react-dom?style=flat-square&label=react-dom)](https://www.npmjs.com/package/react-dom)
+[![react-router-dom](https://img.shields.io/npm/v/react-router-dom?style=flat-square&label=react-router-dom)](https://www.npmjs.com/package/react-router-dom)
+[![validator](https://img.shields.io/npm/v/validator?style=flat-square&label=validator)](https://www.npmjs.com/package/validator)
 
 [![Dima Klimkin Profile Page](https://img.shields.io/badge/Dima_Klimkin-f9f9f9?style=for-the-badge&logoColor=000&logo=github)](https://github.com/kobewinona)
 
@@ -16,6 +21,10 @@
 [![MongoDB](https://img.shields.io/badge/MongoDB-f9f9f9?style=for-the-badge&logo=MongoDB)](https://www.mongodb.com)
 
 [![Webstorm](https://img.shields.io/badge/Webstorm-f9f9f9?style=for-the-badge&logoColor=0066b8&logo=webstorm)](https://www.googleadservices.com/pagead/aclk?sa=L&ai=DChcSEwiojunJrob_AhVBkmYCHUo9CkEYABAAGgJzbQ&ae=2&ohost=www.google.com&cid=CAESbeD2s_3F28tibUacQadmzB0nEItOP3IL0oRLAm8j0strsLviP55uS6YTuBUFZQG24kmk3q8Xv2nuYCUJ8LbmJZMmihBZSh3znKnfbQqjzSE39ZO6EuHtsdu2uToYj-Wqk3zF5I7Z8d7JAC9U89k&sig=AOD64_2Kp70jUNhk8FFzOAXsp6uOTrLJZQ&q&adurl&ved=2ahUKEwjKs-PJrob_AhVRSGwGHayEAzAQ0Qx6BAgJEAE&nis=2&dct=1)
+
+## Plans for improvement
+- fix cookies work for Safari browsers (cookies are rejected by the client with new Safari update, even with website tracking setting checked off)
+- translate into English
 
 ## contents
 

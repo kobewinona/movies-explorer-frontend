@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
-// import {useLocation} from 'react-router-dom';
 
 import {moviesURL} from '../../utils/props';
 
@@ -9,14 +8,13 @@ import MovieCardButton from '../MovieCardButton/MovieCardButton';
 
 
 const MoviesCard = ({movieId, movieInfo, isSavedOnLoad, onSave, onDelete}) => {
-  // const {pathname} = useLocation();
   const {nameRU, duration, image, trailerLink} = movieInfo;
   const imageURL = image.url ? `${moviesURL}${image.url}` : image;
   const durationHours = Math.floor(duration / 60);
   const durationMinutes = duration % 60;
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  
+
   const handleSaveMovie = () => {
     if (isSaved) {
       onDelete(movieId);
@@ -26,11 +24,11 @@ const MoviesCard = ({movieId, movieInfo, isSavedOnLoad, onSave, onDelete}) => {
       setIsSaved(true);
     }
   };
-  
+
   useEffect(() => {
     setIsSaved(isSavedOnLoad);
   }, [isSavedOnLoad]);
-  
+
   return (
     <li className="movies-card">
       <div className="movies-card__details">
